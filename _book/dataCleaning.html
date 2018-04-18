@@ -86,7 +86,6 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -99,7 +98,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><strong><a href="./">R for Motus</a></strong></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Utilisation du langage R appliqué aux données du réseau de radiotélémétrie automatisée Motus</a></li>
@@ -290,9 +289,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="D.6.3" data-path="appendixD.html"><a href="appendixD.html#exemples"><i class="fa fa-check"></i><b>D.6.3</b> Exemples</a></li>
 </ul></li>
 </ul></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -311,7 +307,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="dataCleaning" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Nettoyage des données</h1>
+<h1><span class="header-section-number">5</span> Nettoyage des données</h1>
 <p>Il peut arriver que des données de détection d’émetteurs dans votre base soient incorrectes; les «erreurs» peuvent avoir trois causes.</p>
 <p>Premièrement, les récepteurs peuvent détecter du bruit radioélectrique aléatoire (des parasites) qu’ils interprètent comme étant de véritables signaux provenant d’émetteurs. Le phénomène produit ce qu’on appelle des faux positifs.</p>
 <p>Deuxièmement, même si nous faisons tout pour l’éviter, il arrive parfois que des émetteurs en double émettent des signaux en même temps. Lorsque sont déployés en même temps deux émetteurs ayant le même identifiant, la même cadence d’émission et la même fréquence d’émission nominale, il se peut que les signaux captés proviennent de l’un ou de l’autre des émetteurs. Si cela se produit, il faut s’appuyer sur l’information contextuelle pour les départager (si possible). Les signaux en question sont appelés signaux d’émetteurs ambigus.</p>
@@ -922,9 +918,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["FrMotusRBook.pdf", "FrMotusRBook.epub"],
+"download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });
