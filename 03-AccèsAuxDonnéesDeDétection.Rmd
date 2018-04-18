@@ -19,7 +19,7 @@ df.alltags <- tbl.alltags %>%
 
 ```
 
-**Avant de télécharger vos données de détection, rendez-vous à la [page Web relative aux problèmes de données] (https://motus.org/data/issues) pour vérifier qu'il n'y a pas de problème en suspens en ce qui touche les métadonnées.**
+**Avant de télécharger vos données de détection, rendez-vous à la [page Web relative aux problèmes de données](https://motus.org/data/issues) pour vérifier qu'il n'y a pas de problème en suspens en ce qui touche les métadonnées.**
 
 ## Types de bases de données {#databaseTypes}
 
