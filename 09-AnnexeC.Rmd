@@ -1,0 +1,378 @@
+# Annexe C - Le logiciel R de Motus {#appendixC}
+
+```{r tidyr9, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
+
+```
+
+Le logiciel R de Motus comprend des fonctions qui permettent d’effectuer des calculs communs et de produire des sommaires, des graphiques et des cartes avec les données .motus. Cette annexe présente ces fonctions et des exemples de leur utilisation. Bon nombre des fonctions sont utilisables dans les formats tbl et data.frame; toutefois, pour certaines, les données doivent être dans le format sql tel que spécifié ci-après. Le chapitre \@ref(accessingData) présente des marches à suivre détaillées pour accéder aux données et les formater. Les exemples présentés tout au long de ce chapitre sont basés sur les données du projet 176 (Programme de suivi des oiseaux de rivage de la baie James) utilisées comme exemples, auxquelles on peut accéder et qu’on peut convertir dans différents formats par l’intermédiaire du code suivant:
+
+```{r appendixBSample, eval = FALSE}
+# Télécharger les données fournies comme exemples dans le format sql et y accéder, nom d'utilisateur: motus.sample, mot de passe: motus.sample
+sql.motus <- tagme(176, new = TRUE, update = TRUE, dir = "./data")
+
+# Extraire la table «alltags» du fichier sql «sql.motus».
+tbl.alltags <- tbl(sql.motus, "alltags") 
+
+## Convertir la table «tbl.alltags» en une trame de données appelée «df.alltags».
+df.alltags <- tbl.alltags %>% 
+  collect() %>% 
+  as.data.frame()
+
+```
+```{r appendixBSample2, echo=FALSE, eval = TRUE}
+
+sql.motus <- tagme(176, new = FALSE, update = FALSE, dir = "./data") # download and access sample data in sql format, username: motus.sample, password: motus.sample
+
+tbl.alltags <- tbl(sql.motus, "alltags") # Extraire la table «alltags» du fichier sql «sql.motus».
+df.alltags <- tbl.alltags %>% 
+  collect() %>% 
+  as.data.frame() # Convertir la table «tbl.alltags» en une trame de données appelée «df.alltags».
+
+```
+
+Vous pouvez accéder aux pages d’aide relatives aux fonctions en utilisant «??sunRiseSet» dans la console R. Vous pouvez aussi voir le code sous-jacent à la fonction comme suit:
+
+```{r functionCode, eval = FALSE}
+
+sunRiseSet
+
+```
+
+## checkVersion {#checkVersion.B}
+### Description
+
+Lorsque vous appelez la fonction tagme() pour charger la base de données sqlite, le système vérifie que la version de votre base de données correspond à la plus récente version du logiciel motus et stocke la version dans une nouvelle table appelée admInfo. Au fil du temps, des changements sont apportés qui nécessitent l’ajout de tables, de vues ou de champs à la base de données. La fonction suivante vérifie que la version de votre base de données a été mise à jour de manière à correspondre à la version courante du logiciel motus. Si le système affiche un avertissement, reportez-vous à l’annexe B pour savoir quoi faire. Si la version de votre base de données n’est pas à jour, reportez-vous au chapitre \@ref(loadingPackages) pour savoir comment mettre à jour les versions des logiciels motus et motusClient.
+
+### Dépendances
+
+**sql.motus** Une base sqlite de données .motus téléchargée au moyen de la fonction tagme()
+
+### Exemple
+```{r checkVersion.B, eval = FALSE}
+checkVersion(sql.motus)
+```
+
+## sunRiseSet {#sunRiseSet}
+### Description 
+Cette fonction crée une variable heure du lever du soleil (sunrise) et heure du coucher du soleil (sunset) et l'ajoute à une trame de données comprenant des valeurs de latitude, de longitude et de date/heure dans le format POSIXct ou numérique.
+
+### Dépendances
+**data** Peut être une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure, latitude et longitude.  
+**lat** Variable avec valeurs de latitude, par défaut les valeurs de recvDeployLat.  
+**lon** Variable avec valeurs de longitude, par défaut les valeurs de recvDeployLon.  
+**ts** Variable de l'heure UTC dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+
+### Exemple
+Ajout des variables sunrise/sunset à la trame de données alltags
+```{r sunRiseSet, eval = TRUE}
+
+alltags.df.sun <- sunRiseSet(df.alltags)
+head(alltags.df.sun)
+
+```
+
+## plotAllTagsCoord {#plotAllTagsCoor}
+### Description
+Cette fonction pointe sur un graphique la latitude/longitude par rapport à l’heure (UTC arrondie à l’heure près) pour chaque émetteur à partir des données de détection .motus. Par défaut, les coordonnées géographiques sont tirées des enregistrements effectués par les GPS des récepteurs.
+
+### Dépendances
+**data** Peut être une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure et latitude ou longitude.  
+**tagsPerPanel** Nombre d’émetteurs indiqués dans chaque panneau du graphique, par défaut 5.  
+**coordinate** Variable avec valeurs de position, par défaut les valeurs de recvDeployLat.  
+**ts** Variable de l'heure UTC dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**fullID** Variable de l'identifiant complet de l'émetteur.
+**mfgID** Variable de l'identifiant de l'émetteur attribué par le fabricant.  
+
+### Exemple
+Pointage sur un graphique des coordonnées de certains émetteurs à partir d'une table tbl.alltags, à raison de 3 émetteurs par panneau
+```{r plotAllTagsCoord, eval = TRUE, message = FALSE, warning = FALSE}
+
+plotAllTagsCoord(
+  filter(tbl.alltags, motusTagID %in% c(19129, 16011, 17357, 16035, 22897, 23316)), 
+  tagsPerPanel = 3)
+
+```
+
+## plotAllTagsSite {#plotAllTagsSite}
+### Description
+Cette fonction pointe sur un graphique la latitude/longitude par rapport à l’heure (UTC arrondie à l’heure près) pour chaque émetteur à partir des données de détection .motus. Par défaut, les coordonnées sont tirées des enregistrements de la latitude effectués par les GPS des récepteurs.
+
+### Dépendances
+**data** Peut être une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure et latitude ou longitude.  
+**tagsPerPanel** Nombre d’émetteurs indiqués dans chaque panneau du graphique, par défaut 5.  
+**coordinate** Variable avec valeurs de position, par défaut les valeurs de recvDeployLat.  
+**ts** Variable de l'heure UTC dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**fullID** Variable de l'identifiant complet de l'émetteur.
+**mfgID** Variable de l'identifiant de l'émetteur attribué par le fabricant.  
+
+### Exemple
+Pointage sur un graphique des coordonnées à partir d'une table tbl.alltags pour l'espèce choisie, à savoir le Bécasseau maubèche, à raison de 3 émetteurs par panneau.
+```{r, plotAllTagsSite}
+
+plotAllTagsSite(filter(tbl.alltags, speciesEN == "Red Knot"), 
+                coordinate = "recvDeployLat", 
+                tagsPerPanel = 3)
+
+```
+
+## plotDailySiteSum {#plotDailySiteSum}
+### Description
+Cette fonction pointe sur des graphiques le nombre total de détections de tous les émetteurs et le nombre total d’émetteurs détectés, par jour, à un site déterminé. Elle dépend de la fonction siteSumDaily.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, recvDepName et ts.  
+**motusTagID** Variable consistant en un identifiant d'émetteur motus (motus tag ID).  
+**sig** Variable de puissance de signal.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+
+### Exemple
+Pointage sur des graphiques du nombre total de détections de tous les émetteurs et du nombre total d'émetteurs détectés au site Longridge à partir de data.frame et df.alltags
+```{r, plotDailySiteSum, eval = TRUE}
+
+plotDailySiteSum(df.alltags, recvDeployName = "Longridge")
+
+```
+
+## plotRouteMap {#plotRouteMap}
+### Description
+Cette fonction pointe sur une carte Google les trajectoires d’émetteurs détectés, la trajectoire de chaque émetteur étant représentée par une couleur distincte. L’utilisateur fixe un intervalle de temps entre deux dates pour que la carte indique la position des récepteurs qui fonctionnaient à un moment donné pendant cet intervalle.
+### Dépendances
+**data** Un fichier sql .motus.  
+**maptype** Type de carte Google à afficher: relief, plan, satellite ou hybride.  
+**latCentre** Latitude du point central de la carte.  
+**lonCentre** Longitude du point central de la carte.  
+**zoom** Nombre entier de 3 à 21, 3 correspondant au niveau du continent et 10 au niveau de la localité.  
+**recvStart** Date du début de l'intervalle de temps pour l'indication des récepteurs actifs.  
+**recvEnd** Date de la fin de l'intervalle de temps pour l'indication des récepteurs actifs.  
+
+### Exemple
+Pointage sur une carte de trajectoires de type «relief» à partir de toutes les données de détection, avec indication des récepteurs actifs entre le 1er janvier 2016 (2016-01-01) et le 1er janvier 2017 (2017-01-01).
+```{r, plotRouteMap, eval = TRUE}
+
+plotRouteMap(sql.motus, 
+             maptype = "terrain", 
+             latCentre = 44, lonCentre = -70, zoom = 5, 
+             recvStart = "2016-01-01", recvEnd = "2016-12-31")
+
+```
+
+
+## plotSite {#plotSite}
+### Description
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables ts, antBearing, fullID et recvDepName.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**antBearing** Variable de l'angle de relèvement de l'antenne.  
+**fullID** Variable de l'identifiant complet de l'émetteur.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+
+### Exemple
+Pointage seulement des données de détection à un site particulier (Piskwamish) à partir de data.frame et de df.alltags.
+```{r, plotSite, eval = TRUE}
+
+plotSite(filter(df.alltags, recvDeployName == "Piskwamish"))
+
+```
+
+## plotSiteSig {#plotSiteSig}
+### Description
+Cette fonction pointe sur un graphique la puissance du signal par rapport au temps de l’année pour tous les émetteurs détectés à un site particulier, les couleurs variant selon la gamme des angles de relèvement des antennes.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables antBearing, ts, lat, sig, fullID et recvDepName.  
+**antBearing** Variable de l'angle de relèvement de l'antenne.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**recvDeployLat** Variable de la latitude de la position du récepteur.  
+**sig** Variable de la puissance du signal de l'émetteur.  
+**fullID** Variable de l'identifiant complet de l'émetteur.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+
+### Exemple
+Pointage de la puissance du signal de certains émetteurs détectés au site de Piskwamish. 
+```{r, plotSiteSig, eval = TRUE}
+
+plotSiteSig(filter(df.alltags, motusTagID %in% c(16037, 16039, 16035)), recvDeployName = "Netitishi")
+
+```
+
+## plotTagSig {#plotTagSig}
+
+### Description
+Cette fonction pointe sur un graphique la puissance du signal d’un émetteur particulier par rapport au temps de l’année, à raison d’un panneau de graphique par site (dans l’ordre de la latitude), les couleurs variant selon la gamme des angles de relèvement des antennes.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, ts, antBearing, recvDeployLat, fullID et recvDepName.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus.  
+**antBearing** Variable de l'angle de relèvement de l'antenne.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**recvDeployLat** Variable de la latitude de la position du récepteur.  
+**sig** Variable de la puissance du signal de l'émetteur.
+**fullID** Variable de l'identifiant complet de l'émetteur.
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.
+
+### Exemple
+Pointage de la puissance du signal d’un émetteur particulier à partir de la table de données tbl.alltags.
+```{r, plotTagSig, eval = TRUE}
+
+plotTagSig(tbl.alltags, motusTagID = 16035)
+
+```
+
+## simSiteDet {#simSiteDet}
+
+### Description
+Cette fonction crée une trame de données comprenant seulement les données de détection des émetteurs détectés par deux récepteurs ou plus en même temps.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables ts, motusTagID et recvDepName.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+
+### Exemple
+Obtention, à partir d’une trame de données df.alltags, d’une trame de données appelée «simSites» comprenant seulement les données de détection simultanée d’émetteurs.
+```{r, simSiteDet, eval = TRUE}
+
+simSites <- simSiteDet(df.alltags)
+head(simSites)
+
+```
+
+## siteSum {#siteSum}
+
+### Description
+Cette fonction crée un sommaire des données sur la première et la dernière détections à un site déterminé, avec indications de l’intervalle de temps entre celles-ci, du nombre d’émetteurs détectés et du nombre total de détections. Elle pointe sur des graphiques le nombre total de détections de tous les émetteurs et le nombre total d’émetteurs détectés à chaque site.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, recvDeploLat, recvDepName et ts.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus.  
+**sig** Variable de la puissance du signal.  
+**recvDeployLat** Variable de la latitude du lieu de déploiement du récepteur.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**units** Unités de temps indiquant l'intervalle de temps. Options: secondes, minutes, heures, jours et semaines. Par défaut en heures.  
+
+### Exemple
+Création de sommaires par site pour des sites sélectionnés, avec indication du temps en minutes.
+```{r, siteSum, eval = TRUE}
+
+site_summary <- siteSum(filter(df.alltags, 
+                               recvDeployName %in% c("Niapiskau", "Netitishi", "Old Cur", "Washkaugou")), units = "mins")
+
+head(site_summary)
+
+```
+
+## siteSumDaily {#siteSumDaily}
+### Description
+Cette fonction crée un sommaire des données sur la première et la dernière détections à un site déterminé, avec indications de l’intervalle de temps entre celles-ci, du nombre d’émetteurs détectés et du nombre total de détections pour chaque jour. Elle produit le même sommaire que la fonction siteSum, mais pour chaque jour par site.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, recvDepName et ts.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus.  
+**sig** Variable de la puissance du signal.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**units** Unités de temps indiquant l'intervalle de temps. Options: secondes, minutes, heures, jours et semaines. Par défaut en heures.  
+  
+
+### Exemple
+Création de sommaires par site à partir des données de détection des émetteurs de l'utilisateur, pour tous les sites pour chaque jour, avec indication du temps en minutes, en utilisant la table de données tbl.alltags.
+```{r, siteSumDaily, eval = TRUE}
+
+daily_site_summary <- siteSumDaily(tbl.alltags, units = "mins")
+head(daily_site_summary)
+
+```
+
+## siteTrans {#siteTrans}
+### Description
+Cette fonction crée une trame de données sur les transitions entre des sites; les données de détection sont ordonnées en fonction de l’heure de détection. Par transition on entend l’intervalle de temps entre la dernière détection au site x («départ» possible) et la première détection au site y («arrivée» possible); les données sont présentées dans l’ordre chronologique. Chaque ligne contient les indications suivantes: heure de la dernière détection et de la latitude/longitude au site x; heure de la première détection et de la latitude/longitude au site y; distance entre les deux sites; intervalle de temps entre les deux détections; vitesse du déplacement entre les détections; et angle de relèvement (cap) entre les deux sites.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables ts, motusTagID, tagDeployID, recvDeployLat, recvDeployLon et recvDepName.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus.  
+**tagDeployID** Variable de l'identifiant du lieu de déploiement de l'émetteur Motus.  
+**recvDeployLat** Variable de la latitude du lieu de déploiement du récepteur.  
+**recvDeployLon** Variable de la longitude du lieu de déploiement du récepteur.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+
+### Exemple
+Visualisation des transitions entre des sites seulement pour l'émetteur 16037 à partir de la trame de données df.alltags.
+```{r, siteTrans, eval = TRUE}
+
+transitions <- siteTrans(filter(df.alltags, motusTagID == 16037), 
+                         latCoord = "recvDeployLat", lonCoord = "recvDeployLon")
+head(transitions)
+
+```
+
+## tagSum {#tagSum}
+### Description
+Cette fonction crée un sommaire, pour chaque émetteur, des données sur les heures de la première et de la dernière détections, les sites de la première et de la dernière détections, l’intervalle de temps entre la première et la dernière détections, la distance en ligne droite entre les sites de la première et de la dernière détections, la vitesse de déplacement de l’émetteur et l’angle de relèvement entre les deux sites.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, fullID, recvDeployLat, recvDeployLon, recvDepName et ts.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus. 
+**fullID** Variable de l'identifiant complet de l'émetteur.  
+**recvDeployLat** Variable de la latitude du lieu de déploiement du récepteur.  
+**recvDeployLon** Variable de la longitude du lieu de déploiement du récepteur.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+
+### Exemple
+Création d'un sommaire de données pour tous les émetteurs à partir de l'ensemble des données de détection en utilisant la trame de données df.alltags.
+```{r, tagSum, eval = TRUE}
+
+tag_summary <- tagSum(tbl.alltags)
+head(tag_summary)
+
+```
+
+## tagSumSite {#tagSumSite}
+### Description
+Cette fonction crée un sommaire de données pour chaque émetteur indiquant les heures de la première et de la dernière détections à chaque site, l’intervalle de temps entre les première et dernière détections à chaque site et le nombre total de détections à chaque site.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, fullID, recvDepName et ts.  
+**motusTagID** Variable de l'identifiant de l'émetteur Motus.  
+**fullID** Variable de l'identifiant complet de l'émetteur.  
+**recvDepName** Variable du nom du lieu de déploiement du récepteur.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+
+### Exemple
+Création de sommaires de données pour seulement certains émetteurs avec indication du temps en heures par défaut, à partir de la trame de données df.alltags.
+```{r, tagSumSite, eval = TRUE}
+
+tag_site_summary <- tagSumSite(filter(df.alltags, motusTagID %in% c(16047, 16037, 16039)))
+head(tag_site_summary)
+
+```
+
+## timeToSunriset {#timeToSunriset}
+### Description
+Cette fonction crée et ajoute des variables du temps jusqu’au lever/coucher du soleil et du temps depuis le lever/coucher du soleil à partir d’une trame de données comprenant des valeurs de latitude, de longitude et de date/heure dans le format POSIXct.
+
+### Dépendances
+**data** Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure, latitude et longitude.  
+**lat** Variable de la latitude, par défaut les valeurs de recvDeployLat.  
+**lon** Variable de la longitude, par défaut les valeurs de recvDeployLon.  
+**ts** Variable de la date et de l'heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.  
+**units** Unités de temps indiquant l'intervalle de temps. Options: secondes, minutes, heures, jours et semaines. Par défaut en heures.  
+
+### Exemple
+Obtention d’information sur le temps jusqu’au lever/coucher du soleil et du temps depuis le lever/coucher du soleil, en minutes, à partir de la table tbl.alltags.
+```{r, timeToSunriset, eval = TRUE}
+
+sunrise <- timeToSunriset(tbl.alltags, units = "mins")
+head(sunrise)
+
+```

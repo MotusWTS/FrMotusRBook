@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Guide R pour Motus</title>
+  <meta name="description" content="Guide R pour Motus">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Guide R pour Motus" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="BSC_Motus_Logo.png" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guide R pour Motus" />
+  
+  
+  <meta name="twitter:image" content="BSC_Motus_Logo.png" />
+
+<meta name="author" content="Tara L. Crewe, Zoe Crysler, et Philip Taylor">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="loadingPackages.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Utilisation du langage R appliqué aux données du réseau de radiotélémétrie automatisée Motus</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#whatBookCovers"><i class="fa fa-check"></i><b>1.1</b> Ce que le présent guide ne montre pas</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.2</b> Connaissances préalables</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#sampleData"><i class="fa fa-check"></i><b>1.3</b> Ensemble de données utilisées comme exemples</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i><b>1.4</b> Remerciements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loadingPackages.html"><a href="loadingPackages.html"><i class="fa fa-check"></i><b>2</b> Chargement des logiciels R</a><ul>
+<li class="chapter" data-level="2.1" data-path="loadingPackages.html"><a href="loadingPackages.html#internalProcessing"><i class="fa fa-check"></i><b>2.1</b> Traitement interne des données</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="accessingData.html"><a href="accessingData.html"><i class="fa fa-check"></i><b>3</b> Accès aux données de détection</a><ul>
+<li class="chapter" data-level="3.1" data-path="accessingData.html"><a href="accessingData.html#databaseTypes"><i class="fa fa-check"></i><b>3.1</b> Types de bases de données</a></li>
+<li class="chapter" data-level="3.2" data-path="accessingData.html"><a href="accessingData.html#loadPackages"><i class="fa fa-check"></i><b>3.2</b> Chargement des logiciels R pertinents</a></li>
+<li class="chapter" data-level="3.3" data-path="accessingData.html"><a href="accessingData.html#reglage-de-lenvironnement-systeme"><i class="fa fa-check"></i><b>3.3</b> Réglage de l’environnement système</a></li>
+<li class="chapter" data-level="3.4" data-path="accessingData.html"><a href="accessingData.html#importDetections"><i class="fa fa-check"></i><b>3.4</b> Importation de données de détection</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="accessingData.html"><a href="accessingData.html#telechargement-des-donnees-dun-projet-ou-dun-recepteur-pour-la-premiere-fois"><i class="fa fa-check"></i><b>3.4.1</b> Téléchargement des données d’un projet ou d’un récepteur pour la <em>première fois</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="accessingData.html"><a href="accessingData.html#userAuthentication"><i class="fa fa-check"></i><b>3.4.2</b> Authentification de l’utilisateur</a></li>
+<li class="chapter" data-level="3.4.3" data-path="accessingData.html"><a href="accessingData.html#logout"><i class="fa fa-check"></i><b>3.4.3</b> Fermeture de session</a></li>
+<li class="chapter" data-level="3.4.4" data-path="accessingData.html"><a href="accessingData.html#downloadData"><i class="fa fa-check"></i><b>3.4.4</b> Téléchargement de données de détection</a></li>
+<li class="chapter" data-level="3.4.5" data-path="accessingData.html"><a href="accessingData.html#tagmeUpdate"><i class="fa fa-check"></i><b>3.4.5</b> Ouverture et mise à jour d’une base de données de détection locale</a></li>
+<li class="chapter" data-level="3.4.6" data-path="accessingData.html"><a href="accessingData.html#tellme"><i class="fa fa-check"></i><b>3.4.6</b> Vérification de l’existence de nouvelles données</a></li>
+<li class="chapter" data-level="3.4.7" data-path="accessingData.html"><a href="accessingData.html#forceMeta"><i class="fa fa-check"></i><b>3.4.7</b> Imposition d’une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs</a></li>
+<li class="chapter" data-level="3.4.8" data-path="accessingData.html"><a href="accessingData.html#metadata"><i class="fa fa-check"></i><b>3.4.8</b> Importation de l’ensemble des métadonnées sur les émetteurs et les récepteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="accessingData.html"><a href="accessingData.html#databaseStructure"><i class="fa fa-check"></i><b>3.5</b> Structure des données</a></li>
+<li class="chapter" data-level="3.6" data-path="accessingData.html"><a href="accessingData.html#verification-de-la-version-de-la-base-de-donnees-checkversion"><i class="fa fa-check"></i><b>3.6</b> Vérification de la version de la base de données {checkVersion}</a></li>
+<li class="chapter" data-level="3.7" data-path="accessingData.html"><a href="accessingData.html#convertToFlat"><i class="fa fa-check"></i><b>3.7</b> Conversion d’une table SQLITE en une trame de données plate</a></li>
+<li class="chapter" data-level="3.8" data-path="accessingData.html"><a href="accessingData.html#exportDetections"><i class="fa fa-check"></i><b>3.8</b> Exportation d’une trame de données «plate» sous la forme d’un fichier CSV ou RDS</a></li>
+<li class="chapter" data-level="3.9" data-path="accessingData.html"><a href="accessingData.html#convention-de-noms-dobjets-r"><i class="fa fa-check"></i><b>3.9</b> Convention de noms d’objets R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deployments.html"><a href="deployments.html"><i class="fa fa-check"></i><b>4</b> Déploiements d’émetteurs et de récepteurs</a><ul>
+<li class="chapter" data-level="4.1" data-path="deployments.html"><a href="deployments.html#chargement-des-logiciels-r-pertinents-et-reglage-de-lenvironnement-de-travail"><i class="fa fa-check"></i><b>4.1</b> Chargement des logiciels R pertinents et réglage de l’environnement de travail</a></li>
+<li class="chapter" data-level="4.2" data-path="deployments.html"><a href="deployments.html#chargement-du-fichier-.motus"><i class="fa fa-check"></i><b>4.2</b> Chargement du fichier .motus</a></li>
+<li class="chapter" data-level="4.3" data-path="deployments.html"><a href="deployments.html#tagDeployments"><i class="fa fa-check"></i><b>4.3</b> Déploiements d’émetteurs</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-completes-sur-les-emetteurs-pour-votre-projet"><i class="fa fa-check"></i><b>4.3.1</b> Téléchargement des métadonnées complètes sur les émetteurs pour votre projet</a></li>
+<li class="chapter" data-level="4.3.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres"><i class="fa fa-check"></i><b>4.3.2</b> Détermination du nombre d’émetteurs enregistrés</a></li>
+<li class="chapter" data-level="4.3.3" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres-qui-ont-ete-deployes"><i class="fa fa-check"></i><b>4.3.3</b> Détermination du nombre d’émetteurs enregistrés qui ont été déployés</a></li>
+<li class="chapter" data-level="4.3.4" data-path="deployments.html"><a href="deployments.html#checkNumberTagDeployments"><i class="fa fa-check"></i><b>4.3.4</b> Détermination du nombre de déploiements par émetteur</a></li>
+<li class="chapter" data-level="4.3.5" data-path="deployments.html"><a href="deployments.html#localisation-des-emetteurs-deployes"><i class="fa fa-check"></i><b>4.3.5</b> Localisation des émetteurs déployés</a></li>
+<li class="chapter" data-level="4.3.6" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-demetteurs"><i class="fa fa-check"></i><b>4.3.6</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="deployments.html"><a href="deployments.html#recvMetadata"><i class="fa fa-check"></i><b>4.4</b> Vérification des métadonnées sur les récepteurs</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-sur-tous-les-recepteurs-dans-le-reseau"><i class="fa fa-check"></i><b>4.4.1</b> Téléchargement des métadonnées sur tous les récepteurs dans le réseau</a></li>
+<li class="chapter" data-level="4.4.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-de-recepteurs-deployes-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.2</b> Détermination du nombre de récepteurs déployés dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.3" data-path="deployments.html"><a href="deployments.html#determination-du-moment-du-deploiement-des-recepteurs-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.3</b> Détermination du moment du déploiement des récepteurs dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.4" data-path="deployments.html"><a href="deployments.html#localisation-des-recepteurs-deployes"><i class="fa fa-check"></i><b>4.4.4</b> Localisation des récepteurs déployés</a></li>
+<li class="chapter" data-level="4.4.5" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-des-recepteurs"><i class="fa fa-check"></i><b>4.4.5</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements des récepteurs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dataCleaning.html"><a href="dataCleaning.html"><i class="fa fa-check"></i><b>5</b> Nettoyage des données</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-logiciels-requis"><i class="fa fa-check"></i><b>5.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="5.2" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-donnees-de-detection"><i class="fa fa-check"></i><b>5.2</b> Chargement des données de détection</a></li>
+<li class="chapter" data-level="5.3" data-path="dataCleaning.html"><a href="dataCleaning.html#verifications-preliminaires-des-donnees"><i class="fa fa-check"></i><b>5.3</b> Vérifications préliminaires des données</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="dataCleaning.html"><a href="dataCleaning.html#sommaires-de-donnees-de-detection-demetteurs"><i class="fa fa-check"></i><b>5.3.1</b> Sommaires de données de détection d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dataCleaning.html"><a href="dataCleaning.html#ambigs"><i class="fa fa-check"></i><b>5.4</b> Recherche et examen de détections ambiguës</a></li>
+<li class="chapter" data-level="5.5" data-path="dataCleaning.html"><a href="dataCleaning.html#verification-de-la-validite-des-sequences-dau-moins-2-detections"><i class="fa fa-check"></i><b>5.5</b> Vérification de la validité des séquences d’au moins 2 détections</a></li>
+<li class="chapter" data-level="5.6" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrage-des-donnees"><i class="fa fa-check"></i><b>5.6</b> Filtrage des données</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrer-et-enregistrer-le-resultat-dans-le-format-rds"><i class="fa fa-check"></i><b>5.6.1</b> Filtrer et enregistrer le résultat dans le format RDS</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dataCleaning.html"><a href="dataCleaning.html#enregistrer-un-filtre-personnalise-dans-la-base-de-donnees-motus-et-lappliquer-aux-donnees"><i class="fa fa-check"></i><b>5.6.2</b> Enregistrer un filtre personnalisé dans la base de données motus et l’appliquer aux données</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exploreData.html"><a href="exploreData.html"><i class="fa fa-check"></i><b>6</b> Exploration des données avec le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="6.1" data-path="exploreData.html"><a href="exploreData.html#chargement-des-logiciels-requis-1"><i class="fa fa-check"></i><b>6.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="6.2" data-path="exploreData.html"><a href="exploreData.html#chargement-des-donnees"><i class="fa fa-check"></i><b>6.2</b> Chargement des données</a></li>
+<li class="chapter" data-level="6.3" data-path="exploreData.html"><a href="exploreData.html#dataSummaries"><i class="fa fa-check"></i><b>6.3</b> Sommaires de données</a></li>
+<li class="chapter" data-level="6.4" data-path="exploreData.html"><a href="exploreData.html#dataPlotting"><i class="fa fa-check"></i><b>6.4</b> Graphiques de données</a></li>
+<li class="chapter" data-level="6.5" data-path="exploreData.html"><a href="exploreData.html#mappingData"><i class="fa fa-check"></i><b>6.5</b> Cartes de données</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="exploreData.html"><a href="exploreData.html#googleMaps"><i class="fa fa-check"></i><b>6.5.1</b> Utilisation de Google Maps</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exploreData.html"><a href="exploreData.html#outlineMaps"><i class="fa fa-check"></i><b>6.5.2</b> Création de cartes muettes simples</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Appendix - alltags structure</a></li>
+<li class="chapter" data-level="B" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html"><i class="fa fa-check"></i><b>B</b> Annexe B - Dépannage {#Annexe B}</a><ul>
+<li class="chapter" data-level="B.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#motusLogout"><i class="fa fa-check"></i><b>B.1</b> Fermeture du logiciel motus</a></li>
+<li class="chapter" data-level="B.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#resumeDownload"><i class="fa fa-check"></i><b>B.2</b> Reprise du téléchargement de données</a></li>
+<li class="chapter" data-level="B.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#messages-derreur-courants-et-solutions"><i class="fa fa-check"></i><b>B.3</b> Messages d’erreur courants et solutions</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-auto-disconnecting-sqliteconnection-une-ou-plusieurs-fois-apres-avoir-utilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.1</b> Je reçois le message «Auto-disconnecting SQLiteConnection» une ou plusieurs fois après avoir utilisé la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-internal-server-error-pendant-que-jutilise-la-fonction-tagme-update-true."><i class="fa fa-check"></i><b>B.3.2</b> Je reçois le message «Internal Server Error» pendant que j’utilise la fonction tagme (…, update = TRUE).</a></li>
+<li class="chapter" data-level="B.3.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-forbidden-pendant-que-jutilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.3</b> Je reçois le message «Error: Forbidden» pendant que j’utilise la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.4" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-object-xxxx-not-found-relatif-au-nom-dune-table-ou-dun-champ-ou-encore-certains-de-vos-exemples-dans-le-guide-ne-fonctionnent-pas."><i class="fa fa-check"></i><b>B.3.4</b> Je reçois le message «Error: Object ‘xxxx’ not found», relatif au nom d’une table ou d’un champ, ou encore certains de vos exemples dans le guide ne fonctionnent pas.</a></li>
+<li class="chapter" data-level="B.3.5" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-in-rsqlite_connectdbname-loadable.extensions-flags-vfs-could-not-connect-to-database-unable-to-open-database-file-lorsque-je-tente-dexecuter-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.5</b> Je reçois le message «Error in rsqlite_connect(dbname, loadable.extensions, flags, vfs): Could not connect to database: unable to open database file» lorsque je tente d’exécuter la fonction tagme().</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="appendixC.html"><a href="appendixC.html"><i class="fa fa-check"></i><b>C</b> Annexe C - Le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="C.1" data-path="appendixC.html"><a href="appendixC.html#checkVersion.B"><i class="fa fa-check"></i><b>C.1</b> checkVersion</a><ul>
+<li class="chapter" data-level="C.1.1" data-path="appendixC.html"><a href="appendixC.html#description"><i class="fa fa-check"></i><b>C.1.1</b> Description</a></li>
+<li class="chapter" data-level="C.1.2" data-path="appendixC.html"><a href="appendixC.html#dependances"><i class="fa fa-check"></i><b>C.1.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.1.3" data-path="appendixC.html"><a href="appendixC.html#exemple"><i class="fa fa-check"></i><b>C.1.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="appendixC.html"><a href="appendixC.html#sunRiseSet"><i class="fa fa-check"></i><b>C.2</b> sunRiseSet</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="appendixC.html"><a href="appendixC.html#description-1"><i class="fa fa-check"></i><b>C.2.1</b> Description</a></li>
+<li class="chapter" data-level="C.2.2" data-path="appendixC.html"><a href="appendixC.html#dependances-1"><i class="fa fa-check"></i><b>C.2.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.2.3" data-path="appendixC.html"><a href="appendixC.html#exemple-1"><i class="fa fa-check"></i><b>C.2.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.3" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsCoor"><i class="fa fa-check"></i><b>C.3</b> plotAllTagsCoord</a><ul>
+<li class="chapter" data-level="C.3.1" data-path="appendixC.html"><a href="appendixC.html#description-2"><i class="fa fa-check"></i><b>C.3.1</b> Description</a></li>
+<li class="chapter" data-level="C.3.2" data-path="appendixC.html"><a href="appendixC.html#dependances-2"><i class="fa fa-check"></i><b>C.3.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.3.3" data-path="appendixC.html"><a href="appendixC.html#exemple-2"><i class="fa fa-check"></i><b>C.3.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsSite"><i class="fa fa-check"></i><b>C.4</b> plotAllTagsSite</a><ul>
+<li class="chapter" data-level="C.4.1" data-path="appendixC.html"><a href="appendixC.html#description-3"><i class="fa fa-check"></i><b>C.4.1</b> Description</a></li>
+<li class="chapter" data-level="C.4.2" data-path="appendixC.html"><a href="appendixC.html#dependances-3"><i class="fa fa-check"></i><b>C.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.4.3" data-path="appendixC.html"><a href="appendixC.html#exemple-3"><i class="fa fa-check"></i><b>C.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="appendixC.html"><a href="appendixC.html#plotDailySiteSum"><i class="fa fa-check"></i><b>C.5</b> plotDailySiteSum</a><ul>
+<li class="chapter" data-level="C.5.1" data-path="appendixC.html"><a href="appendixC.html#description-4"><i class="fa fa-check"></i><b>C.5.1</b> Description</a></li>
+<li class="chapter" data-level="C.5.2" data-path="appendixC.html"><a href="appendixC.html#dependances-4"><i class="fa fa-check"></i><b>C.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.5.3" data-path="appendixC.html"><a href="appendixC.html#exemple-4"><i class="fa fa-check"></i><b>C.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.6" data-path="appendixC.html"><a href="appendixC.html#plotRouteMap"><i class="fa fa-check"></i><b>C.6</b> plotRouteMap</a><ul>
+<li class="chapter" data-level="C.6.1" data-path="appendixC.html"><a href="appendixC.html#description-5"><i class="fa fa-check"></i><b>C.6.1</b> Description</a></li>
+<li class="chapter" data-level="C.6.2" data-path="appendixC.html"><a href="appendixC.html#exemple-5"><i class="fa fa-check"></i><b>C.6.2</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.7" data-path="appendixC.html"><a href="appendixC.html#plotSite"><i class="fa fa-check"></i><b>C.7</b> plotSite</a><ul>
+<li class="chapter" data-level="C.7.1" data-path="appendixC.html"><a href="appendixC.html#description-6"><i class="fa fa-check"></i><b>C.7.1</b> Description</a></li>
+<li class="chapter" data-level="C.7.2" data-path="appendixC.html"><a href="appendixC.html#dependances-5"><i class="fa fa-check"></i><b>C.7.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.7.3" data-path="appendixC.html"><a href="appendixC.html#exemple-6"><i class="fa fa-check"></i><b>C.7.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="appendixC.html"><a href="appendixC.html#plotSiteSig"><i class="fa fa-check"></i><b>C.8</b> plotSiteSig</a><ul>
+<li class="chapter" data-level="C.8.1" data-path="appendixC.html"><a href="appendixC.html#description-7"><i class="fa fa-check"></i><b>C.8.1</b> Description</a></li>
+<li class="chapter" data-level="C.8.2" data-path="appendixC.html"><a href="appendixC.html#dependances-6"><i class="fa fa-check"></i><b>C.8.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.8.3" data-path="appendixC.html"><a href="appendixC.html#exemple-7"><i class="fa fa-check"></i><b>C.8.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.9" data-path="appendixC.html"><a href="appendixC.html#plotTagSig"><i class="fa fa-check"></i><b>C.9</b> plotTagSig</a><ul>
+<li class="chapter" data-level="C.9.1" data-path="appendixC.html"><a href="appendixC.html#description-8"><i class="fa fa-check"></i><b>C.9.1</b> Description</a></li>
+<li class="chapter" data-level="C.9.2" data-path="appendixC.html"><a href="appendixC.html#dependances-7"><i class="fa fa-check"></i><b>C.9.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.9.3" data-path="appendixC.html"><a href="appendixC.html#exemple-8"><i class="fa fa-check"></i><b>C.9.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.10" data-path="appendixC.html"><a href="appendixC.html#simSiteDet"><i class="fa fa-check"></i><b>C.10</b> simSiteDet</a><ul>
+<li class="chapter" data-level="C.10.1" data-path="appendixC.html"><a href="appendixC.html#description-9"><i class="fa fa-check"></i><b>C.10.1</b> Description</a></li>
+<li class="chapter" data-level="C.10.2" data-path="appendixC.html"><a href="appendixC.html#dependances-8"><i class="fa fa-check"></i><b>C.10.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.10.3" data-path="appendixC.html"><a href="appendixC.html#exemple-9"><i class="fa fa-check"></i><b>C.10.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.11" data-path="appendixC.html"><a href="appendixC.html#siteSum"><i class="fa fa-check"></i><b>C.11</b> siteSum</a><ul>
+<li class="chapter" data-level="C.11.1" data-path="appendixC.html"><a href="appendixC.html#description-10"><i class="fa fa-check"></i><b>C.11.1</b> Description</a></li>
+<li class="chapter" data-level="C.11.2" data-path="appendixC.html"><a href="appendixC.html#dependances-9"><i class="fa fa-check"></i><b>C.11.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.11.3" data-path="appendixC.html"><a href="appendixC.html#exemple-10"><i class="fa fa-check"></i><b>C.11.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.12" data-path="appendixC.html"><a href="appendixC.html#siteSumDaily"><i class="fa fa-check"></i><b>C.12</b> siteSumDaily</a><ul>
+<li class="chapter" data-level="C.12.1" data-path="appendixC.html"><a href="appendixC.html#description-11"><i class="fa fa-check"></i><b>C.12.1</b> Description</a></li>
+<li class="chapter" data-level="C.12.2" data-path="appendixC.html"><a href="appendixC.html#dependances-10"><i class="fa fa-check"></i><b>C.12.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.12.3" data-path="appendixC.html"><a href="appendixC.html#exemple-11"><i class="fa fa-check"></i><b>C.12.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.13" data-path="appendixC.html"><a href="appendixC.html#siteTrans"><i class="fa fa-check"></i><b>C.13</b> siteTrans</a><ul>
+<li class="chapter" data-level="C.13.1" data-path="appendixC.html"><a href="appendixC.html#description-12"><i class="fa fa-check"></i><b>C.13.1</b> Description</a></li>
+<li class="chapter" data-level="C.13.2" data-path="appendixC.html"><a href="appendixC.html#dependances-11"><i class="fa fa-check"></i><b>C.13.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.13.3" data-path="appendixC.html"><a href="appendixC.html#exemple-12"><i class="fa fa-check"></i><b>C.13.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.14" data-path="appendixC.html"><a href="appendixC.html#tagSum"><i class="fa fa-check"></i><b>C.14</b> tagSum</a><ul>
+<li class="chapter" data-level="C.14.1" data-path="appendixC.html"><a href="appendixC.html#description-13"><i class="fa fa-check"></i><b>C.14.1</b> Description</a></li>
+<li class="chapter" data-level="C.14.2" data-path="appendixC.html"><a href="appendixC.html#dependances-12"><i class="fa fa-check"></i><b>C.14.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.14.3" data-path="appendixC.html"><a href="appendixC.html#exemple-13"><i class="fa fa-check"></i><b>C.14.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.15" data-path="appendixC.html"><a href="appendixC.html#tagSumSite"><i class="fa fa-check"></i><b>C.15</b> tagSumSite</a><ul>
+<li class="chapter" data-level="C.15.1" data-path="appendixC.html"><a href="appendixC.html#description-14"><i class="fa fa-check"></i><b>C.15.1</b> Description</a></li>
+<li class="chapter" data-level="C.15.2" data-path="appendixC.html"><a href="appendixC.html#dependances-13"><i class="fa fa-check"></i><b>C.15.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.15.3" data-path="appendixC.html"><a href="appendixC.html#exemple-14"><i class="fa fa-check"></i><b>C.15.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.16" data-path="appendixC.html"><a href="appendixC.html#timeToSunriset"><i class="fa fa-check"></i><b>C.16</b> timeToSunriset</a><ul>
+<li class="chapter" data-level="C.16.1" data-path="appendixC.html"><a href="appendixC.html#description-15"><i class="fa fa-check"></i><b>C.16.1</b> Description</a></li>
+<li class="chapter" data-level="C.16.2" data-path="appendixC.html"><a href="appendixC.html#dependances-14"><i class="fa fa-check"></i><b>C.16.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.16.3" data-path="appendixC.html"><a href="appendixC.html#exemple-15"><i class="fa fa-check"></i><b>C.16.3</b> Exemple</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="appendixD.html"><a href="appendixD.html"><i class="fa fa-check"></i><b>D</b> Annexe D - Le logiciel motusClient - Fonctions de filtrage de données</a><ul>
+<li class="chapter" data-level="D.1" data-path="appendixD.html"><a href="appendixD.html#listRunsFilters"><i class="fa fa-check"></i><b>D.1</b> listRunsFilters</a><ul>
+<li class="chapter" data-level="D.1.1" data-path="appendixD.html"><a href="appendixD.html#description-16"><i class="fa fa-check"></i><b>D.1.1</b> Description</a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="appendixD.html"><a href="appendixD.html#dependances-15"><i class="fa fa-check"></i><b>D.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.3" data-path="appendixD.html"><a href="appendixD.html#exemple-16"><i class="fa fa-check"></i><b>D.3</b> Exemple</a></li>
+<li class="chapter" data-level="D.4" data-path="appendixD.html"><a href="appendixD.html#createRunsFilter"><i class="fa fa-check"></i><b>D.4</b> createRunsFilter</a><ul>
+<li class="chapter" data-level="D.4.1" data-path="appendixD.html"><a href="appendixD.html#description-17"><i class="fa fa-check"></i><b>D.4.1</b> Description</a></li>
+<li class="chapter" data-level="D.4.2" data-path="appendixD.html"><a href="appendixD.html#dependances-16"><i class="fa fa-check"></i><b>D.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.4.3" data-path="appendixD.html"><a href="appendixD.html#exemple-17"><i class="fa fa-check"></i><b>D.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.5" data-path="appendixD.html"><a href="appendixD.html#getRunsFilters"><i class="fa fa-check"></i><b>D.5</b> getRunsFilters</a><ul>
+<li class="chapter" data-level="D.5.1" data-path="appendixD.html"><a href="appendixD.html#description-18"><i class="fa fa-check"></i><b>D.5.1</b> Description</a></li>
+<li class="chapter" data-level="D.5.2" data-path="appendixD.html"><a href="appendixD.html#dependances-17"><i class="fa fa-check"></i><b>D.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.5.3" data-path="appendixD.html"><a href="appendixD.html#exemple-18"><i class="fa fa-check"></i><b>D.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.6" data-path="appendixD.html"><a href="appendixD.html#writeRunsFilter"><i class="fa fa-check"></i><b>D.6</b> writeRunsFilter</a><ul>
+<li class="chapter" data-level="D.6.1" data-path="appendixD.html"><a href="appendixD.html#description-19"><i class="fa fa-check"></i><b>D.6.1</b> Description</a></li>
+<li class="chapter" data-level="D.6.2" data-path="appendixD.html"><a href="appendixD.html#dependances-18"><i class="fa fa-check"></i><b>D.6.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.6.3" data-path="appendixD.html"><a href="appendixD.html#exemples"><i class="fa fa-check"></i><b>D.6.3</b> Exemples</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Guide R pour Motus</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p><img src="images/Motus-System-IG-finalSml.png" width="1800" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>Le Système de surveillance faunique Motus (‘Motus’; Taylor et al. 2017; <a href="https://motus.org/?lang=fr" class="uri">https://motus.org/?lang=fr</a>) est un réseau international de recherche collaborative composé de stations de radiotélémétrie automatisée qui assure le suivi des déplacements et du comportement d’animaux volants portant des émetteurs radio encodés numériquement. Motus a été élaboré à l’Université Acadia en 2012-2013. En 2014, une importante expansion de l’infrastructure a été rendue possible grâce à une subvention accordée par la Fondation canadienne pour l’innovation aux universités Western, de Guelph et Acadia. Depuis, le réseau Motus s’est étendu grâce à la collaboration entre des chercheurs indépendants et divers organismes (voir <a href="https://motus.org/about/?lang=fr" class="uri">https://motus.org/about/?lang=fr</a>). Il est maintenant géré en tant que programme d’Études d’Oiseaux Canada (<a href="https://www.birdscanada.org/?lang=FR" class="uri">https://www.birdscanada.org/?lang=FR</a>) en partenariat avec l’Université Acadia.</p>
+<p>Motus se distingue des autres réseaux de télémétrie automatisée en ce que l’ensemble des chercheurs dans une région donnée (les Amériques ou l’Europe par exemple) utilisent une fréquence radio commune. Ainsi, les animaux portant un émetteur peuvent être détectés par n’importe quelle station réceptrice du réseau, ce qui élargit grandement la portée spatiale des sujets de recherche possibles. De plus, les utilisateurs de Motus partagent aussi une infrastructure de données et un portail Web. L’entreposage et l’archivage centralisés de toutes les données recueillies dans l’ensemble du réseau permettent aux utilisateurs d’accéder à toutes les données sur leurs émetteurs dont les signaux sont captés par n’importe quelle station réceptrice, et les responsables des récepteurs ont accès à l’ensemble des données captées par ceux-ci.</p>
+<p>En outre, avec l’existence d’une infrastructure de données partagée, les utilisateurs peuvent bénéficier des fonctions R mises au point spécifiquement pour les données Motus par n’importe quel utilisateur du système. Le logiciel R de Motus décrit dans ce guide est en constante évolution. Le présent guide a pour but d’aider les utilisateurs à apprendre les différentes fonctionnalités du logiciel et de les inciter à contribuer à leur développement. Il montre également comment d’autres logiciels R, comme ggplot, peuvent être utilisés pour explorer, visualiser, transformer et analyser les données Motus.</p>
+<p>Le contenu de ce guide continuera d’évoluer et d’augmenter en fonction des besoins du réseau en matière d’analyse. Les personnes intéressées à ajouter des codes au logiciel R ou à enrichir ce guide peuvent faire parvenir leurs propositions à <a href="http://www.birdscanada.org/research/motus/?lang=FR" class="uri">http://www.birdscanada.org/research/motus/?lang=FR</a>.</p>
+<p>Taylor, P. D., T. L. Crewe, S. A. Mackenzie, D. Lepage, Y. Aubry, Z. Crysler, G. Finney, C. M. Francis, C. G. Guglielmo, D. J. Hamilton, R. L. Holberton, P. H. Loring, G. W. Mitchell, D. R. Noriis, J. Paquet, R. A. Ronconi, J. Smetzer, P. A. Smith, L. J. Welch et B. K. Woodworth. 2017. The Motus Wildlife Tracking System: a collaborative .research network to enhance the understanding of wildlife movement. Avian Conservation and Ecology 12(1):8. <a href="https://doi.org/10.5751/ACE-00953-120108" class="uri">https://doi.org/10.5751/ACE-00953-120108</a>.</p>
+<div id="whatBookCovers" class="section level2">
+<h2><span class="header-section-number">1.1</span> Ce que le présent guide ne montre pas</h2>
+<p>Le présent guide ne montre pas comment enregistrer des émetteurs radio auprès de Motus, gérer les émetteurs et les déploiements des stations réceptrices ou téléverser des données de détection brutes en vue de leur traitement. On peut accéder aux instructions pour ces opérations en cliquant sur l’option de menu Ressources au site Web de Motus: <a href="https://motus.org/resources/?lang=fr" class="uri">https://motus.org/resources/?lang=fr</a>. N’oubliez pas d’enregistrer vos émetteurs <strong>avant de les déployer</strong> et de saisir les métadonnées sur les émetteurs et les stations en ligne sans tarder. Veuillez également consulter la Politique de collaboration de Motus et le Barème des frais d’enregistrement d’émetteurs à <a href="https://motus.org/policy/?lang=fr" class="uri">https://motus.org/policy/?lang=fr</a>.</p>
+</div>
+<div id="prerequisites" class="section level2">
+<h2><span class="header-section-number">1.2</span> Connaissances préalables</h2>
+<p>Nous tenons pour acquis que vous possédez une connaissance de base du langage et du logiciel R. Quel que soit votre degré de connaissance à cet égard, nous vous recommandons fortement de vous familiariser avec l’ouvrage de Garrett Grolemund et d’Hadley Wickham intitulé «R for Data Science» (<a href="http://r4ds.had.co.nz/" class="uri">http://r4ds.had.co.nz/</a>). Cet ouvrage montre comment importer, visualiser et résumer des données en langage R en utilisant la collection tidyverse de logiciels R (<a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>). De plus, il fournit un cadre d’une valeur inestimable qui vous permettra d’organiser votre flux de travail afin de produire du code propre et reproductible (<a href="http://r4ds.had.co.nz/workflow-projects.html" class="uri">http://r4ds.had.co.nz/workflow-projects.html</a>). Nous suivons l’exemple de ces auteurs en utilisant le cadre tidyverse tout au long du présent guide dans la mesure du possible.</p>
+</div>
+<div id="sampleData" class="section level2">
+<h2><span class="header-section-number">1.3</span> Ensemble de données utilisées comme exemples</h2>
+<p>Tout au long du présent guide, nous utilisons un sous-ensemble de données recueillies dans le cadre du Programme de suivi des oiseaux de rivage de la baie James dans le but de montrer comment accéder aux données Motus, les gérer et les analyser en langage R. Nous vous recommandons de passer en revue le code présenté à titre d’exemple dans chaque chapitre avec ce sous-ensemble de données <strong>avant</strong> d’utiliser vos propres données, car vous aurez sans aucun doute besoin de modifier le code que nous fournissons pour traiter celles-ci le plus efficacement possible (chaque situation est différente).</p>
+<p>Le Programme de suivi des oiseaux de rivage de la baie James a pour objet de surveiller et d’étudier les oiseaux de rivage qui font halte sur la côte de la baie James. Il est mené en collaboration par le ministère des Richesses naturelles et des Forêts de l’Ontario, Études d’Oiseaux Canada, l’Université Trent et le Service canadien de la faune (Environnement et Changement climatique Canada), conjointement avec une initiative de conservation de plus grande portée mobilisant les Premières Nations de la baie James et Nature Canada. Le Musée royal de l’Ontario était un partenaire associé au programme jusqu’en 2016. Le programme vise trois buts: 1) améliorer la capacité d’estimer les indices d’abondance et les tendances démographiques des espèces d’oiseaux de rivage qui font halte sur la côte ouest de la baie James; 2) étudier les profils des déplacements des oiseaux et leurs causes; et 3) déterminer l’importance relative des haltes migratoires et des habitats qu’elles renferment. Une fois réunis, les renseignements collectés contribueront à établir des mesures de conservation du Bécasseau maubèche et d’autres espèces d’oiseaux de rivage par des moyens de protection des habitats, comme la désignation au sein du Réseau de réserves pour les oiseaux de rivage dans l’hémisphère occidental (RRORHO). De plus amples renseignements peuvent être obtenus sur le site Web du Programme de suivi des oiseaux de rivage de la baie James à l’adresse <a href="https://www.jamesbayshorebirdproject.com/" class="uri">https://www.jamesbayshorebirdproject.com/</a> (en anglais) et sur sa page Facebook à <a href="https://www.facebook.com/jamesbayshorebirdproject/" class="uri">https://www.facebook.com/jamesbayshorebirdproject/</a> ou en communiquant avec le chef du programme:</p>
+<p>Christian Friis Wildlife Biologist Canadian Wildlife Service, Environment and Climate Change Canada / Government of Canada <a href="mailto:christian.friis@canada.ca">christian.friis@canada.ca</a> / Tel: 416.739.4908</p>
+<p>Biologiste de la faune<br />
+Service Canadien de la faune, Environnement et Changement Climatique Canada / Gouvernement du Canada <a href="mailto:christian.friis@canada.ca">christian.friis@canada.ca</a> / Tél.: 416.739.4908</p>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2><span class="header-section-number">1.4</span> Remerciements</h2>
+<p>Une partie du présent guide est adaptée du contenu de l’entrepôt de données github de John Brzustowski se rapportant au logiciel R de Motus, à l’adresse <a href="https://github.com/jbrzusto/motus" class="uri">https://github.com/jbrzusto/motus</a>.</p>
+<p>Motus était à l’origine le réseau SensorGnome, conçu par Philip Taylor et John Brzustowski à l’Université Acadia. La première expansion du réseau a été financée par le biais d’une subvention de la Fondation canadienne pour l’innovation accordée aux universités Western (Christopher Guglielmo, Ph. D.), de Guelph (Ryan Norris, Ph. D.) et Acadia (Philip Taylor, Ph. D.). L’élaboration de l’interface Web de Motus et du logiciel R et la production du guide qui l’accompagne ont été rendues possibles grâce à une subvention accordée à Études d’Oiseaux Canada par CANARIE (<a href="https://www.canarie.ca/fr/" class="uri">https://www.canarie.ca/fr/</a>). Motus poursuit sa croissance en tant que programme d’Études d’Oiseaux Canada grâce à la collaboration d’un grand nombre de chercheurs indépendants, d’organismes et de particuliers. Une liste non exhaustive des partenaires et collaborateurs de Motus est présentée à <a href="https://motus.org/data/partners.jsp" class="uri">https://motus.org/data/partners.jsp</a>. Si votre organisme devrait figurer sur cette liste mais ne s’y trouve pas, veuillez envoyer un courriel à <a href="mailto:motus@birdscanada.org">motus@birdscanada.org</a>.</p>
+<p>Beaucoup d’intervenants ont travaillé de concert pour fédérer la technologie Motus, l’interface Web et le logiciel R. L’équipe centrale du programme Motus est formée des personnes suivantes: John Brzustowski, Tara Crewe, Zoe Crysler, Jeremy Hussell, Catherine Jardine, Denis Lepage, Stuart Mackenzie, Paul Morrill et Philip Taylor.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="loadingPackages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["FrMotusRBook.pdf", "FrMotusRBook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

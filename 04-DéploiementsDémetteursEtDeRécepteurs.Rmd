@@ -1,0 +1,522 @@
+# Déploiements d'émetteurs et de récepteurs {#deployments}
+
+```{r tidyr4, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
+
+```
+
+Avant de travailler avec vos données de détection, il convient d’abord de résumer et de visualiser les métadonnées relatives aux déploiements des émetteurs et des récepteurs enregistrés dans le cadre de votre projet. La production de sommaires, de graphiques et de cartes des données sur vos déploiements peut permettre de trouver des erreurs possibles dans les métadonnées sur les émetteurs et les récepteurs. De telles erreurs peuvent faire en sorte que les données de détection recueillies dans le cadre de votre projet soient incomplètes, tout comme les projets d’autres chercheurs dont des émetteurs ont été détectés par vos récepteurs. 
+
+Le présent chapitre est un complément de la [page sur les problèmes de données]( https://motus.org/data/login) du site Web de Motus, qui présente pour chaque projet une liste des problèmes touchant les métadonnées (valeurs manquantes ou aberrantes), problèmes qu’il faut accepter ou ne pas prendre en compte. Veuillez traiter toutes les erreurs associées à votre projet qui sont indiquées dans la page des problèmes de données **avant** d’importer vos données par l’intermédiaire de R. Les indications fournies ici ne permettent pas de faire une vérification complète des métadonnées sur les déploiements de vos émetteurs et récepteurs, mais elles aideront à déceler les erreurs que les interrogations automatiques sur la page des problèmes de données n’ont pas permis de trouver.
+
+Nous utilisons l’ensemble de données du Programme de suivi des oiseaux de rivage de la baie James (projet 176) à titre d’exemple tout au long du présent chapitre (voyez la section \@ref(sampleData)). Pendant que vous parcourez le code pour examiner vos propres déploiements, **si vous trouvez des erreurs ou des omissions dans vos métadonnées, veuillez les corriger; pour ce faire, rendez-vous à la page https://motus.org/.** Cliquez sur l’option «Gérer les données» et dans le menu, choisissez «Gérer vos émetteurs» pour corriger les métadonnées sur les déploiements d’émetteurs ou «Gérer vos récepteurs» pour corriger les métadonnées sur les récepteurs. Il est important de corriger en ligne les erreurs dans les métadonnées; ainsi, les erreurs sont corrigées à la source et les données corrigées sont archivées dans le serveur de Motus, de sorte que tous les utilisateurs ont accès aux métadonnées correctes sur les émetteurs et les récepteurs. Les métadonnées corrigées en ligne seront automatiquement corrigées dans vos fichiers de données de détection. Si vous avez déjà téléchargé vos données de détection, vous pouvez mettre à jour le fichier existant afin d’inclure les nouvelles métadonnées et données de détection (voyez les sections \@ref(forceMeta) et \@ref(tagmeUpdate)).
+
+## Chargement des logiciels R pertinents et réglage de l'environnement de travail
+
+Avant de commencer à travailler avec des données, il faut charger les logiciels requis pour les opérations expliquées dans le présent chapitre. Si vous n'avez pas encore installé ces logiciels (à partir de  github et de CRAN), retournez au chapitre \@ref(loadingPackages) pour le faire.
+
+```{r loadPackages.4, eval = FALSE, warning = FALSE, message = FALSE}
+
+library(tidyverse)
+library(tidyr)
+library(motus)
+
+# Réglez le fuseau horaire de l'environnement système au temps universel coordonné (UTC), pour vous assurer de toujours travailler à cette échelle de temps.
+Sys.setenv(TZ="GMT")
+
+```
+
+## Chargement du fichier .motus
+
+Dans le présent chapitre, il est tenu pour acquis que vous avez déjà téléchargé le fichier .motus. Si ce n’est pas le cas, retournez au chapitre \@ref(accessingData), qui présente la marche à suivre pour ce faire. Pour mettre à jour le fichier existant et le charger dans R, utilisez la fonction tagme(); pour ce faire, il se peut que vous ayez à ouvrir une session tel qu’indiqué dans le chapitre précédent en entrant votre nom d’utilisateur **et** le mot de passe «motus.sample».
+
+```{r loadDetections, eval = FALSE}
+
+proj.num <- 176
+
+sql.motus <- tagme(proj.num, update = TRUE, dir = "./data")
+
+```
+
+## Déploiements d'émetteurs {#tagDeployments}
+
+Dans votre fichier .motus, lorsque vous utilisez la fonction tagme(), vous obtenez seulement les métadonnées sur tous les émetteurs dont les signaux ont été détectés dans le cadre de votre projet ainsi que les métadonnées sur les émetteurs ambigus associés dont les signaux ont été détectés dans le cadre d’autres projets et les métadonnées sur les récepteurs des stations où des signaux de vos émetteurs ont été détectés. Ici, nous:
+
+1. téléchargerons les métadonnées complètes sur les émetteurs pour votre projet seulement;  
+2. déterminerons combien d'émetteurs sont enregistrés dans le cadre de votre projet;  
+3. déterminerons combien de ces émetteurs enregistrés ont été déployés;  
+4. localiserons les émetteurs déployés;  
+5. vérifierons si les métadonnées sur les déploiements d'émetteurs sont complètes et exactes.  
+
+Voyons maintenant chacune de ces opérations dans l'ordre.
+
+### Téléchargement des métadonnées complètes sur les émetteurs pour votre projet 
+
+Si les métadonnées sont incomplètes ou s’il manque des enregistrements d’émetteurs, il se peut qu’il manque des données de détection. Il faut donc vérifier si tous les émetteurs enregistrés pour votre projet sont pris en compte et pas seulement ceux dont des signaux ont été détectés. Pour ce faire, nous utiliserons la fonction metadata() pour le projet 176, dont il est question plus en détail dans la section \@ref(metadata).
+
+```{r metadata176, eval = FALSE}
+
+metadata(sql.motus, projectIDs = proj.num)
+
+```
+
+### Détermination du nombre d'émetteurs enregistrés
+
+Maintenant que nous avons l’ensemble des métadonnées sur les émetteurs pour notre projet, nous pouvons vérifier le nombre d’émetteurs enregistrés en chargeant la table «tags» dans le fichier .motus. Cette table contient les métadonnées sur chaque émetteur enregistré, dont son identifiant unique et de l’information sur le fabricant, le modèle, les fréquences nominale et décalée, la cadence d’émission et la durée de l’impulsion. La table «tags» ne fournit pas d’information sur le déploiement des émetteurs. Nous choisissons les métadonnées propres au Programme de suivi des oiseaux de rivage de la baie James (projet 176) et ne tenons pas compte des métadonnées associées à de possibles émetteurs en double utilisés pour d’autres projets:
+
+```{r importTags, message = FALSE, warning = FALSE}
+
+tbl.tags <- tbl(sql.motus, "tags") 
+df.tags <- tbl.tags %>%
+                filter(projectID == proj.num) %>%
+                collect() %>%
+                as.data.frame()
+
+```
+
+Le nombre de lignes dans la base de données «df.tags» équivaut au nombre d’émetteurs dans l’ensemble de données du Programme de suivi des oiseaux de rivage de la baie James qui sont enregistrés (projet 176; 18 émetteurs):
+
+```{r nRegisteredTags}
+
+nrow(df.tags) # Nombre d'émetteurs enregistrés dans la base de données
+
+```
+Vous pouvez voir les identifiants des émetteurs (motusTagID):
+
+```{r, mtousTagIDs}
+unique(df.tags$tagID)
+```
+Si des émetteurs enregistrés sont manquants, suivez les instructions fournies à <https://motus.org/tag-registration/?lang=fr>.
+
+### Détermination du nombre d'émetteurs enregistrés qui ont été déployés
+
+Pour vérifier quels émetteurs enregistrés ont été déployés, il faut utiliser la table de métadonnées «tagDeps» qui se trouve dans le fichier .motus. Cette table indique la date, l’heure et le lieu du déploiement ainsi que le nom d’espèce de l’animal portant l’émetteur. La base de données se rapporte au projet 176, et nous utilisons la fonction anti_join afin de déterminer pour quels émetteurs enregistrés il existe (ou n’existe pas) d’information sur le déploiement.
+
+```{r importTagMeta.4, message = FALSE, warning = FALSE}
+
+tbl.tagDeps <- tbl(sql.motus, "tagDeps") 
+df.tagDeps <- tbl.tagDeps %>%
+                filter(projectID == proj.num) %>%
+                collect() %>%
+                as.data.frame() %>% # dans le format df, les dates peuvent être formatées avec le logiciel lubridate
+                mutate(tsStart = as_datetime(tsStart, tz = "UTC", origin = "1970-01-01"),
+                       tsEnd = as_datetime(tsEnd, tz = "UTC", origin = "1970-01-01")) 
+
+anti_join(df.tags, df.tagDeps, by = "tagID") 
+
+```
+
+Dans les données du programme de la baie James, il n’y a pas de métadonnées sur les déploiements manquantes pour les émetteurs enregistrés, ce qui porte à croire que tous les émetteurs ont été déployés. Si vous avez des émetteurs non déployés dans vos propres fichiers, vérifiez si c’est bien le cas dans vos dossiers; sans les métadonnées sur les déploiements, les données de détection reliées aux émetteurs enregistrés mais non déployés seront manquantes dans votre base de données de détection.
+
+### Détermination du nombre de déploiements par émetteur {#checkNumberTagDeployments}
+
+Un émetteur peut être déployé plus d’une fois. Par exemple, un émetteur déjà déployé peut avoir été récupéré puis déployé de nouveau sur un autre animal. Quand un émetteur est déployé plus d’une fois, les données de détection doivent être considérées indépendamment pour chaque déploiement. 
+
+Tout au long du présent guide, nous utilisons «motusTagID» comme identifiant unique pour un déploiement. Toutefois, lorsqu’un émetteur est déployé plus d’une fois, l’identifiant «motusTagID» demeure inchangé d’un déploiement à l’autre. Il faut utiliser «tagDeployID» ou une combinaison de «motusTagID» et de «tagDeployID» pour distinguer les détections propres à chaque déploiement. 
+
+Vérifions s’il y a plus d’un déploiement pour des émetteurs dans les données du programme de la baie James (en réalité, il n’y a pas de cas de plus d’un déploiement) puis voyons comment créer une variable combinée tagID/deployID pour l’utiliser à la place de l’identifiant «motusTagID» dans l’éventualité où il y aurait plus d’un déploiement d’un émetteur dans vos propres données:
+
+```{r CheckMultipleDeploy}
+
+df.alltags %>%
+  select(motusTagID, tagDeployID) %>%
+  filter(!(is.na(tagDeployID))) %>% # Enlever NA tagDeployID.
+  distinct() %>%
+  group_by(motusTagID) %>%
+  mutate(n = n()) %>%
+  filter(n > 1)
+
+```
+
+Si vous avez plus d’un déploiement pour un émetteur, nous vous recommandons de créer une variable combinée «motusTagDepID», que vous utiliserez à la place de «motusTagID» pour définir un déploiement unique d’un émetteur. Tout au long du présent guide, vous remplacerez donc «motusTagID» par «motusTagDepID»:
+
+```{r createMotusTagDepID}
+
+df.alltags <- df.alltags %>%
+  mutate(motusTagDepID = paste(motusTagID, tagDeployID, sep = "."))
+
+# et faire de même pour les métadonnées sur les émetteurs
+
+df.tagDeps <- df.tagDeps %>%
+  mutate(motusTagDepID = paste(tagID, deployID, sep = "."))
+
+
+```
+
+
+
+### Localisation des émetteurs déployés
+
+La production d’une carte indiquant les lieux où vos émetteurs ont été déployés peut permettre de détecter d’éventuelles erreurs évidentes dans les indications des degrés de latitude ou de longitude que les interrogations effectuées en ligne au centre de messages sur les métadonnées n’auraient pas permis de saisir.
+
+**a. Chargement des fichiers de cartes de base**
+
+Chargez les fichiers de cartes de base à partir du logiciel rworldmap:
+
+```{r loadMapsRecv1DUP, eval = FALSE, message = FALSE, warning = FALSE}
+
+na.lakes <- map_data(map = "lakes")
+na.lakes <- mutate(na.lakes, long = long- 360)
+
+# Incluez l'ensemble des Amériques pour commencer.
+na.map <- map_data(map = "world2")
+na.map <- filter(na.map, region %in% c("Canada", "USA"))
+                               
+na.map <- mutate(na.map, long = long- 360)
+                
+# Selon la position, vous voudrez peut-être localiser des émetteurs dans d'autres pays des Amériques: «Mexico», «lakes»,«Belize», «Costa Rica», «Panama», «Guatemala», «Honduras», «Nicaragua», «El Salvador», «Colombia», «Venezuela», «Ecuador», «Peru», «Brazil», «Guyana»,«Suriname», «Bolivia», «French Guiana», «Jamaica», «Cuba», «Haiti», «Dominican Republic», «The Bahamas», «Turks and Caicos Islands», «Puerto Rico», «British Virgin Islands», «Montserrat», «Dominica», «Saint Lucia», «Barbados», «Grenada», «Trinidad and Tobago», «Chile», «Argentina», «Uruguay»
+
+```
+
+**b. Pointage des positions des émetteurs déployés**
+
+Pointez les positions des émetteurs déployés à partir des données du programme de la baie James (projet 176): 
+
+```{r mapRecvs1, eval = FALSE, message = FALSE, warning = FALSE}
+
+# Fixez des limites à la carte en fonction des positions des détections, en vous assurant que la carte englobe ces positions.
+xmin <- -100 #min(df.tagDeps$longitude, na.rm = TRUE) - 5
+xmax <- max(df.tagDeps$longitude, na.rm = TRUE) + 5
+ymin <- min(df.tagDeps$latitude, na.rm = TRUE) - 5
+ymax <- max(df.tagDeps$latitude, na.rm = TRUE) + 5
+                
+# Pointez en utilisant ggplot.
+ggplot(na.lakes, aes(long, lat)) + 
+  geom_polygon(
+    data = na.map, 
+    aes(long, lat, group=group), colour = "grey", fill="grey98") + 
+  geom_polygon(
+    aes(group = group), colour = "grey", fill = "white") +
+  coord_map(projection="mercator", 
+            xlim = c(xmin, xmax), 
+            ylim = c(ymin, ymax)) +
+  xlab("") + ylab("") + 
+  theme_bw() + 
+  geom_point(data = filter(df.tagDeps, projectID == 176), 
+             aes(longitude, latitude), cex = 2, pch = 1, colour = "red")
+
+```
+
+```{r fig4.1, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/mapRecvs1.png")
+```
+
+S'il y a une erreur dans la position d'un émetteur déployé, veuillez la corriger en ligne à <https://motus.org/data/>.
+
+### Vérification de la complétude et de l'exactitude des métadonnées sur les déploiements d'émetteurs
+
+Les métadonnées sur les émetteurs requises sont les suivantes : date/heure du début du déploiement, date/heure de la fin du déploiement (s’il y a lieu), latitude, longitude et espèce. L’absence d’information - en particulier les dates et les heures et les latitude et longitude - peut influer sur la durée de vie estimée de l’émetteur en cause; par conséquent, il faudra se demander si tagFinder «cherchera» l’émetteur au(x) moment(s) approprié(s). Cela peut aussi accroître le risque d’ambiguïtés causées par l’existence d’émetteurs en double dans le réseau. 
+
+**a. Vérifier les gammes de valeurs des métadonnées**
+
+Tout d’abord, il faut utiliser le sommaire (df.tagDeps) pour avoir une idée de la gamme des valeurs de chaque variable et pour vérifier s’il manque des valeurs (NA) ou s’il y a des valeurs aberrantes pour une ou des variables. Nous présentons ci-dessous le résumé d’un sous-ensemble des variables dans la base de données df.tagDeps. Il faut répondre à plusieurs questions: est-ce que la plage des valeurs des dates du début et de la fin du déploiement est raisonnable pour vos déploiements? y a-t-il des erreurs évidentes dans les dates et les heures des déploiements? est-ce que la gamme des latitudes et longitudes est raisonnable? est-ce que les valeurs identifiant les espèces sont correctes?  
+
+```{r summaryTagMeta}
+
+df.tagDeps %>%
+      select(tagID, projectID, tsStart, tsEnd, speciesID, latitude, longitude) %>%
+      summary()
+
+```
+
+Il ne manque pas de dates de début (tsStart), et les dates de début des déploiements vont de `r min(year(df.tagDeps$tsStart))` à `r max(year(df.tagDeps$tsStart))`, ce qui est raisonnable pour ce projet.  
+
+Les identifiants d’espèces sont numériques et n’ont pas de signification particulière si l’on ne peut pas leur attribuer chacun un nom d’espèce, ce que nous ferons ci-après. Dans le cas présent, il n’y a pas de valeurs manquantes. 
+
+**b. Vérifier que les identifiants d'espèces concordent avec vos données**
+
+La table 'species' dans le fichier .motus associe chaque identifiant numérique d’espèce à un nom commun anglais, un nom commun français et un nom scientifique. Nous chargeons cette table et l’intégrons comme sous-ensemble de la suite d’identifiants numériques dans les métadonnées sur les émetteurs:
+
+```{r checkSpecies}
+
+# Générez la liste des identifiants d'espèces dans les métadonnées du projet 176.
+sp.list <- unique(df.tagDeps$speciesID)  
+
+# Métadonnées sur les espèces
+tbl.species <- tbl(sql.motus, "species") 
+tbl.species %>%
+    filter(id %in% sp.list) %>%
+    collect() %>%
+    as.data.frame()
+
+```
+
+Cette opération génère la liste de toutes les espèces incluses dans les métadonnées sur les déploiements d’émetteurs pour le projet. Si des noms d’espèces sont inappropriés, cela s’explique probablement par une erreur de saisie de données au moment de l’attribution d’un déploiement à une espèce. Vous pouvez chercher les enregistrements dans vos métadonnées sur les émetteurs en utilisant le code suivant; ensuite, vous utilisez la variable deployID associée à l’entrée ou aux entrées pour trouver et mettre à jour en ligne l’enregistrement du déploiement dans vos métadonnées sur le projet:
+
+```{r listMetaSpecies}
+
+filter(df.tagDeps, speciesID == 4780)
+
+```
+
+
+**Rappelez-vous que les corrections des métadonnées doivent être apportées en ligne.**
+
+## Vérification des métadonnées sur les récepteurs {#recvMetadata}
+
+Il existe deux sources de métadonnées sur les récepteurs dans les données de détection Motus: les récepteurs enregistrés dans le cadre de votre projet et les récepteurs enregistrés dans le cadre de projets d’autres chercheurs. Vous pouvez accéder aux métadonnées sur tous les récepteurs du réseau, car les données négatives (par exemple, mon émetteur *n’a pas été* détecté à la station x même si cette station était active) sont souvent aussi importantes que les données positives. Cela vous permet aussi de connaître les positions où vos émetteurs ont été détectés par rapport à la répartition de l’ensemble des récepteurs partout dans le réseau Motus.
+
+Les erreurs ou les omissions touchant les métadonnées sur les récepteurs que vous détectez dans votre fichier .motus peuvent être corrigées seulement pour les récepteurs enregistrés dans le cadre de votre propre projet. 
+
+Les utilisateurs de Motus sont encouragés à entrer des métadonnées sur les récepteurs complètes et exactes pour le bénéfice de l’ensemble des utilisateurs du réseau. Si vous prévoyez d’avoir besoin d’information spécifique sur le déploiement de récepteurs ou d’antennes à des stations déployées par d’autres chercheurs, vous pouvez utiliser le forum de Motus (<https://motus.org/discussion/>) pour demander que ces derniers enregistrent l’information sur le déploiement dont vous avez besoin. Vous devez indiquer avec précision l’information qui vous intéresse et indiquer également quand et où dans le réseau vos émetteurs seront déployés et éventuellement détectés.
+Ici, nous:
+
+
+1. téléchargerons les métadonnées complètes sur les récepteurs dans l'ensemble du réseau;  
+2. déterminerons combien de récepteurs sont enregistrés dans le cadre de votre projet;
+3. déterminerons à quel(s) moment(s) les récepteurs enregistrés dans le cadre de votre projet ont été déployés;
+4. localiserons les récepteurs déployés dans tout le réseau et dans le cadre de votre projet;
+5. vérifierons si les métadonnées sur les déploiements de récepteurs sont complètes et exactes.
+
+### Téléchargement des métadonnées sur tous les récepteurs dans le réseau
+
+Plus loin dans le présent chapitre, nous produirons la carte indiquant la position de tous les récepteurs dans le réseau. Nous chargerons donc maintenant les métadonnées relatives à tous les projets plutôt que seulement celles propres au projet 176 comme nous l’avons fait précédemment. La fonction metadata() est décrite plus en détail dans la section \@ref(metadata).
+
+```{r metadataall, eval = FALSE}
+metadata(sql.motus)
+```
+
+### Détermination du nombre de récepteurs déployés dans le cadre de votre projet
+
+Pour savoir quels récepteurs déployés sont enregistrés dans le cadre de votre projet (s'il y en a), importez les données sur les déploiements et faites-en un sous-ensemble de données et un sommaire:
+
+```{r projectDeps}
+
+tbl.recvDeps <- tbl(sql.motus, "recvDeps") 
+df.projRecvs <- tbl.recvDeps %>%
+                filter(projectID == proj.num) %>%
+                collect() %>%
+                as.data.frame() %>%
+                mutate(tsStart = as_datetime(tsStart, tz = "UTC", origin = "1970-01-01"),
+                       tsEnd = as_datetime(tsEnd, tz = "UTC", origin = "1970-01-01"))
+
+summary(df.projRecvs)
+
+```
+
+Il y a `r nrow(df.projRecvs)` récepteurs déployés d’enregistrés dans le cadre du projet 176. Les valeurs de latitude et de longitude sont manquantes dans quatre cas et les valeurs des dates de fin sont manquantes dans six cas, ce qui porte à croire que les récepteurs en cause sont encore déployés. 
+
+L’opération suivante permet de conserver seulement les variables qui nous intéressent (en enlevant celles dont nous n’avons pas besoin) et structure les enregistrements restants par identifiant de récepteur, par latitude et par date de début:
+
+```{r checkRegisteredReceivers}
+
+df.projRecvs %>%
+  mutate(dateStart = date(tsStart)) %>% 
+  select(-serno,-fixtureType, -macAddress, -tsStart, -tsEnd, -elevation, 
+         -projectID, -status, -receiverType, -siteName) %>%
+  arrange(deviceID, latitude, dateStart)
+
+```
+
+Le nombre de récepteurs déployés indiqué dans les métadonnées devrait correspondre au nombre réellement déployé sur le terrain. 
+
+Si l’on examine les valeurs dans la colonne 'isMobile' qui correspondent aux quatre récepteurs déployés pour lesquels les valeurs de latitude et longitude sont manquantes, il est évident qu’il s’agit de récepteurs mobiles qui n’ont pas une position fixe (c.-à-d. qu’ils ont une valeur de 1). Étant donné que ces récepteurs sont mobiles, on ne s’attend pas à voir des coordonnées géographiques; l’indication demeure donc NA dans ces cas. Lorsque des coordonnées sont indiquées dans la table pour des récepteurs mobiles, celles-ci représentent le point de départ du déploiement.
+
+### Détermination du moment du déploiement des récepteurs dans le cadre de votre projet
+
+L’information sur le moment des déploiements peut être affichée sous forme de graphique. Les lignes horizontales dans le graphique ci-dessous correspondent à l’intervalle de temps pendant lequel a été déployé chaque récepteur (deviceID) enregistré dans le cadre du Programme de suivi des oiseaux de rivage de la baie James (projet 176). Dans le cas des deux récepteurs pour lesquels la date de fin est manquante, le code attribue une date de fin arbitraire correspondant à la date de fin la plus éloignée parmi celles des autres récepteurs plus un mois. Sans cette opération, l’information sur les déploiements sans dates de fin ne serait pas affichée. Les périodes de déploiement d’un récepteur donné ne devraient pas se chevaucher dans le temps:
+
+```{r projectRecvDeploy, warnings = FALSE, messages = FALSE}
+
+# Mettez les données dans un format long pour simplifier le pointage(ou utilisez geom_segment).
+
+df.projRecvs.long <- select(df.projRecvs, deviceID, deployID, tsStart, tsEnd) %>% 
+  tidyr::gather(when, ts, c(tsStart, tsEnd)) %>%
+  mutate(ts = if_else(is.na(ts), max(ts, na.rm = TRUE) + duration(1, "month"), ts)) # fake end date 
+
+ggplot(df.projRecvs.long, 
+       aes(y = as.factor(deviceID), x = ts, colour = as.factor(deployID))) +
+  geom_line(lwd=3) + 
+  
+  # Centrez plutôt sur la droite.
+  geom_text(data=filter(df.projRecvs.long, when == "tsStart"), 
+            aes(label=deployID), hjust="left", nudge_y = 0.2, size=3, angle = 45) +
+  theme_bw() +
+  ylab("Receiver ID") + 
+  xlab("Year") + 
+  theme(legend.position="none")
+
+```
+Si vous voulez obtenir de l’information plus détaillée pour une année donnée (ou pour toutes les années), vous pouvez générer un sous-ensemble de données et pointer celles-ci de nouveau sur un graphique ou utiliser le jour de l’année sur l’axe des x et ensuite faire la synthèse par année (facet_wrap). 
+
+```{r}
+ggplot(df.projRecvs.long, 
+       aes(y = as.factor(deviceID), x = yday(ts), colour = as.factor(deployID))) +
+  geom_line(lwd=3) + 
+  
+  # Centrez les étiquettes sur la gauche.
+  geom_text(data=filter(df.projRecvs.long, when == "tsStart"), 
+            aes(label=deployID), hjust="left", nudge_y = 0.4, size=3) +
+  theme_bw() +
+  ylab("Receiver ID") + 
+  xlab("Day of year") + 
+  theme(legend.position="none") + 
+  facet_grid(year(ts) ~ ., scales="free")
+  
+```
+
+### Localisation des récepteurs déployés
+
+Les cartes assurent une meilleure représentation spatiale que les simples graphiques. Les opérations suivantes permettent de pointer la position des récepteurs Motus sur une carte de l’Amérique du Nord. Les récepteurs déployés dans le cadre du projet 176 (Programme de suivi des oiseaux de rivage de la baie James) sont indiqués en rouge.
+
+**a. Charger les métadonnées sur tous les récepteurs**
+```{r loadRecvDeps, message = FALSE, warning = FALSE}
+
+df.recvDeps <- tbl.recvDeps %>%
+                collect() %>%
+                as.data.frame() %>%
+                mutate(tsStart = as_datetime(tsStart, tz = "UTC", origin = "1970-01-01"),
+                       tsEnd = as_datetime(tsEnd, tz = "UTC", origin = "1970-01-01"))
+
+```
+
+**b. Charger les fichiers des cartes de base**
+
+```{r loadMapsRecv2, eval = FALSE, message = FALSE, warning = FALSE}
+
+na.lakes <- map_data(map = "lakes")
+na.lakes <- mutate(na.lakes, long = long- 360)
+
+# Include all of the Americas to begin
+na.map <- map_data(map = "world2")
+na.map <- filter(na.map, region %in% c("Canada", "USA", "Mexico", "lakes", "Belize", "Costa Rica", "Panama", 
+             "Guatemala", "Honduras", "Nicaragua", "El Salvador", "Colombia", "Venezuela", 
+             "Ecuador", "Peru", "Brazil", "Guyana","Suriname", "Bolivia", "French Guiana", 
+             "Jamaica", "Cuba", "Haiti", "Dominican Republic", "The Bahamas", 
+             "Turks and Caicos Islands", "Puerto Rico", "British Virgin Islands", 
+             "Montserrat", "Dominica", "Saint Lucia", "Barbados", "Grenada", "Trinidad and Tobago", 
+             "Chile", "Argentina", "Uruguay", "Paraguay")) %>%
+  mutate(long = long- 360)
+                
+```
+
+**c. Pointer sur la carte la position des récepteurs dans les Amériques**
+Carte montrant la position des récepteurs déployés dans l’ensemble du réseau (les «x» gris foncé) et des récepteurs déployés dans le cadre du Programme de suivi des oiseaux de rivage de la baie James (projet 176; les «x» rouges).
+
+```{r mapRecvs2, eval = FALSE, message = FALSE, warning = FALSE}
+
+# Fixez des limites à la carte en fonction des positions des détections, en vous assurant que la carte englobe ces positions.
+xmin <- min(df.recvDeps$longitude, na.rm = TRUE) - 2
+xmax <- -20 # Limitez aux Amériques (sauf quelques points en Europe).
+ymin <- -60 #min(df.recvDeps$longitude, na.rm = TRUE) - 2
+ymax <- max(df.recvDeps$latitude, na.rm = TRUE) + 2
+                
+# map
+ggplot(na.lakes, aes(long, lat))+ 
+  geom_polygon(data = na.map, aes(long, lat, group=group), 
+               colour = "grey", fill="grey98") +
+  geom_polygon(aes(group = group), colour = "grey", fill = "white")+
+  coord_map(projection="mercator", xlim = c(xmin, xmax), ylim = c(ymin, ymax))+
+  xlab("") + ylab("") + 
+  theme_bw() + 
+  geom_point(data = df.recvDeps, 
+             aes(longitude, latitude, colour = as.logical(projectID == 176)), 
+             cex = 0.8, pch = 4)+
+  scale_colour_manual(values = c("grey30", "red"), name = "Project 176 Deployment") 
+
+```  
+
+```{r fig4.2, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/mapRecvs2.png")
+```
+
+**d. Pointer sur la carte la position seulement des récepteurs déployés dans le cadre d'un projet**
+
+Carte montrant la position des récepteurs déployés dans le cadre d’un projet. Les limites de la carte sur les axes des x (longitude) et des y (latitude) sont fixées à l’aide de la trame de données «df.projRecvs» qui a été créée précédemment. Seuls les récepteurs qui étaient actifs en 2016 figurent sur cette carte.
+
+```{r mapProjRecvs, eval = FALSE, message = FALSE, warning = FALSE}
+
+# Fixez des limites à la carte en fonction des positions des détections, en vous assurant que la carte englobe ces positions.
+xmin <- min(df.projRecvs$longitude, na.rm = TRUE) - 2
+xmax <- max(df.projRecvs$longitude, na.rm = TRUE) + 2
+ymin <- min(df.projRecvs$latitude, na.rm = TRUE) - 1
+ymax <- max(df.projRecvs$latitude, na.rm = TRUE) + 1
+                
+# map
+ggplot(na.lakes, aes(long, lat))+ 
+  geom_polygon(data = na.map, 
+               aes(long, lat, group=group), colour = "grey", fill="grey98") +
+  geom_polygon(aes(group = group), colour = "grey", fill = "white") +
+  coord_map(projection="mercator", xlim = c(xmin, xmax), ylim = c(ymin, ymax)) +
+#  coord_map(projection="mercator", xlim = c(xmin, xmax), ylim = c(50.154, 52.875)) +
+  xlab("") + ylab("") + 
+  theme_bw() + 
+  geom_point(data = filter(df.projRecvs, 
+                            year(tsStart) == 2016, 
+                            !is.na(latitude)),  # remove mobile receivers
+             aes(longitude, latitude, colour = as.factor(deviceID)), cex = 2, pch = 1)+
+  scale_colour_discrete(name  =  "Receiver ID") 
+
+```
+
+```{r fig4.3, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/mapProjRecvs.png")
+```
+
+### Vérification de la complétude et de l'exactitude des métadonnées sur les déploiements des récepteurs
+
+Les utilisateurs de Motus se préoccupent principalement de savoir si les métadonnées sur les déploiements des récepteurs qui ont détecté des signaux de leurs émetteurs sont complètes, parce que cela peut avoir un effet direct sur l’interprétation des données de ces détections. Par exemple, si les valeurs de latitude ou de longitude sont manquantes, on ne saura pas quelle était la position de l’émetteur dont les signaux ont été détectés. De même, si l’information sur le type et/ou l’orientation de l’antenne est manquante, cela peut empêcher de bien estimer l’orientation du déplacement de l’émetteur ou son cap au moment du départ de l'animal portant l'émetteur. 
+
+Dans de nombreux cas cependant, les métadonnées sur les déploiements des récepteurs *sans* information sur la détection des signaux des émetteurs peuvent quand même être utiles, par exemple pour estimer la probabilité de détection d’un animal qui passe dans la zone de détection d’une station réceptrice.
+
+Dans la présente section, nous nous intéressons aux métadonnées sur les récepteurs enregistrés dans le cadre d’un projet particulier. Selon vos intérêts, les sommaires de métadonnées peuvent être appliqués à un plus grand groupe de récepteurs, par exemple à tous les récepteurs qui ont détecté des signaux d’émetteurs ou à tous les récepteurs dans une région déterminée (même s’ils n’ont pas détecté de signaux d’émetteurs).
+
+**a. Chargement des données sur les récepteurs et les antennes**
+
+```{r loadReceiverAntennaMetadata}
+
+# Métadonnées sur TOUTES les antennes Motus déployées; 
+# pour simplifier, conservez seulement les variables d'intérêt.
+tbl.antDeps <- tbl(sql.motus, "antDeps") 
+df.antDeps <- tbl.antDeps %>%
+                select(deployID, port, antennaType, bearing, heightMeters) %>%
+                collect() %>%
+                as.data.frame()
+
+# Métadonnées sur les récepteurs déployés; conservez les variables
+# d'intérêt.
+df.recvDeps <- df.recvDeps %>%
+                    select(deployID, receiverType, deviceID, name, latitude, longitude, isMobile, tsStart, tsEnd, projectID, elevation) 
+
+df.stationDeps <- left_join(df.recvDeps, df.antDeps, by = "deployID")
+
+```
+
+Faites de ces métadonnées un sous-ensemble des données sur les récepteurs enregistrés dans le cadre d'un projet:
+
+```{r stationMetaProj}
+
+df.stationDeps <- filter(df.stationDeps, projectID == proj.num)
+
+```
+
+**b. Examen de la gamme des valeurs des métadonnées** 
+
+Utilisez la fonction summary() pour avoir une idée générale de la distribution des variables dans les données. 
+
+```{r SummaryRecv}
+
+summary(df.stationDeps)
+
+```
+
+Les valeurs de latitude et de longitude sont manquantes dans quatre cas associés au déploiement de récepteurs mobiles, comme nous l'avons vu précédemment. 
+
+Les valeurs d’élévation sont manquantes dans 74 enregistrements sur 91, mais il s’agit d’un champ de données dont le contenu n’est pas obligatoire. On peut estimer l’élévation à partir d’autres sources ou directement dans R (par exemple, voyez <https://stackoverflow.com/questions/8973695/conversion-for-latitude-longitude-to-altitude-in-r>). 
+
+Sur 91 enregistrements, les valeurs de l’angle de relèvement d’antenne sont manquantes dans 18 enregistrements et les valeurs de la hauteur d’antenne dans 4 enregistrements. Formez un sous-ensemble de données avec les enregistrements dans lesquels les valeurs de l’angle de relèvement d’antenne sont manquantes pour voir si cela peut être corrigé:
+
+```{r antennaBearing}
+
+filter(df.stationDeps, is.na(bearing)) %>%
+  select(-elevation, -deviceID, -tsEnd)
+
+```
+
+Il ressort que les stations réceptrices pour lesquelles les valeurs de l’angle de relèvement d’antenne sont manquantes sont limitées à celles dont les antennes sont omnidirectionnelles ou aux récepteurs mobiles, si bien que l’absence de valeurs est compréhensible. On constate aussi que les quatre enregistrements dans lesquels les valeurs de hauteur d’antenne sont manquantes sont également associés aux quatre récepteurs mobiles. Par conséquent, l’absence de valeurs de hauteur d’antenne est elle aussi compréhensible, et il n’est pas nécessaire d’apporter des corrections.  
+
+Rappelez-vous que les corrections relatives aux métadonnées manquantes doivent être apportées en ligne. Les métadonnées corrigées en ligne seront automatiquement corrigées dans vos fichiers de données de détection. Si vous avez déjà téléchargé vos données de détection, vous pouvez mettre à jour le fichier existant afin d’inclure les nouvelles métadonnées et données de détection (voyez les sections \@ref(forceMeta) et \@ref(tagmeUpdate)).
+
+Dans le prochain chapitre, nous examinerons nos données à la recherche de faux positifs et nous enlèverons les données de détection des signaux d'émetteurs ambigus.

@@ -1,0 +1,102 @@
+# Chargement des logiciels R {#loadingPackages}
+```{r tidyr2, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
+
+```
+
+Deux logiciels R ont été élaborés pour les utilisateurs de Motus:
+
+1. motus: ce logiciel intègre des fonctions permettant de produire des sorties graphiques sommaires et de transformer (ajouter les heures du lever et du coucher du soleil) et d'analyser les données Motus.
+
+2. motusClient: ce logiciel intègre des fonctions pour le téléchargement et la mise à jour des données de détection et des métadonnées sur le déploiement des émetteurs et des récepteurs à partir du serveur de Motus.
+
+Les **utilisateurs** de Motus peuvent installer les versions stables les plus récentes des logiciels R à l’aide du code suivant. Comme c’est le cas pour tous les logiciels R, vous n'avez besoin d'installer les logiciels qu’une seule fois. Après l’installation, vous devez charger chaque logiciel (en utilisant la fonction library() ou require()) chaque fois que vous ouvrez une nouvelle session R. 
+
+Veuillez noter que l’utilisation de certaines fonctionnalités du logiciel devtools peut nécessiter des versions à jour de R et de RStudio. Pour éviter les erreurs, veuillez-vous assurer d’utiliser les versions les plus récentes de [R](https://www.r-project.org/) et de [RStudio]() et mettre à jour vos logiciels R en utilisant update.pacakges() dans la console R.
+
+Pour mettre à jour vos logiciels existants:
+
+```{r update packages.1, eval = FALSE}
+
+update.packages()                         
+
+```
+
+Commencez par installer les logiciels requis s’ils ne sont pas déjà installés. Notez que le logiciel motusClient, qu’il faut utiliser pour accéder aux données de détection dans le serveur de Motus, fait partie du logiciel motus (c.-à-d. que vous ne devriez avoir qu’à exécuter le code pour installer le logiciel motus, et le logiciel motusClient sera chargé automatiquement). Le code permettant d’installer le logiciel motusClient de manière indépendante est fourni ci-dessous, mais vous ne devriez pas avoir besoin de l’exécuter.
+
+```{r install packages, eval = FALSE}
+
+install.packages("devtools")
+library(devtools)
+
+# Installation du logiciel motus pour le téléchargement, la manipulation, la visualisation et l'analyse des données
+install_github("MotusWTS/motus")
+
+# Installation du logiciel motusClient pour le téléchargement des données
+install_github("MotusWTS/motusClient")
+
+library(motus)
+
+```
+
+Si vous devez mettre à jour un logiciel motus ou motusClient existant, vous devez spécifier 'force = TRUE':
+```{r update packages.2, eval = FALSE}
+# Réinstallation forcée du logiciel motus quand des mises à jour sont requises
+install_github("MotusWTS/motus", force = TRUE)
+
+# Réinstallation forcée du logiciel motusClient quand des mises à jour sont requises
+install_github("MotusWTS/motusClient", force = TRUE)
+
+library(motus)
+
+```
+
+Tout au long du guide, nous utilisons tidyverse, une collection de logiciels R consacrés à la science des données - y compris tidyr, dplyr, ggplot2 et lubridate - pour la gestion et la manipulation de dates. Vous trouverez de plus amples renseignements sur tidyverse à <https://www.tidyverse.org/> ou en parcourant (ou, mieux encore, en lisant attentivement) l’ouvrage de Garrett Grolemund et d’Hadley Wickham intitulé «R for Data Science» (<http://r4ds.had.co.nz/>). Pour la cartographie, nous utilisons aussi les logiciels rworldmap et ggmap, qui peuvent être installés à partir de CRAN, de la manière suivante:
+
+```{r install tidyverse, eval = FALSE}
+
+library(maps)
+
+install.packages("tidyverse")
+library(tidyverse)
+
+install.packages("tidyr")
+library(tidyr)
+
+install.packages("rworldmap")
+library(rworldmap)
+
+install.packages("ggmap")
+library(ggmap)
+
+```
+```{r loadAllPackages, echo = FALSE, warning = FALSE, message = FALSE}
+library(motus)
+library(maps)
+library(tidyverse)
+library(tidyr)
+library(rworldmap)
+library(ggmap)
+
+```
+Nous installons également le logiciel plyr, mais nous ne le chargeons pas. Nous l’utilisons directement pour nous servir de la pratique fonction round_any, mais s’il est chargé, il peut survenir des problèmes touchant les fonctions dplyr:
+
+```{r install plyr, eval = FALSE}
+
+install.packages("plyr")
+
+```
+
+## Traitement interne des données {#internalProcessing}
+
+Lorsqu’un animal portant un émetteur se déplace dans la zone de détection d’une station Motus, les signaux (ou salves d'impulsions) émis sont captés par l’antenne ou les antennes de la station et enregistrés par un récepteur. Ces données de détection brutes sont téléversées dans la base de données Motus instantanément via une connexion Internet ou sont téléchargées depuis le récepteur puis téléversées dans la base de données Motus manuellement. En arrière-plan, les données de détection brutes sont lues et traitées au moyen de différentes fonctions pour produire le fichier de données de détection des émetteurs auquel les utilisateurs du logiciel R peuvent accéder (voir le chapitre \@ref(accessingData)). La plupart des utilisateurs n’auront pas besoin de recourir aux fonctions de traitement interne des données, mais une liste complète des fonctions intégrées dans le logiciel R du serveur de Motus est fournie sur GitHub (<https://github.com/jbrzusto/motusServer>). Pour voir le code sous-jacent à chaque fonction, on peut aller sur GitHub. On peut aussi taper ce qui suit dans la console R après avoir chargé le logiciel R; il suffit de remplacer «function.name» par le nom de la fonction R d’intérêt:
+
+```{r function.name, eval = FALSE}
+
+function.name() 
+
+```
+
+Dans le chapitre suivant, nous examinerons et chargerons des données.

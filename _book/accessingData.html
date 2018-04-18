@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Guide R pour Motus</title>
+  <meta name="description" content="Guide R pour Motus">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Guide R pour Motus" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="BSC_Motus_Logo.png" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guide R pour Motus" />
+  
+  
+  <meta name="twitter:image" content="BSC_Motus_Logo.png" />
+
+<meta name="author" content="Tara L. Crewe, Zoe Crysler, et Philip Taylor">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="loadingPackages.html">
+<link rel="next" href="deployments.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Utilisation du langage R appliqué aux données du réseau de radiotélémétrie automatisée Motus</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#whatBookCovers"><i class="fa fa-check"></i><b>1.1</b> Ce que le présent guide ne montre pas</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.2</b> Connaissances préalables</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#sampleData"><i class="fa fa-check"></i><b>1.3</b> Ensemble de données utilisées comme exemples</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i><b>1.4</b> Remerciements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loadingPackages.html"><a href="loadingPackages.html"><i class="fa fa-check"></i><b>2</b> Chargement des logiciels R</a><ul>
+<li class="chapter" data-level="2.1" data-path="loadingPackages.html"><a href="loadingPackages.html#internalProcessing"><i class="fa fa-check"></i><b>2.1</b> Traitement interne des données</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="accessingData.html"><a href="accessingData.html"><i class="fa fa-check"></i><b>3</b> Accès aux données de détection</a><ul>
+<li class="chapter" data-level="3.1" data-path="accessingData.html"><a href="accessingData.html#databaseTypes"><i class="fa fa-check"></i><b>3.1</b> Types de bases de données</a></li>
+<li class="chapter" data-level="3.2" data-path="accessingData.html"><a href="accessingData.html#loadPackages"><i class="fa fa-check"></i><b>3.2</b> Chargement des logiciels R pertinents</a></li>
+<li class="chapter" data-level="3.3" data-path="accessingData.html"><a href="accessingData.html#reglage-de-lenvironnement-systeme"><i class="fa fa-check"></i><b>3.3</b> Réglage de l’environnement système</a></li>
+<li class="chapter" data-level="3.4" data-path="accessingData.html"><a href="accessingData.html#importDetections"><i class="fa fa-check"></i><b>3.4</b> Importation de données de détection</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="accessingData.html"><a href="accessingData.html#telechargement-des-donnees-dun-projet-ou-dun-recepteur-pour-la-premiere-fois"><i class="fa fa-check"></i><b>3.4.1</b> Téléchargement des données d’un projet ou d’un récepteur pour la <em>première fois</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="accessingData.html"><a href="accessingData.html#userAuthentication"><i class="fa fa-check"></i><b>3.4.2</b> Authentification de l’utilisateur</a></li>
+<li class="chapter" data-level="3.4.3" data-path="accessingData.html"><a href="accessingData.html#logout"><i class="fa fa-check"></i><b>3.4.3</b> Fermeture de session</a></li>
+<li class="chapter" data-level="3.4.4" data-path="accessingData.html"><a href="accessingData.html#downloadData"><i class="fa fa-check"></i><b>3.4.4</b> Téléchargement de données de détection</a></li>
+<li class="chapter" data-level="3.4.5" data-path="accessingData.html"><a href="accessingData.html#tagmeUpdate"><i class="fa fa-check"></i><b>3.4.5</b> Ouverture et mise à jour d’une base de données de détection locale</a></li>
+<li class="chapter" data-level="3.4.6" data-path="accessingData.html"><a href="accessingData.html#tellme"><i class="fa fa-check"></i><b>3.4.6</b> Vérification de l’existence de nouvelles données</a></li>
+<li class="chapter" data-level="3.4.7" data-path="accessingData.html"><a href="accessingData.html#forceMeta"><i class="fa fa-check"></i><b>3.4.7</b> Imposition d’une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs</a></li>
+<li class="chapter" data-level="3.4.8" data-path="accessingData.html"><a href="accessingData.html#metadata"><i class="fa fa-check"></i><b>3.4.8</b> Importation de l’ensemble des métadonnées sur les émetteurs et les récepteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="accessingData.html"><a href="accessingData.html#databaseStructure"><i class="fa fa-check"></i><b>3.5</b> Structure des données</a></li>
+<li class="chapter" data-level="3.6" data-path="accessingData.html"><a href="accessingData.html#verification-de-la-version-de-la-base-de-donnees-checkversion"><i class="fa fa-check"></i><b>3.6</b> Vérification de la version de la base de données {checkVersion}</a></li>
+<li class="chapter" data-level="3.7" data-path="accessingData.html"><a href="accessingData.html#convertToFlat"><i class="fa fa-check"></i><b>3.7</b> Conversion d’une table SQLITE en une trame de données plate</a></li>
+<li class="chapter" data-level="3.8" data-path="accessingData.html"><a href="accessingData.html#exportDetections"><i class="fa fa-check"></i><b>3.8</b> Exportation d’une trame de données «plate» sous la forme d’un fichier CSV ou RDS</a></li>
+<li class="chapter" data-level="3.9" data-path="accessingData.html"><a href="accessingData.html#convention-de-noms-dobjets-r"><i class="fa fa-check"></i><b>3.9</b> Convention de noms d’objets R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deployments.html"><a href="deployments.html"><i class="fa fa-check"></i><b>4</b> Déploiements d’émetteurs et de récepteurs</a><ul>
+<li class="chapter" data-level="4.1" data-path="deployments.html"><a href="deployments.html#chargement-des-logiciels-r-pertinents-et-reglage-de-lenvironnement-de-travail"><i class="fa fa-check"></i><b>4.1</b> Chargement des logiciels R pertinents et réglage de l’environnement de travail</a></li>
+<li class="chapter" data-level="4.2" data-path="deployments.html"><a href="deployments.html#chargement-du-fichier-.motus"><i class="fa fa-check"></i><b>4.2</b> Chargement du fichier .motus</a></li>
+<li class="chapter" data-level="4.3" data-path="deployments.html"><a href="deployments.html#tagDeployments"><i class="fa fa-check"></i><b>4.3</b> Déploiements d’émetteurs</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-completes-sur-les-emetteurs-pour-votre-projet"><i class="fa fa-check"></i><b>4.3.1</b> Téléchargement des métadonnées complètes sur les émetteurs pour votre projet</a></li>
+<li class="chapter" data-level="4.3.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres"><i class="fa fa-check"></i><b>4.3.2</b> Détermination du nombre d’émetteurs enregistrés</a></li>
+<li class="chapter" data-level="4.3.3" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres-qui-ont-ete-deployes"><i class="fa fa-check"></i><b>4.3.3</b> Détermination du nombre d’émetteurs enregistrés qui ont été déployés</a></li>
+<li class="chapter" data-level="4.3.4" data-path="deployments.html"><a href="deployments.html#checkNumberTagDeployments"><i class="fa fa-check"></i><b>4.3.4</b> Détermination du nombre de déploiements par émetteur</a></li>
+<li class="chapter" data-level="4.3.5" data-path="deployments.html"><a href="deployments.html#localisation-des-emetteurs-deployes"><i class="fa fa-check"></i><b>4.3.5</b> Localisation des émetteurs déployés</a></li>
+<li class="chapter" data-level="4.3.6" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-demetteurs"><i class="fa fa-check"></i><b>4.3.6</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="deployments.html"><a href="deployments.html#recvMetadata"><i class="fa fa-check"></i><b>4.4</b> Vérification des métadonnées sur les récepteurs</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-sur-tous-les-recepteurs-dans-le-reseau"><i class="fa fa-check"></i><b>4.4.1</b> Téléchargement des métadonnées sur tous les récepteurs dans le réseau</a></li>
+<li class="chapter" data-level="4.4.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-de-recepteurs-deployes-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.2</b> Détermination du nombre de récepteurs déployés dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.3" data-path="deployments.html"><a href="deployments.html#determination-du-moment-du-deploiement-des-recepteurs-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.3</b> Détermination du moment du déploiement des récepteurs dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.4" data-path="deployments.html"><a href="deployments.html#localisation-des-recepteurs-deployes"><i class="fa fa-check"></i><b>4.4.4</b> Localisation des récepteurs déployés</a></li>
+<li class="chapter" data-level="4.4.5" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-des-recepteurs"><i class="fa fa-check"></i><b>4.4.5</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements des récepteurs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dataCleaning.html"><a href="dataCleaning.html"><i class="fa fa-check"></i><b>5</b> Nettoyage des données</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-logiciels-requis"><i class="fa fa-check"></i><b>5.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="5.2" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-donnees-de-detection"><i class="fa fa-check"></i><b>5.2</b> Chargement des données de détection</a></li>
+<li class="chapter" data-level="5.3" data-path="dataCleaning.html"><a href="dataCleaning.html#verifications-preliminaires-des-donnees"><i class="fa fa-check"></i><b>5.3</b> Vérifications préliminaires des données</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="dataCleaning.html"><a href="dataCleaning.html#sommaires-de-donnees-de-detection-demetteurs"><i class="fa fa-check"></i><b>5.3.1</b> Sommaires de données de détection d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dataCleaning.html"><a href="dataCleaning.html#ambigs"><i class="fa fa-check"></i><b>5.4</b> Recherche et examen de détections ambiguës</a></li>
+<li class="chapter" data-level="5.5" data-path="dataCleaning.html"><a href="dataCleaning.html#verification-de-la-validite-des-sequences-dau-moins-2-detections"><i class="fa fa-check"></i><b>5.5</b> Vérification de la validité des séquences d’au moins 2 détections</a></li>
+<li class="chapter" data-level="5.6" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrage-des-donnees"><i class="fa fa-check"></i><b>5.6</b> Filtrage des données</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrer-et-enregistrer-le-resultat-dans-le-format-rds"><i class="fa fa-check"></i><b>5.6.1</b> Filtrer et enregistrer le résultat dans le format RDS</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dataCleaning.html"><a href="dataCleaning.html#enregistrer-un-filtre-personnalise-dans-la-base-de-donnees-motus-et-lappliquer-aux-donnees"><i class="fa fa-check"></i><b>5.6.2</b> Enregistrer un filtre personnalisé dans la base de données motus et l’appliquer aux données</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exploreData.html"><a href="exploreData.html"><i class="fa fa-check"></i><b>6</b> Exploration des données avec le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="6.1" data-path="exploreData.html"><a href="exploreData.html#chargement-des-logiciels-requis-1"><i class="fa fa-check"></i><b>6.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="6.2" data-path="exploreData.html"><a href="exploreData.html#chargement-des-donnees"><i class="fa fa-check"></i><b>6.2</b> Chargement des données</a></li>
+<li class="chapter" data-level="6.3" data-path="exploreData.html"><a href="exploreData.html#dataSummaries"><i class="fa fa-check"></i><b>6.3</b> Sommaires de données</a></li>
+<li class="chapter" data-level="6.4" data-path="exploreData.html"><a href="exploreData.html#dataPlotting"><i class="fa fa-check"></i><b>6.4</b> Graphiques de données</a></li>
+<li class="chapter" data-level="6.5" data-path="exploreData.html"><a href="exploreData.html#mappingData"><i class="fa fa-check"></i><b>6.5</b> Cartes de données</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="exploreData.html"><a href="exploreData.html#googleMaps"><i class="fa fa-check"></i><b>6.5.1</b> Utilisation de Google Maps</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exploreData.html"><a href="exploreData.html#outlineMaps"><i class="fa fa-check"></i><b>6.5.2</b> Création de cartes muettes simples</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Appendix - alltags structure</a></li>
+<li class="chapter" data-level="B" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html"><i class="fa fa-check"></i><b>B</b> Annexe B - Dépannage {#Annexe B}</a><ul>
+<li class="chapter" data-level="B.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#motusLogout"><i class="fa fa-check"></i><b>B.1</b> Fermeture du logiciel motus</a></li>
+<li class="chapter" data-level="B.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#resumeDownload"><i class="fa fa-check"></i><b>B.2</b> Reprise du téléchargement de données</a></li>
+<li class="chapter" data-level="B.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#messages-derreur-courants-et-solutions"><i class="fa fa-check"></i><b>B.3</b> Messages d’erreur courants et solutions</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-auto-disconnecting-sqliteconnection-une-ou-plusieurs-fois-apres-avoir-utilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.1</b> Je reçois le message «Auto-disconnecting SQLiteConnection» une ou plusieurs fois après avoir utilisé la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-internal-server-error-pendant-que-jutilise-la-fonction-tagme-update-true."><i class="fa fa-check"></i><b>B.3.2</b> Je reçois le message «Internal Server Error» pendant que j’utilise la fonction tagme (…, update = TRUE).</a></li>
+<li class="chapter" data-level="B.3.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-forbidden-pendant-que-jutilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.3</b> Je reçois le message «Error: Forbidden» pendant que j’utilise la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.4" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-object-xxxx-not-found-relatif-au-nom-dune-table-ou-dun-champ-ou-encore-certains-de-vos-exemples-dans-le-guide-ne-fonctionnent-pas."><i class="fa fa-check"></i><b>B.3.4</b> Je reçois le message «Error: Object ‘xxxx’ not found», relatif au nom d’une table ou d’un champ, ou encore certains de vos exemples dans le guide ne fonctionnent pas.</a></li>
+<li class="chapter" data-level="B.3.5" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-in-rsqlite_connectdbname-loadable.extensions-flags-vfs-could-not-connect-to-database-unable-to-open-database-file-lorsque-je-tente-dexecuter-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.5</b> Je reçois le message «Error in rsqlite_connect(dbname, loadable.extensions, flags, vfs): Could not connect to database: unable to open database file» lorsque je tente d’exécuter la fonction tagme().</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="appendixC.html"><a href="appendixC.html"><i class="fa fa-check"></i><b>C</b> Annexe C - Le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="C.1" data-path="appendixC.html"><a href="appendixC.html#checkVersion.B"><i class="fa fa-check"></i><b>C.1</b> checkVersion</a><ul>
+<li class="chapter" data-level="C.1.1" data-path="appendixC.html"><a href="appendixC.html#description"><i class="fa fa-check"></i><b>C.1.1</b> Description</a></li>
+<li class="chapter" data-level="C.1.2" data-path="appendixC.html"><a href="appendixC.html#dependances"><i class="fa fa-check"></i><b>C.1.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.1.3" data-path="appendixC.html"><a href="appendixC.html#exemple"><i class="fa fa-check"></i><b>C.1.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="appendixC.html"><a href="appendixC.html#sunRiseSet"><i class="fa fa-check"></i><b>C.2</b> sunRiseSet</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="appendixC.html"><a href="appendixC.html#description-1"><i class="fa fa-check"></i><b>C.2.1</b> Description</a></li>
+<li class="chapter" data-level="C.2.2" data-path="appendixC.html"><a href="appendixC.html#dependances-1"><i class="fa fa-check"></i><b>C.2.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.2.3" data-path="appendixC.html"><a href="appendixC.html#exemple-1"><i class="fa fa-check"></i><b>C.2.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.3" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsCoor"><i class="fa fa-check"></i><b>C.3</b> plotAllTagsCoord</a><ul>
+<li class="chapter" data-level="C.3.1" data-path="appendixC.html"><a href="appendixC.html#description-2"><i class="fa fa-check"></i><b>C.3.1</b> Description</a></li>
+<li class="chapter" data-level="C.3.2" data-path="appendixC.html"><a href="appendixC.html#dependances-2"><i class="fa fa-check"></i><b>C.3.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.3.3" data-path="appendixC.html"><a href="appendixC.html#exemple-2"><i class="fa fa-check"></i><b>C.3.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsSite"><i class="fa fa-check"></i><b>C.4</b> plotAllTagsSite</a><ul>
+<li class="chapter" data-level="C.4.1" data-path="appendixC.html"><a href="appendixC.html#description-3"><i class="fa fa-check"></i><b>C.4.1</b> Description</a></li>
+<li class="chapter" data-level="C.4.2" data-path="appendixC.html"><a href="appendixC.html#dependances-3"><i class="fa fa-check"></i><b>C.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.4.3" data-path="appendixC.html"><a href="appendixC.html#exemple-3"><i class="fa fa-check"></i><b>C.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="appendixC.html"><a href="appendixC.html#plotDailySiteSum"><i class="fa fa-check"></i><b>C.5</b> plotDailySiteSum</a><ul>
+<li class="chapter" data-level="C.5.1" data-path="appendixC.html"><a href="appendixC.html#description-4"><i class="fa fa-check"></i><b>C.5.1</b> Description</a></li>
+<li class="chapter" data-level="C.5.2" data-path="appendixC.html"><a href="appendixC.html#dependances-4"><i class="fa fa-check"></i><b>C.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.5.3" data-path="appendixC.html"><a href="appendixC.html#exemple-4"><i class="fa fa-check"></i><b>C.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.6" data-path="appendixC.html"><a href="appendixC.html#plotRouteMap"><i class="fa fa-check"></i><b>C.6</b> plotRouteMap</a><ul>
+<li class="chapter" data-level="C.6.1" data-path="appendixC.html"><a href="appendixC.html#description-5"><i class="fa fa-check"></i><b>C.6.1</b> Description</a></li>
+<li class="chapter" data-level="C.6.2" data-path="appendixC.html"><a href="appendixC.html#exemple-5"><i class="fa fa-check"></i><b>C.6.2</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.7" data-path="appendixC.html"><a href="appendixC.html#plotSite"><i class="fa fa-check"></i><b>C.7</b> plotSite</a><ul>
+<li class="chapter" data-level="C.7.1" data-path="appendixC.html"><a href="appendixC.html#description-6"><i class="fa fa-check"></i><b>C.7.1</b> Description</a></li>
+<li class="chapter" data-level="C.7.2" data-path="appendixC.html"><a href="appendixC.html#dependances-5"><i class="fa fa-check"></i><b>C.7.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.7.3" data-path="appendixC.html"><a href="appendixC.html#exemple-6"><i class="fa fa-check"></i><b>C.7.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="appendixC.html"><a href="appendixC.html#plotSiteSig"><i class="fa fa-check"></i><b>C.8</b> plotSiteSig</a><ul>
+<li class="chapter" data-level="C.8.1" data-path="appendixC.html"><a href="appendixC.html#description-7"><i class="fa fa-check"></i><b>C.8.1</b> Description</a></li>
+<li class="chapter" data-level="C.8.2" data-path="appendixC.html"><a href="appendixC.html#dependances-6"><i class="fa fa-check"></i><b>C.8.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.8.3" data-path="appendixC.html"><a href="appendixC.html#exemple-7"><i class="fa fa-check"></i><b>C.8.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.9" data-path="appendixC.html"><a href="appendixC.html#plotTagSig"><i class="fa fa-check"></i><b>C.9</b> plotTagSig</a><ul>
+<li class="chapter" data-level="C.9.1" data-path="appendixC.html"><a href="appendixC.html#description-8"><i class="fa fa-check"></i><b>C.9.1</b> Description</a></li>
+<li class="chapter" data-level="C.9.2" data-path="appendixC.html"><a href="appendixC.html#dependances-7"><i class="fa fa-check"></i><b>C.9.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.9.3" data-path="appendixC.html"><a href="appendixC.html#exemple-8"><i class="fa fa-check"></i><b>C.9.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.10" data-path="appendixC.html"><a href="appendixC.html#simSiteDet"><i class="fa fa-check"></i><b>C.10</b> simSiteDet</a><ul>
+<li class="chapter" data-level="C.10.1" data-path="appendixC.html"><a href="appendixC.html#description-9"><i class="fa fa-check"></i><b>C.10.1</b> Description</a></li>
+<li class="chapter" data-level="C.10.2" data-path="appendixC.html"><a href="appendixC.html#dependances-8"><i class="fa fa-check"></i><b>C.10.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.10.3" data-path="appendixC.html"><a href="appendixC.html#exemple-9"><i class="fa fa-check"></i><b>C.10.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.11" data-path="appendixC.html"><a href="appendixC.html#siteSum"><i class="fa fa-check"></i><b>C.11</b> siteSum</a><ul>
+<li class="chapter" data-level="C.11.1" data-path="appendixC.html"><a href="appendixC.html#description-10"><i class="fa fa-check"></i><b>C.11.1</b> Description</a></li>
+<li class="chapter" data-level="C.11.2" data-path="appendixC.html"><a href="appendixC.html#dependances-9"><i class="fa fa-check"></i><b>C.11.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.11.3" data-path="appendixC.html"><a href="appendixC.html#exemple-10"><i class="fa fa-check"></i><b>C.11.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.12" data-path="appendixC.html"><a href="appendixC.html#siteSumDaily"><i class="fa fa-check"></i><b>C.12</b> siteSumDaily</a><ul>
+<li class="chapter" data-level="C.12.1" data-path="appendixC.html"><a href="appendixC.html#description-11"><i class="fa fa-check"></i><b>C.12.1</b> Description</a></li>
+<li class="chapter" data-level="C.12.2" data-path="appendixC.html"><a href="appendixC.html#dependances-10"><i class="fa fa-check"></i><b>C.12.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.12.3" data-path="appendixC.html"><a href="appendixC.html#exemple-11"><i class="fa fa-check"></i><b>C.12.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.13" data-path="appendixC.html"><a href="appendixC.html#siteTrans"><i class="fa fa-check"></i><b>C.13</b> siteTrans</a><ul>
+<li class="chapter" data-level="C.13.1" data-path="appendixC.html"><a href="appendixC.html#description-12"><i class="fa fa-check"></i><b>C.13.1</b> Description</a></li>
+<li class="chapter" data-level="C.13.2" data-path="appendixC.html"><a href="appendixC.html#dependances-11"><i class="fa fa-check"></i><b>C.13.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.13.3" data-path="appendixC.html"><a href="appendixC.html#exemple-12"><i class="fa fa-check"></i><b>C.13.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.14" data-path="appendixC.html"><a href="appendixC.html#tagSum"><i class="fa fa-check"></i><b>C.14</b> tagSum</a><ul>
+<li class="chapter" data-level="C.14.1" data-path="appendixC.html"><a href="appendixC.html#description-13"><i class="fa fa-check"></i><b>C.14.1</b> Description</a></li>
+<li class="chapter" data-level="C.14.2" data-path="appendixC.html"><a href="appendixC.html#dependances-12"><i class="fa fa-check"></i><b>C.14.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.14.3" data-path="appendixC.html"><a href="appendixC.html#exemple-13"><i class="fa fa-check"></i><b>C.14.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.15" data-path="appendixC.html"><a href="appendixC.html#tagSumSite"><i class="fa fa-check"></i><b>C.15</b> tagSumSite</a><ul>
+<li class="chapter" data-level="C.15.1" data-path="appendixC.html"><a href="appendixC.html#description-14"><i class="fa fa-check"></i><b>C.15.1</b> Description</a></li>
+<li class="chapter" data-level="C.15.2" data-path="appendixC.html"><a href="appendixC.html#dependances-13"><i class="fa fa-check"></i><b>C.15.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.15.3" data-path="appendixC.html"><a href="appendixC.html#exemple-14"><i class="fa fa-check"></i><b>C.15.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.16" data-path="appendixC.html"><a href="appendixC.html#timeToSunriset"><i class="fa fa-check"></i><b>C.16</b> timeToSunriset</a><ul>
+<li class="chapter" data-level="C.16.1" data-path="appendixC.html"><a href="appendixC.html#description-15"><i class="fa fa-check"></i><b>C.16.1</b> Description</a></li>
+<li class="chapter" data-level="C.16.2" data-path="appendixC.html"><a href="appendixC.html#dependances-14"><i class="fa fa-check"></i><b>C.16.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.16.3" data-path="appendixC.html"><a href="appendixC.html#exemple-15"><i class="fa fa-check"></i><b>C.16.3</b> Exemple</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="appendixD.html"><a href="appendixD.html"><i class="fa fa-check"></i><b>D</b> Annexe D - Le logiciel motusClient - Fonctions de filtrage de données</a><ul>
+<li class="chapter" data-level="D.1" data-path="appendixD.html"><a href="appendixD.html#listRunsFilters"><i class="fa fa-check"></i><b>D.1</b> listRunsFilters</a><ul>
+<li class="chapter" data-level="D.1.1" data-path="appendixD.html"><a href="appendixD.html#description-16"><i class="fa fa-check"></i><b>D.1.1</b> Description</a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="appendixD.html"><a href="appendixD.html#dependances-15"><i class="fa fa-check"></i><b>D.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.3" data-path="appendixD.html"><a href="appendixD.html#exemple-16"><i class="fa fa-check"></i><b>D.3</b> Exemple</a></li>
+<li class="chapter" data-level="D.4" data-path="appendixD.html"><a href="appendixD.html#createRunsFilter"><i class="fa fa-check"></i><b>D.4</b> createRunsFilter</a><ul>
+<li class="chapter" data-level="D.4.1" data-path="appendixD.html"><a href="appendixD.html#description-17"><i class="fa fa-check"></i><b>D.4.1</b> Description</a></li>
+<li class="chapter" data-level="D.4.2" data-path="appendixD.html"><a href="appendixD.html#dependances-16"><i class="fa fa-check"></i><b>D.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.4.3" data-path="appendixD.html"><a href="appendixD.html#exemple-17"><i class="fa fa-check"></i><b>D.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.5" data-path="appendixD.html"><a href="appendixD.html#getRunsFilters"><i class="fa fa-check"></i><b>D.5</b> getRunsFilters</a><ul>
+<li class="chapter" data-level="D.5.1" data-path="appendixD.html"><a href="appendixD.html#description-18"><i class="fa fa-check"></i><b>D.5.1</b> Description</a></li>
+<li class="chapter" data-level="D.5.2" data-path="appendixD.html"><a href="appendixD.html#dependances-17"><i class="fa fa-check"></i><b>D.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.5.3" data-path="appendixD.html"><a href="appendixD.html#exemple-18"><i class="fa fa-check"></i><b>D.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.6" data-path="appendixD.html"><a href="appendixD.html#writeRunsFilter"><i class="fa fa-check"></i><b>D.6</b> writeRunsFilter</a><ul>
+<li class="chapter" data-level="D.6.1" data-path="appendixD.html"><a href="appendixD.html#description-19"><i class="fa fa-check"></i><b>D.6.1</b> Description</a></li>
+<li class="chapter" data-level="D.6.2" data-path="appendixD.html"><a href="appendixD.html#dependances-18"><i class="fa fa-check"></i><b>D.6.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.6.3" data-path="appendixD.html"><a href="appendixD.html#exemples"><i class="fa fa-check"></i><b>D.6.3</b> Exemples</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Guide R pour Motus</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="accessingData" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Accès aux données de détection</h1>
+<p><strong>Avant de télécharger vos données de détection, rendez-vous à la [page Web relative aux problèmes de données] (<a href="https://motus.org/data/issues" class="uri">https://motus.org/data/issues</a>) pour vérifier qu’il n’y a pas de problème en suspens en ce qui touche les métadonnées.</strong></p>
+<div id="databaseTypes" class="section level2">
+<h2><span class="header-section-number">3.1</span> Types de bases de données</h2>
+<p>Il existe deux types de bases de données de détection:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>base de données de récepteur</strong>: comprend toutes les données de détection des signaux de n’importe quel émetteur enregistré captés par un récepteur particulier. Une base de données de récepteur porte un nom comme SG-1234BBBK5678.motus, ce nom correspondant au numéro de série du récepteur.</p></li>
+<li><p><strong>base de données de projet</strong>: comprend toutes les données de détection des signaux de vos émetteurs enregistrés captés dans l’ensemble du réseau Motus. Une base de données de projet porte un nom comme project-123.motus, le numéro correspondant à l’identifiant du projet Motus en question.</p></li>
+</ol>
+<p>Ces deux types de bases de données correspondent au modèle de base du partage de données:</p>
+<ol style="list-style-type: decimal">
+<li><p>Vous obtenez toutes les données de détection des signaux de tous les émetteurs captés par <em>vos</em> récepteurs (c.-à-d. une base de données de récepteur pour chacun des récepteurs que vous avez déployés).</p></li>
+<li><p>Vous obtenez toutes les données de détection des signaux de <em>vos</em> émetteurs captés par <em>n’importe quel</em> récepteur (c.-à-d. une base de données de projet pour chacun de vos projets Motus).</p></li>
+</ol>
+</div>
+<div id="loadPackages" class="section level2">
+<h2><span class="header-section-number">3.2</span> Chargement des logiciels R pertinents</h2>
+<p>Avant de commencer à travailler avec des données, il faut charger les logiciels requis pour les opérations expliquées dans le présent chapitre. Si vous n’avez pas encore installé ces logiciels (à partir de github et de CRAN), retournez au chapitre <a href="loadingPackages.html#loadingPackages">2</a> pour le faire.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># logiciel «motus» requis depuis github</span>
+<span class="kw">require</span>(motus)</code></pre></div>
+</div>
+<div id="reglage-de-lenvironnement-systeme" class="section level2">
+<h2><span class="header-section-number">3.3</span> Réglage de l’environnement système</h2>
+<p>Réglez le fuseau horaire de l’environnement système au temps universel coordonné (UTC), pour vous assurer de toujours travailler à cette échelle de temps. C’est une étape très importante qui devrait toujours faire partie de chaque séance de travail. Si vous ne faites pas ce réglage, deux problèmes peuvent se produire. Premièrement, les indications des heures dans la base de données de Motus sont en UTC, et si vous ne réglez pas l’environnement système à l’échelle de temps UTC, ces indications peuvent être modifiées par inadvertance pendant l’importation des données. Deuxièmement, si les signaux des émetteurs ont été captés dans différents fuseaux horaires, les indications des heures peuvent aussi être modifiées par inadvertance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> <span class="st">&quot;GMT&quot;</span>)</code></pre></div>
+</div>
+<div id="importDetections" class="section level2">
+<h2><span class="header-section-number">3.4</span> Importation de données de détection</h2>
+<p>Pour importer des données de détection de signaux d’émetteurs dans le cadre de votre projet ou à partir de votre récepteur, vous devez avoir un identifiant numérique de projet ou un numéro de série de récepteur.</p>
+<p>Pour que le réseau Motus fonctionne correctement, il est important que les collaborateurs versent en temps opportun dans le serveur de Motus les données de détection provenant de leur(s) récepteur(s) et qu’ils assurent l’exactitude des métadonnées sur leurs émetteurs et récepteurs, et les tiennent à jour. Nous vous encourageons, après avoir téléchargé vos données depuis le serveur de Motus, à mettre à jour vos données de détection et vos métadonnées chaque fois que vous exécutez une analyse, car des collaborateurs peuvent ajouter des données de détection et des métadonnées n’importe quand et, si ces nouvelles données ne sont pas incluses, cela peut faire en sorte que vos données de détection soient incomplètes.</p>
+<div id="telechargement-des-donnees-dun-projet-ou-dun-recepteur-pour-la-premiere-fois" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Téléchargement des données d’un projet ou d’un récepteur pour la <em>première fois</em></h3>
+<p>Lorsque vous téléchargez des données depuis le serveur de Motus pour la première fois, vous devez spécifier ‘new = TRUE’ et ‘update = TRUE’. À moins que le répertoire dans lequel vous voulez enregistrer vos données soit indiqué spécifiquement dans l’appel de fonction, les données seront téléchargées dans le répertoire de travail courant.</p>
+</div>
+<div id="userAuthentication" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Authentification de l’utilisateur</h3>
+<p>Notez que la première fois que vous appellerez une fonction en vous servant du logiciel R de Motus, vous devrez entrer votre nom d’utilisateur et votre mot de passe motus.org dans la console R pour certifier votre droit d’accès aux données d’un projet. Cela se produira seulement une fois par session de travail avec le logiciel R. Si vous n’avez pas de nom d’utilisateur ni de mot de passe Motus, vous pouvez vous inscrire à <a href="https://motus.org/data/user/new?lang=fr" class="uri">https://motus.org/data/user/new?lang=fr</a>. La permission d’accéder aux données d’un projet vous sera accordée par le personnel de Motus ou le chercheur principal engagé dans le projet en question.</p>
+<p>Tout au long du présent guide, nous utiliserons des exemples de données (voyez la section <a href="introduction.html#sampleData">1.3</a>) attribuées au projet 176 (Programme de suivi des oiseaux de rivage de la baie James). Pour accéder à ces données, vous devrez ouvrir une session en entrant votre nom d’utilisateur et votre mot de passe («motus.sample») dans la console R lorsque la fonction tagme() vous y invitera (voyez la section <a href="accessingData.html#downloadData">3.4.4</a>). Cela ressemblera à ce qui suit:</p>
+<p><img src="images/SampleLogin.PNG" width="244" style="display: block; margin: auto;" /></p>
+</div>
+<div id="logout" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> Fermeture de session</h3>
+<p>Une fois que vous aurez ouvert une session dans un compte utilisateur, vous ne pourrez pas accéder aux données d’un autre compte. Si vous avez besoin de fermer une session dans le compte courant pour accéder à d’autres données, vous pouvez exécuter le code ci-dessous.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">motusLogout</span>()</code></pre></div>
+</div>
+<div id="downloadData" class="section level3">
+<h3><span class="header-section-number">3.4.4</span> Téléchargement de données de détection</h3>
+<p>Nous pouvons commencer. Notez qu’aucun récepteur n’est enregistré dans le cadre du projet 176, de sorte que le deuxième appel de fonction ne permettra pas d’obtenir des données. Toutefois, vous pouvez remplacer le numéro de série du récepteur par un véritable numéro de série enregistré dans le cadre de votre projet ou d’un de vos projets si vous avez ouvert une session dans votre propre compte (c.-à-d. non pas avec le mot de passe «motus.sample»; voyez la section <a href="accessingData.html#logout">3.4.3</a>).</p>
+<p>****Toutes les données téléchargées seront enregistrées dans votre répertoire de travail, sauf indication contraire dans l’appel de fonction tagme tel qu’indiqué ci-après.**</p>
+<p>Veuillez noter que si vous téléchargez pour la première fois (‘new = TRUE’ dans l’appel de fonction tagme) un grand ensemble de données à partir du serveur de Motus, cela peut prendre beaucoup de temps, parfois quelques heures. Une fois que vous aurez effectué un premier téléchargement, le chargement d’un fichier .motus dans R avec la commande «’tagme(proj.num, update = TRUE)» se fera presque instantanément. L’indication du déroulement du téléchargement devrait s’afficher à la console; si vous ne la voyez pas, essayez de faire défiler la page vers le bas pendant que la fonction tagme est en cours d’exécution.</p>
+<p>Dans l’éventualité où votre connexion au serveur de Motus ferait défaut avant la fin du téléchargement (à cause d’une mauvaise connexion Internet par exemple), utilisez «tagme(proj.num, update = TRUE)» pour poursuivre le téléchargement à partir du point d’interruption, en veillant à indiquer le répertoire de réception des données si vous n’utilisez pas le répertoire de travail.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()  <span class="co"># Indiquez le répertoire de travail; utilisez la fonction setwd() pour le modifier.</span>
+proj.num &lt;-<span class="st"> </span><span class="dv">176</span>  <span class="co"># Entrez 176 ou le numéro de votre projet.</span>
+
+sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">new =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">update =</span> <span class="ot">TRUE</span>)  <span class="co"># Pour la base de données du projet</span>
+sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dt">projRecv =</span> <span class="st">&quot;SG-123BBBK1234&quot;</span>, <span class="dt">update =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">new =</span> <span class="ot">TRUE</span>)  <span class="co"># Pour la base de données du récepteur</span></code></pre></div>
+<p>Si vous ne voulez pas utiliser le répertoire de travail, spécifiez un répertoire à créer et ouvrez une base de données de détection locale en utilisant «dir =»:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">new =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">update =</span> <span class="ot">TRUE</span>, <span class="dt">dir =</span> <span class="st">&quot;./data/&quot;</span>)</code></pre></div>
+<p>La fonction tagme() versera une copie de votre base de données de détection dans le répertoire de travail ou le répertoire que vous avez spécifié. Cette copie prendra la forme d’un fichier SQLite portant le suffixe .motus.</p>
+</div>
+<div id="tagmeUpdate" class="section level3">
+<h3><span class="header-section-number">3.4.5</span> Ouverture et mise à jour d’une base de données de détection locale</h3>
+<p>Pour ouvrir et mettre à jour une base de données de détection qui existe déjà (qui a déjà été téléchargée):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">new =</span> <span class="ot">FALSE</span>, 
+    <span class="dt">update =</span> <span class="ot">TRUE</span>, <span class="dt">dir =</span> <span class="st">&quot;./data/&quot;</span>)  <span class="co"># Utilisez «dir =» pour spécifier un répertoire.</span></code></pre></div>
+<p>Si vous travaillez hors ligne et que vous voulez charger une base de données déjà téléchargée sans vous connecter au serveur, utilisez:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">update =</span> <span class="ot">FALSE</span>, 
+    <span class="dt">dir =</span> <span class="st">&quot;./data/&quot;</span>)</code></pre></div>
+</div>
+<div id="tellme" class="section level3">
+<h3><span class="header-section-number">3.4.6</span> Vérification de l’existence de nouvelles données</h3>
+<p>Pour vérifier si de nouvelles données sont disponibles sans télécharger ces données, vous pouvez utiliser la fonction tellme(). Vous verrez s’afficher une liste:</p>
+<ul>
+<li><strong>numHits</strong>: nombre de nouvelles détections;</li>
+<li><strong>numBytes</strong>: quantité approximative de données non comprimées à transférer, en mégaoctets;</li>
+<li><strong>numRuns</strong>: nombre de séquences de nouvelles détections, c’est-à-dire de séries de détections continues par une antenne particulière de signaux provenant d’un émetteur;</li>
+<li><strong>numBatches</strong>: nombre de lots de nouvelles données;</li>
+<li><strong>numGPS</strong> nombre d’enregistrements GPS de nouvelles données.</li>
+</ul>
+<p>La fonction tellme () repose sur l’hypothèse qu’il existe déjà une copie locale de la base de données:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tellme</span>(<span class="dt">projRecv =</span> proj.num)  <span class="co"># Si db est dans le répertoire de travail</span>
+<span class="kw">tellme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">dir =</span> <span class="st">&quot;./data/&quot;</span>)  <span class="co"># Pour spécifier un autre répertoire</span></code></pre></div>
+<p>Pour vérifier combien de données sont disponibles pour un projet sans_que_vous_ayez une copie locale de la base de données, utilisez le paramètre «new»:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tellme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">new =</span> <span class="ot">TRUE</span>)</code></pre></div>
+</div>
+<div id="forceMeta" class="section level3">
+<h3><span class="header-section-number">3.4.7</span> Imposition d’une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs</h3>
+<p>Les métadonnées sur les émetteurs et les récepteurs sont automatiquement fusionnées avec les données de détection d’émetteurs lorsque ces dernières sont téléchargées. Toutefois, si vous voulez imposer la réimportation des métadonnées lorsque vous mettez à jour une base de données, vous pouvez utiliser la commande suivante:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dt">projRecv =</span> proj.num, <span class="dt">forceMeta =</span> <span class="ot">TRUE</span>)</code></pre></div>
+</div>
+<div id="metadata" class="section level3">
+<h3><span class="header-section-number">3.4.8</span> Importation de l’ensemble des métadonnées sur les émetteurs et les récepteurs</h3>
+<p>Lorsque vous utilisez la fonction tagme() pour télécharger ou mettre à jour votre fichier .motus, vous obtenez les métadonnées sur:</p>
+<ol style="list-style-type: decimal">
+<li>tous les émetteurs enregistrés dans le cadre de votre projet dont des signaux ont été détectés;</li>
+<li>les émetteurs enregistrés dans le cadre d’autres projets qui sont associés à des détections de signaux ambigus (voyez le chapitre <a href="dataCleaning.html#dataCleaning">5</a>) dans vos données;</li>
+<li>les récepteurs qui ont détecté les signaux de vos émetteurs ainsi que les signaux ambigus.</li>
+</ol>
+<p>Dans de nombreux cas, vous voudrez accéder à toutes les métadonnées sur l’ensemble des émetteurs et des récepteurs partout dans le réseau (par exemple pour déterminer combien de vos émetteurs déployés n’ont pas été repérés ou pour localiser les stations avec et sans détections). Vous pouvez utiliser la fonction metadata() pour ajouter la totalité des métadonnées Motus à votre fichier .motus enregistré. Cette fonction n’a besoin d’être exécutée qu’une seule fois, mais nous vous suggérons de réimporter les métadonnées occasionnellement pour vous assurer que vous avez l’information la plus récente et à jour.</p>
+<p>L’exécution de la fonction metadata () de la manière suivante aura pour effet d’ajouter les métadonnées appropriées provenant de l’ensemble du réseau (tous les émetteurs et les récepteurs) aux tables «recvDeps» et «’tagDeps» dans votre fichier .motus:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Accéder aux métadonnées sur tous les émetteurs et</span>
+<span class="co"># les récepteurs dans le cadre de tous les projets</span>
+<span class="co"># dans le réseau.</span>
+<span class="kw">metadata</span>(sql.motus)</code></pre></div>
+<p>Vous pouvez aussi charger les métadonnées reliées à un ou des projets spécifiques, de la manière suivante:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Accéder aux métadonnées sur les émetteurs et les</span>
+<span class="co"># récepteurs associés au projet 176.</span>
+<span class="kw">metadata</span>(sql.motus, <span class="dt">projectIDs =</span> <span class="dv">176</span>)
+
+<span class="co"># Accéder aux métadonnées sur les émetteurs et les</span>
+<span class="co"># récepteurs associés aux projets 176 et 1.</span>
+<span class="kw">metadata</span>(sql.motus, <span class="dt">projectIDs =</span> <span class="kw">c</span>(<span class="dv">176</span>, <span class="dv">1</span>))</code></pre></div>
+</div>
+</div>
+<div id="databaseStructure" class="section level2">
+<h2><span class="header-section-number">3.5</span> Structure des données</h2>
+<p>Chaque base de données de détection est stockée sous la forme d’un fichier SQLite («dplyr::src_sqlite») portant le suffixe .motus. Nous avons choisi le format SQLite pour les raisons suivantes:</p>
+<ol style="list-style-type: decimal">
+<li>Il est souple; il autorise de nombreux formats de données.</li>
+<li>Il est accessible à partir de nombreuses plates-formes logicielles (pas seulement à partir de R).</li>
+<li>Il permet l’<strong>adjonction</strong>: la base de données peut être créée et mise à jour sur disque sans qu’il soit nécessaire de lire et de sauvegarder de nouveau tout le contenu de la base. Cela permet de gagner du temps et d’économiser de la mémoire lorsqu’on fait une recherche pour déterminer si de nouvelles données de détection sont disponibles pour un projet ou un récepteur donné.</li>
+</ol>
+<p>Le fichier .motus contient une série de tables interdépendantes dans lesquelles les données sont stockées sous forme condensée pour économiser de la mémoire. Voici quelles sont ces tables:</p>
+<ol style="list-style-type: decimal">
+<li>antDeps: métadonnées sur les antennes, p. ex., hauteur, angle, type d’antenne;</li>
+<li>batchRuns: métadonnées sur les runID et les batchID associés;</li>
+<li>batches: données de détection pour un récepteur et un numéro de redémarrage de récepteur particuliers;</li>
+<li>filters: métadonnées reliées à des filtres créés par l’utilisateur qui sont associés au récepteur en question;<br />
+</li>
+<li>gps: métadonnées reliées à la position GPS du récepteur;</li>
+<li>hits: données de détection au niveau de chaque détection de signaux;</li>
+<li>meta: métadonnées reliées au projet et au type de données (émetteurs par rapport aux récepteurs) qui sont inclus dans le fichier .motus;</li>
+<li>projAmbig: métadonnées reliées aux projets pour lesquels il existe des détections ambiguës;</li>
+<li>projBatch: métadonnées pour le nombre de détections contenues dans chaque lot;</li>
+<li>projs: métadonnées reliées aux projets, p. ex., nom du projet, chercheur principal;</li>
+<li>recvDeps: métadonnées reliées aux déploiements de récepteurs, p. ex., date du déploiement, lieu, caractéristiques du récepteur;</li>
+<li>recvs: métadonnées reliées au numéro de série du récepteur et à l’identifiant d’appareil (deviceID) Motus associé;</li>
+<li>runs: données de détection associées à une séquence de (détections continues d’un émetteur unique par un récepteur particulier);</li>
+<li>runsFilters: liste de runIDs associés à des filtres créés par l’utilisateur et à des probabilités attribuées;<br />
+</li>
+<li>species: métadonnées reliées aux espèces, p. ex., identifiant unique, nom scientifique, nom commun;</li>
+<li>tagAmbig: métadonnées reliées aux émetteurs ambigus, p. ex., ambigID et motusTagID associés;</li>
+<li>tagDeps: métadonnées reliées à des déploiements d’émetteurs, p. ex., date du déploiement, lieu et espèce;</li>
+<li>tags: métadonnées reliées à des émetteurs, p. ex., identifiant unique, caractéristiques de l’émetteur(p. ex., cadence d’émission).</li>
+</ol>
+<p>Vous pouvez visualiser la liste des tables, et les variables contenues dans ces tables, en utilisant les codes suivants:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Indiquer le lieu et le nom du fichier du projet.</span>
+file.name &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(<span class="kw">SQLite</span>(), <span class="st">&quot;./data/project-176.motus&quot;</span>)
+
+<span class="co"># Obtenir une liste des tables dans le fichier</span>
+<span class="co"># .motus spécifié ci-dessus.</span>
+<span class="kw">dbListTables</span>(file.name)
+
+<span class="co"># Obtenir une liste des variables contenues dans la</span>
+<span class="co"># table «species» dans le fichier .motus.</span>
+<span class="kw">dbListFields</span>(file.name, <span class="st">&quot;species&quot;</span>)</code></pre></div>
+<p>En plus de ces tables, des tables «virtuelles» ou «vues» ont été créées à la suite de requêtes qui entraînent la fusion des données des différentes tables en une «vue» pratique contenant tous les champs dont vous pouvez avoir besoin. Les vues suivantes sont actuellement incluses dans chaque fichier .motus:</p>
+<ol style="list-style-type: decimal">
+<li>allambigs: liste en format long tous les motusTagID (jusqu’à 6) associés à chaque ambigID négatif;</li>
+<li>alltags: fournit l’ensemble des données de détection pour tous les émetteurs et tous les émetteurs ambigus (en double) associés à votre projet. Les détections ambiguës sont répétées pour chaque motusTagID représenté par chaque ambigID.</li>
+</ol>
+<p>Étant donné que le fichier est un fichier dplyr::src_sqlite, toutes les fonctions dplyr peuvent être utilisées pour filtrer la base de données .motus et en présenter un sommaire sans avoir d’abord à enregistrer les données sous la forme d’un fichier <em>plat</em> (une trame de données bidimensionnelle typique). Le format SQL est très avantageux en présence d’un gros fichier – les requêtes effectuées dans ce format seront beaucoup plus rapides que celles effectuées sur une trame de données plate.</p>
+<p>On peut accéder à chaque table et chaque vue dans le fichier .motus en utilisant la fonction tbl():</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Obtenir la table des métadonnées sur les</span>
+<span class="co"># déploiements d&#39;émetteurs pour le projet courant.</span>
+tbl.tagDeps &lt;-<span class="st"> </span><span class="kw">tbl</span>(sql.motus, <span class="st">&quot;tagDeps&quot;</span>)</code></pre></div>
+<p>La structure sous-jacente à ces tables est une liste de longueur 2:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tbl.tagDeps)</code></pre></div>
+<p>La première partie de la liste, «src», fournit de l’information sur la SQLiteConnection, entre autres sur l’emplacement de la base de données. La deuxième partie est une liste qui comprend la table sous-jacente. Dès lors, l’objet R «tagDeps» est une table <em>virtuelle</em> qui contient la structure de la base de données et l’information nécessaire pour la connexion avec les données sous-jacentes dans le fichier .motus. Tel qu’indiqué plus haut, cette méthode de stockage des données présente l’avantage d’économiser de la mémoire lorsqu’on accède à de très grosses bases de données, et les fonctions intégrées dans le logiciel dplyr peuvent être utilisées pour manipuler et résumer les tables avant de rassembler les résultats dans une trame de données «plate» typique.</p>
+<p>Si vous voulez utiliser des fonctions familières pour accéder à des composantes de la trame de données sous-jacente, utilisez la fonction «collect». Par exemple, pour voir les noms des variables dans la table tagDeps:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbl.tagDeps <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">names</span>()  <span class="co"># Présenter la liste des noms des variables dans la table.</span></code></pre></div>
+<pre><code>##  [1] &quot;deployID&quot;     &quot;tagID&quot;        &quot;projectID&quot;    &quot;status&quot;      
+##  [5] &quot;tsStart&quot;      &quot;tsEnd&quot;        &quot;deferSec&quot;     &quot;speciesID&quot;   
+##  [9] &quot;bandNumber&quot;   &quot;markerNumber&quot; &quot;markerType&quot;   &quot;latitude&quot;    
+## [13] &quot;longitude&quot;    &quot;elevation&quot;    &quot;comments&quot;     &quot;id&quot;          
+## [17] &quot;bi&quot;           &quot;tsStartCode&quot;  &quot;tsEndCode&quot;    &quot;fullID&quot;</code></pre>
+<p>La table <em>virtuelle</em> «alltags» contient les données de détection ainsi que toutes les variables dont la plupart des utilisateurs pourront avoir besoin à partir des tables .motus sous-jacentes. Cette table est accessible elle aussi à l’aide de la fonction dplyr tbl():</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbl.alltags &lt;-<span class="st"> </span><span class="kw">tbl</span>(sql.motus, <span class="st">&quot;alltags&quot;</span>)  <span class="co"># Table virtuelle</span></code></pre></div>
+<p>La table suivante présente la liste des variables disponibles dans la vue «alltags». Vous trouverez une description complète de chaque champ dans l’annexe A.</p>
+</div>
+<div id="verification-de-la-version-de-la-base-de-donnees-checkversion" class="section level2">
+<h2><span class="header-section-number">3.6</span> Vérification de la version de la base de données {checkVersion}</h2>
+<p>Lorsque vous appelez la fonction tagme pour charger la base de données SQLite, un processus permet de vérifier que la version de votre base de données correspond à la version la plus récente du logiciel motus et de stocker la version dans une nouvelle table appelée admInfo. Au fil du temps, des changements sont apportés qui nécessitent l’ajout de nouvelles tables ou vues ou de nouveaux champs dans la base de données. Si vous n’avez pas la version correcte de la base de données, il se pourrait que certains des exemples contenus dans le présent guide ne fonctionnent pas. Cette fonction permet de vérifier que votre base de données a été actualisée à la version courante du logiciel motus. Si vous n’avez pas la version courante, reportez-vous au chapitre <a href="loadingPackages.html#loadingPackages">2</a>, qui fournit des instructions sur la mise à jour des logiciels motus et motusClient. Si le système affiche un avertissement, reportez-vous à l’annexe B.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">checkVersion</span>(sql.motus)</code></pre></div>
+</div>
+<div id="convertToFlat" class="section level2">
+<h2><span class="header-section-number">3.7</span> Conversion d’une table SQLITE en une trame de données plate</h2>
+<p>Pour convertir la vue «alltags» ou une autre table dans le fichier .motus en un format «plat» typique (c.-à-d. avec tous les enregistrements pour chaque champ entrés), utilisez les fonctions collect() et as.data.frame(). La sortie pourra ensuite subir d’autres manipulations ou être utilisée pour générer un fichier RDS de vos données à des fins d’archivage ou d’exportation.</p>
+<p>Nous suggérons le flux de travail suivant. Préparez un script qui effectue le téléchargement/la mise à jour de vos données, élimine les variables nécessaires et effectue un premier nettoyage s’il y a lieu, puis enregistrez les données résultantes sous la forme d’un fichier RDS. Nous suggérons d’utiliser le format RDS plutôt que le format CSV, car il conserve la structure sous-jacente des données (p. ex. les heures POSIX demeurent des heures POSIX). Toutefois, si vous voulez exporter vos données dans un autre programme, il pourrait être préférable d’utiliser le format CSV.</p>
+<p>Créer un fichier plat avec l’ensemble des champs peut exiger beaucoup de mémoire et peut ralentir le logiciel R considérablement lorsqu’il faut traiter de grands ensembles de données. Pour certaines combinaisons d’ensembles de données et d’ordinateurs, il peut être impossible d’utiliser directement des trames de données dans R. Si cela se produit, c’est l’étape de votre flux de travail où vous devriez examiner attentivement l’information dont vous avez besoin dans votre ensemble de données (par exemple comment les données sont agrégées) et la simplifier. Il est toujours possible de revenir au script dont il est question ici pour créer un nouveau fichier RDS avec des variables différentes ou avec des données agrégées à une échelle différente.</p>
+<p>Nous développons cette idée dans les sections qui suivent.</p>
+<p>Créez une trame de données …</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags &lt;-<span class="st"> </span>tbl.alltags <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()  <span class="co"># Pour tous les champs dans la trame de données</span></code></pre></div>
+<p>… et examinez brièvement le fichier résultant.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(df.alltags)  <span class="co"># Noms des champs</span>
+<span class="kw">str</span>(df.alltags)  <span class="co"># Examinez la structure de vos champs de données.</span>
+<span class="kw">head</span>(df.alltags)  <span class="co"># Examinez les 6 premières lignes de la trame de données.</span>
+<span class="kw">summary</span>(df.alltags)  <span class="co"># Sommaire de chaque colonne dans la trame de données</span></code></pre></div>
+<p>Notez que le champ de l’estampille temporelle (ts) est numérique; il indique le nombre de secondes écoulé depuis le 1er janvier 1970. Nous recommandons que, lorsque vous transformez vos tables en trames de données plates, vous formatiez l’estampille temporelle en utilisant le logiciel lubridate en fonction de cette estampille, par exemple:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags &lt;-<span class="st"> </span>tbl.alltags <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st">     </span><span class="co"># Pour tous les champs dans la trame de données</span>
+<span class="st">                </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>))
+
+<span class="co"># tz = &quot;UTC&quot; n&#39;est pas nécessaire ici si vous avez réglé votre environnement système à l&#39;échelle de temps UTC (GMT)</span>
+<span class="co"># ... mais c&#39;est un rappel utile!</span></code></pre></div>
+<p>Si vous voulez charger seulement une partie de votre table virtuelle complète (p. ex., certains champs, certains émetteurs ou tous les émetteurs se rapportant à un projet ou à une espèce spécifique), vous pouvez utiliser des fonctions dplyr pour filtrer les données avant de les réunir en une trame de données. Voici des exemples:</p>
+<ol style="list-style-type: decimal">
+<li>Pour choisir certaines variables:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Pour choisir un sous-ensemble de variables, dans</span>
+<span class="co"># le présent cas une liste unique d&#39;identifiants</span>
+<span class="co"># d&#39;émetteurs (tag ID) Motus à chaque récepteur et</span>
+<span class="co"># à chaque antenne.</span>
+df.alltagsSub &lt;-<span class="st"> </span><span class="kw">select</span>(tbl.alltags, recv, port, motusTagID) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">distinct</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Pour choisir certains identifiants d’émetteurs (tag ID):</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filtrez pour inclure seulement les identifiants</span>
+<span class="co"># d&#39;émetteurs Motus 16011 et 23316.</span>
+df.alltagsSub &lt;-<span class="st"> </span><span class="kw">filter</span>(tbl.alltags, motusTagID <span class="op">%in%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">c</span>(<span class="dv">16011</span>, <span class="dv">23316</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>))</code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Pour choisir une espèce en particulier:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filtrez pour inclure seulement le Bécasseau</span>
+<span class="co"># maubèche (en utilisant la variable speciesID).</span>
+df.<span class="dv">4670</span> &lt;-<span class="st"> </span><span class="kw">filter</span>(tbl.alltags, speciesID <span class="op">==</span><span class="st"> </span><span class="dv">4670</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts, 
+    <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>))
+
+<span class="co"># Filtrez pour inclure seulement le Bécasseau</span>
+<span class="co"># maubèche (en utilisant le nom commun anglais).</span>
+df.redKnot &lt;-<span class="st"> </span><span class="kw">filter</span>(tbl.alltags, speciesEN <span class="op">==</span><span class="st"> &quot;Red Knot&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts, 
+    <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>))</code></pre></div>
+<p>En utilisant la fonction dplyr(), vous pouvez aussi résumer votre table virtuelle avant de la convertir en un fichier plat. Par exemple, pour déterminer le nombre de détections différentes pour chaque émetteur à chaque récepteur:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.detectSum &lt;-<span class="st"> </span>tbl.alltags <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(motusTagID, 
+    recv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tally</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<p>Dans les chapitres suivants, nous vous montrerons d’autres façons de travailler avec vos données et de les résumer.</p>
+</div>
+<div id="exportDetections" class="section level2">
+<h2><span class="header-section-number">3.8</span> Exportation d’une trame de données «plate» sous la forme d’un fichier CSV ou RDS</h2>
+<p>Nous avons mentionné qu’un flux de travail approprié consiste à créer un script qui permet de traiter tous les problèmes de données et qui crée ensuite une trame de données (ou un espace de travail) qui peut être réutilisée. Si vous faites cela, vous pouvez rapidement amorcer une session d’analyse ou de visualisation à partir d’un point de départ connu (et cohérent). Nous utilisons un fichier RDS, qui conserve toutes les structures de données R associées, par exemple les estampilles temporelles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Enregistrez un fichier RDS.</span>
+
+<span class="kw">saveRDS</span>(df.alltags, <span class="st">&quot;./data/df.alltags.RDS&quot;</span>)
+
+<span class="co"># ou enregistrez comme fichier CSV, qui ne conserve</span>
+<span class="co"># pas les estampilles temporelles, mais qui peut</span>
+<span class="co"># être lu facilement par d&#39;autres programmes.</span>
+
+<span class="kw">write_csv</span>(df.alltags, <span class="st">&quot;./data/df.alltags.CSV&quot;</span>)</code></pre></div>
+</div>
+<div id="convention-de-noms-dobjets-r" class="section level2">
+<h2><span class="header-section-number">3.9</span> Convention de noms d’objets R</h2>
+<p>Dans le présent chapitre et tout au long du guide, nous nommons les objets R en fonction de leur structure et de la source des données que ces objets contiennent. Ainsi, les objets SQLite portent le préfixe «sql.», les objets de tables virtuelles, le préfixe «tbl.» et les objets de trames de données, le préfixe «df.». Le reste du nom de l’objet inclut le nom de la table .motus d’où proviennent les données. Dans le reste du guide, nous utiliserons et référencerons les formats de nommage ci-dessous; veuillez vous assurer de bien connaître ces formats avant de passer au prochain chapitre. Le code ci-dessous tient pour acquis que vous avez déjà téléchargé les données du projet 176 et que vous n’avez pas besoin de les mettre à jour; dans le cas contraire, reportez-vous à la section <a href="accessingData.html#downloadData">3.4.4</a>, qui montre comment effectuer le téléchargement initial:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Objet R SQLite, lié au fichier .motus:</span>
+sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dv">176</span>, <span class="dt">update =</span> <span class="ot">TRUE</span>, <span class="dt">dir =</span> <span class="st">&quot;./data&quot;</span>)  
+
+<span class="co"># Objet de la table virtuelle alltags dans le fichier .motus du projet 176:</span>
+tbl.alltags &lt;-<span class="st"> </span><span class="kw">tbl</span>(sql.motus, <span class="st">&quot;alltags&quot;</span>)  
+df.alltags &lt;-<span class="st"> </span>tbl.alltags <span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">collect</span>() <span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># Objet de trame de données («plate») de la table alltags</span>
+<span class="st">                </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>))              </code></pre></div>
+<p>Dans le prochain chapitre, il sera question de métadonnées manquantes.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="loadingPackages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="deployments.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["FrMotusRBook.pdf", "FrMotusRBook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

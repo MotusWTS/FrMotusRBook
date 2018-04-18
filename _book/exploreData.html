@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Guide R pour Motus</title>
+  <meta name="description" content="Guide R pour Motus">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Guide R pour Motus" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="BSC_Motus_Logo.png" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guide R pour Motus" />
+  
+  
+  <meta name="twitter:image" content="BSC_Motus_Logo.png" />
+
+<meta name="author" content="Tara L. Crewe, Zoe Crysler, et Philip Taylor">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="dataCleaning.html">
+<link rel="next" href="appendixA.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Utilisation du langage R appliqué aux données du réseau de radiotélémétrie automatisée Motus</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#whatBookCovers"><i class="fa fa-check"></i><b>1.1</b> Ce que le présent guide ne montre pas</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.2</b> Connaissances préalables</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#sampleData"><i class="fa fa-check"></i><b>1.3</b> Ensemble de données utilisées comme exemples</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i><b>1.4</b> Remerciements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loadingPackages.html"><a href="loadingPackages.html"><i class="fa fa-check"></i><b>2</b> Chargement des logiciels R</a><ul>
+<li class="chapter" data-level="2.1" data-path="loadingPackages.html"><a href="loadingPackages.html#internalProcessing"><i class="fa fa-check"></i><b>2.1</b> Traitement interne des données</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="accessingData.html"><a href="accessingData.html"><i class="fa fa-check"></i><b>3</b> Accès aux données de détection</a><ul>
+<li class="chapter" data-level="3.1" data-path="accessingData.html"><a href="accessingData.html#databaseTypes"><i class="fa fa-check"></i><b>3.1</b> Types de bases de données</a></li>
+<li class="chapter" data-level="3.2" data-path="accessingData.html"><a href="accessingData.html#loadPackages"><i class="fa fa-check"></i><b>3.2</b> Chargement des logiciels R pertinents</a></li>
+<li class="chapter" data-level="3.3" data-path="accessingData.html"><a href="accessingData.html#reglage-de-lenvironnement-systeme"><i class="fa fa-check"></i><b>3.3</b> Réglage de l’environnement système</a></li>
+<li class="chapter" data-level="3.4" data-path="accessingData.html"><a href="accessingData.html#importDetections"><i class="fa fa-check"></i><b>3.4</b> Importation de données de détection</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="accessingData.html"><a href="accessingData.html#telechargement-des-donnees-dun-projet-ou-dun-recepteur-pour-la-premiere-fois"><i class="fa fa-check"></i><b>3.4.1</b> Téléchargement des données d’un projet ou d’un récepteur pour la <em>première fois</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="accessingData.html"><a href="accessingData.html#userAuthentication"><i class="fa fa-check"></i><b>3.4.2</b> Authentification de l’utilisateur</a></li>
+<li class="chapter" data-level="3.4.3" data-path="accessingData.html"><a href="accessingData.html#logout"><i class="fa fa-check"></i><b>3.4.3</b> Fermeture de session</a></li>
+<li class="chapter" data-level="3.4.4" data-path="accessingData.html"><a href="accessingData.html#downloadData"><i class="fa fa-check"></i><b>3.4.4</b> Téléchargement de données de détection</a></li>
+<li class="chapter" data-level="3.4.5" data-path="accessingData.html"><a href="accessingData.html#tagmeUpdate"><i class="fa fa-check"></i><b>3.4.5</b> Ouverture et mise à jour d’une base de données de détection locale</a></li>
+<li class="chapter" data-level="3.4.6" data-path="accessingData.html"><a href="accessingData.html#tellme"><i class="fa fa-check"></i><b>3.4.6</b> Vérification de l’existence de nouvelles données</a></li>
+<li class="chapter" data-level="3.4.7" data-path="accessingData.html"><a href="accessingData.html#forceMeta"><i class="fa fa-check"></i><b>3.4.7</b> Imposition d’une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs</a></li>
+<li class="chapter" data-level="3.4.8" data-path="accessingData.html"><a href="accessingData.html#metadata"><i class="fa fa-check"></i><b>3.4.8</b> Importation de l’ensemble des métadonnées sur les émetteurs et les récepteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="accessingData.html"><a href="accessingData.html#databaseStructure"><i class="fa fa-check"></i><b>3.5</b> Structure des données</a></li>
+<li class="chapter" data-level="3.6" data-path="accessingData.html"><a href="accessingData.html#verification-de-la-version-de-la-base-de-donnees-checkversion"><i class="fa fa-check"></i><b>3.6</b> Vérification de la version de la base de données {checkVersion}</a></li>
+<li class="chapter" data-level="3.7" data-path="accessingData.html"><a href="accessingData.html#convertToFlat"><i class="fa fa-check"></i><b>3.7</b> Conversion d’une table SQLITE en une trame de données plate</a></li>
+<li class="chapter" data-level="3.8" data-path="accessingData.html"><a href="accessingData.html#exportDetections"><i class="fa fa-check"></i><b>3.8</b> Exportation d’une trame de données «plate» sous la forme d’un fichier CSV ou RDS</a></li>
+<li class="chapter" data-level="3.9" data-path="accessingData.html"><a href="accessingData.html#convention-de-noms-dobjets-r"><i class="fa fa-check"></i><b>3.9</b> Convention de noms d’objets R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deployments.html"><a href="deployments.html"><i class="fa fa-check"></i><b>4</b> Déploiements d’émetteurs et de récepteurs</a><ul>
+<li class="chapter" data-level="4.1" data-path="deployments.html"><a href="deployments.html#chargement-des-logiciels-r-pertinents-et-reglage-de-lenvironnement-de-travail"><i class="fa fa-check"></i><b>4.1</b> Chargement des logiciels R pertinents et réglage de l’environnement de travail</a></li>
+<li class="chapter" data-level="4.2" data-path="deployments.html"><a href="deployments.html#chargement-du-fichier-.motus"><i class="fa fa-check"></i><b>4.2</b> Chargement du fichier .motus</a></li>
+<li class="chapter" data-level="4.3" data-path="deployments.html"><a href="deployments.html#tagDeployments"><i class="fa fa-check"></i><b>4.3</b> Déploiements d’émetteurs</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-completes-sur-les-emetteurs-pour-votre-projet"><i class="fa fa-check"></i><b>4.3.1</b> Téléchargement des métadonnées complètes sur les émetteurs pour votre projet</a></li>
+<li class="chapter" data-level="4.3.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres"><i class="fa fa-check"></i><b>4.3.2</b> Détermination du nombre d’émetteurs enregistrés</a></li>
+<li class="chapter" data-level="4.3.3" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres-qui-ont-ete-deployes"><i class="fa fa-check"></i><b>4.3.3</b> Détermination du nombre d’émetteurs enregistrés qui ont été déployés</a></li>
+<li class="chapter" data-level="4.3.4" data-path="deployments.html"><a href="deployments.html#checkNumberTagDeployments"><i class="fa fa-check"></i><b>4.3.4</b> Détermination du nombre de déploiements par émetteur</a></li>
+<li class="chapter" data-level="4.3.5" data-path="deployments.html"><a href="deployments.html#localisation-des-emetteurs-deployes"><i class="fa fa-check"></i><b>4.3.5</b> Localisation des émetteurs déployés</a></li>
+<li class="chapter" data-level="4.3.6" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-demetteurs"><i class="fa fa-check"></i><b>4.3.6</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="deployments.html"><a href="deployments.html#recvMetadata"><i class="fa fa-check"></i><b>4.4</b> Vérification des métadonnées sur les récepteurs</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-sur-tous-les-recepteurs-dans-le-reseau"><i class="fa fa-check"></i><b>4.4.1</b> Téléchargement des métadonnées sur tous les récepteurs dans le réseau</a></li>
+<li class="chapter" data-level="4.4.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-de-recepteurs-deployes-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.2</b> Détermination du nombre de récepteurs déployés dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.3" data-path="deployments.html"><a href="deployments.html#determination-du-moment-du-deploiement-des-recepteurs-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.3</b> Détermination du moment du déploiement des récepteurs dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.4" data-path="deployments.html"><a href="deployments.html#localisation-des-recepteurs-deployes"><i class="fa fa-check"></i><b>4.4.4</b> Localisation des récepteurs déployés</a></li>
+<li class="chapter" data-level="4.4.5" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-des-recepteurs"><i class="fa fa-check"></i><b>4.4.5</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements des récepteurs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dataCleaning.html"><a href="dataCleaning.html"><i class="fa fa-check"></i><b>5</b> Nettoyage des données</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-logiciels-requis"><i class="fa fa-check"></i><b>5.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="5.2" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-donnees-de-detection"><i class="fa fa-check"></i><b>5.2</b> Chargement des données de détection</a></li>
+<li class="chapter" data-level="5.3" data-path="dataCleaning.html"><a href="dataCleaning.html#verifications-preliminaires-des-donnees"><i class="fa fa-check"></i><b>5.3</b> Vérifications préliminaires des données</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="dataCleaning.html"><a href="dataCleaning.html#sommaires-de-donnees-de-detection-demetteurs"><i class="fa fa-check"></i><b>5.3.1</b> Sommaires de données de détection d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dataCleaning.html"><a href="dataCleaning.html#ambigs"><i class="fa fa-check"></i><b>5.4</b> Recherche et examen de détections ambiguës</a></li>
+<li class="chapter" data-level="5.5" data-path="dataCleaning.html"><a href="dataCleaning.html#verification-de-la-validite-des-sequences-dau-moins-2-detections"><i class="fa fa-check"></i><b>5.5</b> Vérification de la validité des séquences d’au moins 2 détections</a></li>
+<li class="chapter" data-level="5.6" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrage-des-donnees"><i class="fa fa-check"></i><b>5.6</b> Filtrage des données</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrer-et-enregistrer-le-resultat-dans-le-format-rds"><i class="fa fa-check"></i><b>5.6.1</b> Filtrer et enregistrer le résultat dans le format RDS</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dataCleaning.html"><a href="dataCleaning.html#enregistrer-un-filtre-personnalise-dans-la-base-de-donnees-motus-et-lappliquer-aux-donnees"><i class="fa fa-check"></i><b>5.6.2</b> Enregistrer un filtre personnalisé dans la base de données motus et l’appliquer aux données</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exploreData.html"><a href="exploreData.html"><i class="fa fa-check"></i><b>6</b> Exploration des données avec le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="6.1" data-path="exploreData.html"><a href="exploreData.html#chargement-des-logiciels-requis-1"><i class="fa fa-check"></i><b>6.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="6.2" data-path="exploreData.html"><a href="exploreData.html#chargement-des-donnees"><i class="fa fa-check"></i><b>6.2</b> Chargement des données</a></li>
+<li class="chapter" data-level="6.3" data-path="exploreData.html"><a href="exploreData.html#dataSummaries"><i class="fa fa-check"></i><b>6.3</b> Sommaires de données</a></li>
+<li class="chapter" data-level="6.4" data-path="exploreData.html"><a href="exploreData.html#dataPlotting"><i class="fa fa-check"></i><b>6.4</b> Graphiques de données</a></li>
+<li class="chapter" data-level="6.5" data-path="exploreData.html"><a href="exploreData.html#mappingData"><i class="fa fa-check"></i><b>6.5</b> Cartes de données</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="exploreData.html"><a href="exploreData.html#googleMaps"><i class="fa fa-check"></i><b>6.5.1</b> Utilisation de Google Maps</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exploreData.html"><a href="exploreData.html#outlineMaps"><i class="fa fa-check"></i><b>6.5.2</b> Création de cartes muettes simples</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Appendix - alltags structure</a></li>
+<li class="chapter" data-level="B" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html"><i class="fa fa-check"></i><b>B</b> Annexe B - Dépannage {#Annexe B}</a><ul>
+<li class="chapter" data-level="B.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#motusLogout"><i class="fa fa-check"></i><b>B.1</b> Fermeture du logiciel motus</a></li>
+<li class="chapter" data-level="B.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#resumeDownload"><i class="fa fa-check"></i><b>B.2</b> Reprise du téléchargement de données</a></li>
+<li class="chapter" data-level="B.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#messages-derreur-courants-et-solutions"><i class="fa fa-check"></i><b>B.3</b> Messages d’erreur courants et solutions</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-auto-disconnecting-sqliteconnection-une-ou-plusieurs-fois-apres-avoir-utilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.1</b> Je reçois le message «Auto-disconnecting SQLiteConnection» une ou plusieurs fois après avoir utilisé la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-internal-server-error-pendant-que-jutilise-la-fonction-tagme-update-true."><i class="fa fa-check"></i><b>B.3.2</b> Je reçois le message «Internal Server Error» pendant que j’utilise la fonction tagme (…, update = TRUE).</a></li>
+<li class="chapter" data-level="B.3.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-forbidden-pendant-que-jutilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.3</b> Je reçois le message «Error: Forbidden» pendant que j’utilise la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.4" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-object-xxxx-not-found-relatif-au-nom-dune-table-ou-dun-champ-ou-encore-certains-de-vos-exemples-dans-le-guide-ne-fonctionnent-pas."><i class="fa fa-check"></i><b>B.3.4</b> Je reçois le message «Error: Object ‘xxxx’ not found», relatif au nom d’une table ou d’un champ, ou encore certains de vos exemples dans le guide ne fonctionnent pas.</a></li>
+<li class="chapter" data-level="B.3.5" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-in-rsqlite_connectdbname-loadable.extensions-flags-vfs-could-not-connect-to-database-unable-to-open-database-file-lorsque-je-tente-dexecuter-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.5</b> Je reçois le message «Error in rsqlite_connect(dbname, loadable.extensions, flags, vfs): Could not connect to database: unable to open database file» lorsque je tente d’exécuter la fonction tagme().</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="appendixC.html"><a href="appendixC.html"><i class="fa fa-check"></i><b>C</b> Annexe C - Le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="C.1" data-path="appendixC.html"><a href="appendixC.html#checkVersion.B"><i class="fa fa-check"></i><b>C.1</b> checkVersion</a><ul>
+<li class="chapter" data-level="C.1.1" data-path="appendixC.html"><a href="appendixC.html#description"><i class="fa fa-check"></i><b>C.1.1</b> Description</a></li>
+<li class="chapter" data-level="C.1.2" data-path="appendixC.html"><a href="appendixC.html#dependances"><i class="fa fa-check"></i><b>C.1.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.1.3" data-path="appendixC.html"><a href="appendixC.html#exemple"><i class="fa fa-check"></i><b>C.1.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="appendixC.html"><a href="appendixC.html#sunRiseSet"><i class="fa fa-check"></i><b>C.2</b> sunRiseSet</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="appendixC.html"><a href="appendixC.html#description-1"><i class="fa fa-check"></i><b>C.2.1</b> Description</a></li>
+<li class="chapter" data-level="C.2.2" data-path="appendixC.html"><a href="appendixC.html#dependances-1"><i class="fa fa-check"></i><b>C.2.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.2.3" data-path="appendixC.html"><a href="appendixC.html#exemple-1"><i class="fa fa-check"></i><b>C.2.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.3" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsCoor"><i class="fa fa-check"></i><b>C.3</b> plotAllTagsCoord</a><ul>
+<li class="chapter" data-level="C.3.1" data-path="appendixC.html"><a href="appendixC.html#description-2"><i class="fa fa-check"></i><b>C.3.1</b> Description</a></li>
+<li class="chapter" data-level="C.3.2" data-path="appendixC.html"><a href="appendixC.html#dependances-2"><i class="fa fa-check"></i><b>C.3.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.3.3" data-path="appendixC.html"><a href="appendixC.html#exemple-2"><i class="fa fa-check"></i><b>C.3.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsSite"><i class="fa fa-check"></i><b>C.4</b> plotAllTagsSite</a><ul>
+<li class="chapter" data-level="C.4.1" data-path="appendixC.html"><a href="appendixC.html#description-3"><i class="fa fa-check"></i><b>C.4.1</b> Description</a></li>
+<li class="chapter" data-level="C.4.2" data-path="appendixC.html"><a href="appendixC.html#dependances-3"><i class="fa fa-check"></i><b>C.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.4.3" data-path="appendixC.html"><a href="appendixC.html#exemple-3"><i class="fa fa-check"></i><b>C.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="appendixC.html"><a href="appendixC.html#plotDailySiteSum"><i class="fa fa-check"></i><b>C.5</b> plotDailySiteSum</a><ul>
+<li class="chapter" data-level="C.5.1" data-path="appendixC.html"><a href="appendixC.html#description-4"><i class="fa fa-check"></i><b>C.5.1</b> Description</a></li>
+<li class="chapter" data-level="C.5.2" data-path="appendixC.html"><a href="appendixC.html#dependances-4"><i class="fa fa-check"></i><b>C.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.5.3" data-path="appendixC.html"><a href="appendixC.html#exemple-4"><i class="fa fa-check"></i><b>C.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.6" data-path="appendixC.html"><a href="appendixC.html#plotRouteMap"><i class="fa fa-check"></i><b>C.6</b> plotRouteMap</a><ul>
+<li class="chapter" data-level="C.6.1" data-path="appendixC.html"><a href="appendixC.html#description-5"><i class="fa fa-check"></i><b>C.6.1</b> Description</a></li>
+<li class="chapter" data-level="C.6.2" data-path="appendixC.html"><a href="appendixC.html#exemple-5"><i class="fa fa-check"></i><b>C.6.2</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.7" data-path="appendixC.html"><a href="appendixC.html#plotSite"><i class="fa fa-check"></i><b>C.7</b> plotSite</a><ul>
+<li class="chapter" data-level="C.7.1" data-path="appendixC.html"><a href="appendixC.html#description-6"><i class="fa fa-check"></i><b>C.7.1</b> Description</a></li>
+<li class="chapter" data-level="C.7.2" data-path="appendixC.html"><a href="appendixC.html#dependances-5"><i class="fa fa-check"></i><b>C.7.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.7.3" data-path="appendixC.html"><a href="appendixC.html#exemple-6"><i class="fa fa-check"></i><b>C.7.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="appendixC.html"><a href="appendixC.html#plotSiteSig"><i class="fa fa-check"></i><b>C.8</b> plotSiteSig</a><ul>
+<li class="chapter" data-level="C.8.1" data-path="appendixC.html"><a href="appendixC.html#description-7"><i class="fa fa-check"></i><b>C.8.1</b> Description</a></li>
+<li class="chapter" data-level="C.8.2" data-path="appendixC.html"><a href="appendixC.html#dependances-6"><i class="fa fa-check"></i><b>C.8.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.8.3" data-path="appendixC.html"><a href="appendixC.html#exemple-7"><i class="fa fa-check"></i><b>C.8.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.9" data-path="appendixC.html"><a href="appendixC.html#plotTagSig"><i class="fa fa-check"></i><b>C.9</b> plotTagSig</a><ul>
+<li class="chapter" data-level="C.9.1" data-path="appendixC.html"><a href="appendixC.html#description-8"><i class="fa fa-check"></i><b>C.9.1</b> Description</a></li>
+<li class="chapter" data-level="C.9.2" data-path="appendixC.html"><a href="appendixC.html#dependances-7"><i class="fa fa-check"></i><b>C.9.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.9.3" data-path="appendixC.html"><a href="appendixC.html#exemple-8"><i class="fa fa-check"></i><b>C.9.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.10" data-path="appendixC.html"><a href="appendixC.html#simSiteDet"><i class="fa fa-check"></i><b>C.10</b> simSiteDet</a><ul>
+<li class="chapter" data-level="C.10.1" data-path="appendixC.html"><a href="appendixC.html#description-9"><i class="fa fa-check"></i><b>C.10.1</b> Description</a></li>
+<li class="chapter" data-level="C.10.2" data-path="appendixC.html"><a href="appendixC.html#dependances-8"><i class="fa fa-check"></i><b>C.10.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.10.3" data-path="appendixC.html"><a href="appendixC.html#exemple-9"><i class="fa fa-check"></i><b>C.10.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.11" data-path="appendixC.html"><a href="appendixC.html#siteSum"><i class="fa fa-check"></i><b>C.11</b> siteSum</a><ul>
+<li class="chapter" data-level="C.11.1" data-path="appendixC.html"><a href="appendixC.html#description-10"><i class="fa fa-check"></i><b>C.11.1</b> Description</a></li>
+<li class="chapter" data-level="C.11.2" data-path="appendixC.html"><a href="appendixC.html#dependances-9"><i class="fa fa-check"></i><b>C.11.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.11.3" data-path="appendixC.html"><a href="appendixC.html#exemple-10"><i class="fa fa-check"></i><b>C.11.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.12" data-path="appendixC.html"><a href="appendixC.html#siteSumDaily"><i class="fa fa-check"></i><b>C.12</b> siteSumDaily</a><ul>
+<li class="chapter" data-level="C.12.1" data-path="appendixC.html"><a href="appendixC.html#description-11"><i class="fa fa-check"></i><b>C.12.1</b> Description</a></li>
+<li class="chapter" data-level="C.12.2" data-path="appendixC.html"><a href="appendixC.html#dependances-10"><i class="fa fa-check"></i><b>C.12.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.12.3" data-path="appendixC.html"><a href="appendixC.html#exemple-11"><i class="fa fa-check"></i><b>C.12.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.13" data-path="appendixC.html"><a href="appendixC.html#siteTrans"><i class="fa fa-check"></i><b>C.13</b> siteTrans</a><ul>
+<li class="chapter" data-level="C.13.1" data-path="appendixC.html"><a href="appendixC.html#description-12"><i class="fa fa-check"></i><b>C.13.1</b> Description</a></li>
+<li class="chapter" data-level="C.13.2" data-path="appendixC.html"><a href="appendixC.html#dependances-11"><i class="fa fa-check"></i><b>C.13.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.13.3" data-path="appendixC.html"><a href="appendixC.html#exemple-12"><i class="fa fa-check"></i><b>C.13.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.14" data-path="appendixC.html"><a href="appendixC.html#tagSum"><i class="fa fa-check"></i><b>C.14</b> tagSum</a><ul>
+<li class="chapter" data-level="C.14.1" data-path="appendixC.html"><a href="appendixC.html#description-13"><i class="fa fa-check"></i><b>C.14.1</b> Description</a></li>
+<li class="chapter" data-level="C.14.2" data-path="appendixC.html"><a href="appendixC.html#dependances-12"><i class="fa fa-check"></i><b>C.14.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.14.3" data-path="appendixC.html"><a href="appendixC.html#exemple-13"><i class="fa fa-check"></i><b>C.14.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.15" data-path="appendixC.html"><a href="appendixC.html#tagSumSite"><i class="fa fa-check"></i><b>C.15</b> tagSumSite</a><ul>
+<li class="chapter" data-level="C.15.1" data-path="appendixC.html"><a href="appendixC.html#description-14"><i class="fa fa-check"></i><b>C.15.1</b> Description</a></li>
+<li class="chapter" data-level="C.15.2" data-path="appendixC.html"><a href="appendixC.html#dependances-13"><i class="fa fa-check"></i><b>C.15.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.15.3" data-path="appendixC.html"><a href="appendixC.html#exemple-14"><i class="fa fa-check"></i><b>C.15.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.16" data-path="appendixC.html"><a href="appendixC.html#timeToSunriset"><i class="fa fa-check"></i><b>C.16</b> timeToSunriset</a><ul>
+<li class="chapter" data-level="C.16.1" data-path="appendixC.html"><a href="appendixC.html#description-15"><i class="fa fa-check"></i><b>C.16.1</b> Description</a></li>
+<li class="chapter" data-level="C.16.2" data-path="appendixC.html"><a href="appendixC.html#dependances-14"><i class="fa fa-check"></i><b>C.16.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.16.3" data-path="appendixC.html"><a href="appendixC.html#exemple-15"><i class="fa fa-check"></i><b>C.16.3</b> Exemple</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="appendixD.html"><a href="appendixD.html"><i class="fa fa-check"></i><b>D</b> Annexe D - Le logiciel motusClient - Fonctions de filtrage de données</a><ul>
+<li class="chapter" data-level="D.1" data-path="appendixD.html"><a href="appendixD.html#listRunsFilters"><i class="fa fa-check"></i><b>D.1</b> listRunsFilters</a><ul>
+<li class="chapter" data-level="D.1.1" data-path="appendixD.html"><a href="appendixD.html#description-16"><i class="fa fa-check"></i><b>D.1.1</b> Description</a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="appendixD.html"><a href="appendixD.html#dependances-15"><i class="fa fa-check"></i><b>D.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.3" data-path="appendixD.html"><a href="appendixD.html#exemple-16"><i class="fa fa-check"></i><b>D.3</b> Exemple</a></li>
+<li class="chapter" data-level="D.4" data-path="appendixD.html"><a href="appendixD.html#createRunsFilter"><i class="fa fa-check"></i><b>D.4</b> createRunsFilter</a><ul>
+<li class="chapter" data-level="D.4.1" data-path="appendixD.html"><a href="appendixD.html#description-17"><i class="fa fa-check"></i><b>D.4.1</b> Description</a></li>
+<li class="chapter" data-level="D.4.2" data-path="appendixD.html"><a href="appendixD.html#dependances-16"><i class="fa fa-check"></i><b>D.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.4.3" data-path="appendixD.html"><a href="appendixD.html#exemple-17"><i class="fa fa-check"></i><b>D.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.5" data-path="appendixD.html"><a href="appendixD.html#getRunsFilters"><i class="fa fa-check"></i><b>D.5</b> getRunsFilters</a><ul>
+<li class="chapter" data-level="D.5.1" data-path="appendixD.html"><a href="appendixD.html#description-18"><i class="fa fa-check"></i><b>D.5.1</b> Description</a></li>
+<li class="chapter" data-level="D.5.2" data-path="appendixD.html"><a href="appendixD.html#dependances-17"><i class="fa fa-check"></i><b>D.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.5.3" data-path="appendixD.html"><a href="appendixD.html#exemple-18"><i class="fa fa-check"></i><b>D.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.6" data-path="appendixD.html"><a href="appendixD.html#writeRunsFilter"><i class="fa fa-check"></i><b>D.6</b> writeRunsFilter</a><ul>
+<li class="chapter" data-level="D.6.1" data-path="appendixD.html"><a href="appendixD.html#description-19"><i class="fa fa-check"></i><b>D.6.1</b> Description</a></li>
+<li class="chapter" data-level="D.6.2" data-path="appendixD.html"><a href="appendixD.html#dependances-18"><i class="fa fa-check"></i><b>D.6.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.6.3" data-path="appendixD.html"><a href="appendixD.html#exemples"><i class="fa fa-check"></i><b>D.6.3</b> Exemples</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Guide R pour Motus</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exploreData" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Exploration des données avec le logiciel R de Motus</h1>
+<p>Une fois que vous avez résolu les problèmes reliés aux faux positifs, s’il y en a, et que vous avez supprimé les faux positifs, vous pouvez commencer à analyser votre ensemble de données nettoyées. Dans ce chapitre, nous présentons des procédures simples aves lesquelles vous pouvez vous familiariser pour visualiser l’ensemble de données nettoyées du projet 176 utilisé ici comme exemple. Vous pouvez modifier ces scripts pour travailler avec vos propres données. Pour obtenir des instructions plus détaillées sur le logiciel R, nous vous recommandons fortement de vous familiariser avec l’ouvrage de Garrett Grolemund et d’Hadley Wickham intitulé «R for Data Science» (<a href="http://r4ds.had.co.nz/" class="uri">http://r4ds.had.co.nz/</a>).</p>
+<div id="chargement-des-logiciels-requis-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Chargement des logiciels requis</h2>
+<p>Suivez les instructions fournies dans le chapitre <a href="loadingPackages.html#loadingPackages">2</a> pour installer les logiciels suivants, si cela n’est pas déjà fait, avant de charger les données.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(motus)
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(ggmap)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> <span class="st">&quot;GMT&quot;</span>)</code></pre></div>
+</div>
+<div id="chargement-des-donnees" class="section level2">
+<h2><span class="header-section-number">6.2</span> Chargement des données</h2>
+<p>Si vous avez suivi les instructions du chapitre précédent (chapitre <a href="dataCleaning.html#dataCleaning">5</a>) et que vous travaillez avec le fichier «df.alltags.sub» dont les données ont été nettoyées, vous pouvez omettre cette étape et passer à la section <a href="exploreData.html#dataSummaries">6.3</a>.</p>
+<p>Autrement, si vous avez enregistré vos données sous la forme d’un fichier RDS, vous pouvez les charger comme suit:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags.sub &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./data/dfAlltagsSub.rds&quot;</span>)  <span class="co"># Modifier le répertoire en sélectionnant le répertoire local.</span></code></pre></div>
+<p>Ou, si vous avez appliqué un filtre personnalisé à votre fichier .motus, vous pouvez charger les données .motus du projet 176 que vous avez téléchargées précédemment (voir le chapitre <a href="accessingData.html#accessingData">3</a> et les nettoyer maintenant. Actuellement, le principal avantage du filtre personnalisé est que vous l’appliquez au fichier .motus, ce qui vous procure plus de souplesse pour appliquer les fonctions dplyr pour gérer et filtrer les données (p. ex., vous pouvez choisir des variables à inclure dans les données qui sont différentes de celles que nous avons incluses dans le fichier RDS dans le chapitre <a href="dataCleaning.html#dataCleaning">5</a>. Cette approche vous permet également d’intégrer plus facilement les nouvelles données ajoutées à votre base de données avec la fonction tagme. Étant donné que nous choisissons les mêmes variables et que nous filtrons les mêmes enregistrements, les opérations suivantes vous donnent le même ensemble de données que le fait l’instruction readRDS ci-dessus:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Chargez le fichier .motus.</span>
+proj.num =<span class="st"> </span><span class="dv">176</span>
+sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(proj.num, <span class="dt">update =</span> <span class="ot">TRUE</span>, <span class="dt">dir =</span> <span class="st">&quot;./data/&quot;</span>)
+tbl.alltags &lt;-<span class="st"> </span><span class="kw">tbl</span>(sql.motus, <span class="st">&quot;alltags&quot;</span>)
+
+<span class="co"># Obtenez un objet table du filtre.</span>
+tbl.filter =<span class="st"> </span><span class="kw">getRunsFilters</span>(sql.motus, <span class="st">&quot;filtAmbigFalsePos&quot;</span>)
+
+<span class="co"># Filtrez et convertissez la table en une trame de données, avec quelques modifications.</span>
+df.alltags.sub &lt;-<span class="st"> </span><span class="kw">left_join</span>(tbl.alltags, tbl.filter, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;runID&quot;</span>, <span class="st">&quot;motusTagID&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">probability =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(probability), <span class="dv">1</span>, probability),
+         <span class="dt">recvLat =</span> <span class="kw">if_else</span>((<span class="kw">is.na</span>(gpsLat)<span class="op">|</span>gpsLat <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), 
+                           recvDeployLat, 
+                           gpsLat),
+         <span class="dt">recvLon =</span> <span class="kw">if_else</span>((<span class="kw">is.na</span>(gpsLon)<span class="op">|</span>gpsLon <span class="op">==</span><span class="st"> </span><span class="dv">0</span>), 
+                           recvDeployLon, 
+                           gpsLon),
+         <span class="dt">recvAlt =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(gpsAlt), 
+                           recvDeployAlt, 
+                           gpsAlt)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(probability <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>noise, <span class="op">-</span>slop, <span class="op">-</span>burstSlop, <span class="op">-</span>done, <span class="op">-</span>bootnum, <span class="op">-</span>codeSet, 
+         <span class="op">-</span>mfg, <span class="op">-</span>nomFreq,<span class="op">-</span>markerNumber, <span class="op">-</span>markerType, <span class="op">-</span>tagDeployComments, 
+         <span class="op">-</span>fullID, <span class="op">-</span>deviceID,<span class="op">-</span>recvDeployLat, <span class="op">-</span>recvDeployLon, <span class="op">-</span>recvDeployAlt, 
+         <span class="op">-</span>speciesGroup, <span class="op">-</span>gpsLat,<span class="op">-</span>gpsLon, <span class="op">-</span><span class="st"> </span>recvAlt, <span class="op">-</span><span class="st"> </span>recvSiteName) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">collect</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts),  <span class="co"># Travaillez avec les dates APRÈS la transformation en un fichier plat.</span>
+         <span class="dt">tagDeployStart =</span> <span class="kw">as_datetime</span>(tagDeployStart),
+         <span class="dt">tagDeployEnd =</span> <span class="kw">as_datetime</span>(tagDeployEnd))</code></pre></div>
+<p><strong>Si votre projet est de très grande envergure, il conviendrait peut-être d’en convertir seulement une portion à la trame de données pour éviter des problèmes de mémoire.</strong> La section <a href="accessingData.html#convertToFlat">3.7</a> présente en détail la marche à suivre pour filtrer la table avant de produire une trame de données.</p>
+<p>Ici nous le faisons en ajoutant un filtre à la commande ci-dessus. Dans le cas présent, nous créons une trame de données seulement pour l’émetteur (motusTagID) 16047, mais vous pouvez décider quelle est la meilleure façon de produire un sous-ensemble de données en fonction de vos besoins (p. ex. par espèce ou par année):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Créez un sous-ensemble pour un seul émetteur,</span>
+<span class="co"># pour maintenir une trame de données de petite</span>
+<span class="co"># taille.</span>
+df.alltags.<span class="dv">16047</span> &lt;-<span class="st"> </span>df.alltags.sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(motusTagID <span class="op">==</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">16047</span>)</code></pre></div>
+</div>
+<div id="dataSummaries" class="section level2">
+<h2><span class="header-section-number">6.3</span> Sommaires de données</h2>
+<p>Nous verrons ici des commandes de base, en commençant par la fonction summary(), qui permet de voir une sélection de variables dans une trame de données:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sql.motus <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tbl</span>(<span class="st">&quot;alltags&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ts, motusTagID, 
+    runLen, speciesEN, tagDeployLat, tagDeployLon, 
+    recvDeployLat, recvDeployLon) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summary</span>()</code></pre></div>
+<pre><code>##        ts              motusTagID        runLen        speciesEN        
+##  Min.   :1.438e+09   Min.   :10811   Min.   :   2.0   Length:108826     
+##  1st Qu.:1.476e+09   1st Qu.:22897   1st Qu.:  30.0   Class :character  
+##  Median :1.477e+09   Median :22905   Median : 122.0   Mode  :character  
+##  Mean   :1.476e+09   Mean   :22660   Mean   : 355.9                     
+##  3rd Qu.:1.477e+09   3rd Qu.:23316   3rd Qu.: 404.0                     
+##  Max.   :1.498e+09   Max.   :24303   Max.   :2474.0                     
+##                                                                         
+##   tagDeployLat    tagDeployLon    recvDeployLat    recvDeployLon    
+##  Min.   :11.12   Min.   :-80.69   Min.   :-42.50   Min.   :-143.68  
+##  1st Qu.:50.19   1st Qu.:-63.75   1st Qu.: 50.20   1st Qu.: -63.75  
+##  Median :50.19   Median :-63.75   Median : 50.20   Median : -63.75  
+##  Mean   :50.14   Mean   :-65.77   Mean   : 49.05   Mean   : -65.64  
+##  3rd Qu.:50.19   3rd Qu.:-63.75   3rd Qu.: 50.20   3rd Qu.: -63.75  
+##  Max.   :51.80   Max.   :-63.75   Max.   : 62.89   Max.   : -60.02  
+##  NA&#39;s   :2025    NA&#39;s   :2025     NA&#39;s   :173      NA&#39;s   :173</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Même sommaire pour les données sql filtrées</span>
+df.alltags.sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ts, motusTagID, runLen, speciesEN, 
+    tagDeployLat, tagDeployLon, recvLat, recvLon) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summary</span>()</code></pre></div>
+<pre><code>##        ts                        motusTagID        runLen      
+##  Min.   :2015-08-03 06:37:11   Min.   :16011   Min.   :   3.0  
+##  1st Qu.:2016-10-06 10:30:26   1st Qu.:22897   1st Qu.:  25.0  
+##  Median :2016-10-09 21:49:41   Median :22897   Median :  92.0  
+##  Mean   :2016-09-04 20:32:07   Mean   :22247   Mean   : 230.7  
+##  3rd Qu.:2016-10-19 10:41:54   3rd Qu.:22897   3rd Qu.: 286.0  
+##  Max.   :2017-04-20 22:33:19   Max.   :23316   Max.   :1371.0  
+##                                                                
+##   speciesEN          tagDeployLat    tagDeployLon       recvLat      
+##  Length:49076       Min.   :50.19   Min.   :-80.69   Min.   :-42.50  
+##  Class :character   1st Qu.:50.19   1st Qu.:-63.75   1st Qu.: 50.20  
+##  Mode  :character   Median :50.19   Median :-63.75   Median : 50.20  
+##                     Mean   :50.34   Mean   :-65.63   Mean   : 49.97  
+##                     3rd Qu.:50.19   3rd Qu.:-63.75   3rd Qu.: 50.20  
+##                     Max.   :51.80   Max.   :-63.75   Max.   : 51.82  
+##                                                      NA&#39;s   :167     
+##     recvLon      
+##  Min.   :-80.69  
+##  1st Qu.:-63.75  
+##  Median :-63.75  
+##  Mean   :-65.32  
+##  3rd Qu.:-63.75  
+##  Max.   :-62.99  
+##  NA&#39;s   :167</code></pre>
+<p>Le logiciel dplyr vous permet de résumer facilement les données par groupes, de manipuler les variables ou de créer de nouvelles variables en fonction de vos données.</p>
+<p>Nous pouvons manipuler des variables existantes ou en créer de nouvelles au moyen de la fonction mutate du logiciel dplyr. Ici, nous convertirons ts (estampille temporelle) à un format POSIXct puis nous créerons une nouvelle variable pour l’année et le jour de l’année (doy).</p>
+<p>De plus, nous supprimerons l’ensemble de points où les degrés de latitude et de longitude sont manquants. Cela peut être utile dans certains contextes (par exemple si l’on connaît la position approximative du récepteur), mais ce;a peut aussi entraîner des avertissements ou des erreurs au moment du pointage sur un graphique ou une carte.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags.sub &lt;-<span class="st"> </span>df.alltags.sub <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ts =</span> <span class="kw">as_datetime</span>(ts, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>), <span class="co"># Convertissez ts au format POSIXct.</span>
+         <span class="dt">year =</span> <span class="kw">year</span>(ts), <span class="co"># Extrayez l&#39;année depuis ts</span>
+         <span class="dt">doy =</span> <span class="kw">yday</span>(ts)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Extrayez le numéro du jour de l&#39;année depuis ts.</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(recvLat))
+<span class="kw">head</span>(df.alltags.sub)</code></pre></div>
+<pre><code>##    hitID runID batchID                  ts sig sigsd freq freqsd
+## 1  45107  8886      53 2015-10-26 11:19:49  52     0    4      0
+## 2  45108  8886      53 2015-10-26 11:20:28  54     0    4      0
+## 3  45109  8886      53 2015-10-26 11:21:17  55     0    4      0
+## 4  45110  8886      53 2015-10-26 11:21:55  52     0    4      0
+## 5  45111  8886      53 2015-10-26 11:22:44  49     0    4      0
+## 6 199885 23305      64 2015-10-26 11:12:04  33     0    4      0
+##   motusTagID ambigID port runLen tagProjID mfgID tagType tagModel
+## 1      16047      NA    3      5       176   378      ID NTQB-3-2
+## 2      16047      NA    3      5       176   378      ID NTQB-3-2
+## 3      16047      NA    3      5       176   378      ID NTQB-3-2
+## 4      16047      NA    3      5       176   378      ID NTQB-3-2
+## 5      16047      NA    3      5       176   378      ID NTQB-3-2
+## 6      16047      NA    1     11       176   378      ID NTQB-3-2
+##   tagLifespan  tagBI pulseLen tagDeployID speciesID      tagDeployStart
+## 1          NA 9.6971      2.5        1839      4670 2015-09-10 18:00:00
+## 2          NA 9.6971      2.5        1839      4670 2015-09-10 18:00:00
+## 3          NA 9.6971      2.5        1839      4670 2015-09-10 18:00:00
+## 4          NA 9.6971      2.5        1839      4670 2015-09-10 18:00:00
+## 5          NA 9.6971      2.5        1839      4670 2015-09-10 18:00:00
+## 6          NA 9.6971      2.5        1839      4670 2015-09-10 18:00:00
+##          tagDeployEnd tagDeployLat tagDeployLon tagDeployAlt recvDeployID
+## 1 2016-03-10 18:00:00      51.4839       -80.45           NA         2510
+## 2 2016-03-10 18:00:00      51.4839       -80.45           NA         2510
+## 3 2016-03-10 18:00:00      51.4839       -80.45           NA         2510
+## 4 2016-03-10 18:00:00      51.4839       -80.45           NA         2510
+## 5 2016-03-10 18:00:00      51.4839       -80.45           NA         2510
+## 6 2016-03-10 18:00:00      51.4839       -80.45           NA         2512
+##        recv recvDeployName isRecvMobile recvProjID antType antBearing
+## 1 Lotek-159      Shelburne            0         74  yagi-9        127
+## 2 Lotek-159      Shelburne            0         74  yagi-9        127
+## 3 Lotek-159      Shelburne            0         74  yagi-9        127
+## 4 Lotek-159      Shelburne            0         74  yagi-9        127
+## 5 Lotek-159      Shelburne            0         74  yagi-9        127
+## 6 Lotek-164  BennettMeadow            0         74  yagi-9        243
+##   antHeight speciesEN          speciesFR       speciesSci tagProjName
+## 1        NA  Red Knot Bécasseau maubèche Calidris canutus  SampleData
+## 2        NA  Red Knot Bécasseau maubèche Calidris canutus  SampleData
+## 3        NA  Red Knot Bécasseau maubèche Calidris canutus  SampleData
+## 4        NA  Red Knot Bécasseau maubèche Calidris canutus  SampleData
+## 5        NA  Red Knot Bécasseau maubèche Calidris canutus  SampleData
+## 6        NA  Red Knot Bécasseau maubèche Calidris canutus  SampleData
+##   recvProjName gpsAlt filterID probability  recvLat   recvLon year doy
+## 1         &lt;NA&gt;     NA       NA           1 42.60699 -72.71657 2015 299
+## 2         &lt;NA&gt;     NA       NA           1 42.60699 -72.71657 2015 299
+## 3         &lt;NA&gt;     NA       NA           1 42.60699 -72.71657 2015 299
+## 4         &lt;NA&gt;     NA       NA           1 42.60699 -72.71657 2015 299
+## 5         &lt;NA&gt;     NA       NA           1 42.60699 -72.71657 2015 299
+## 6         &lt;NA&gt;     NA       NA           1 42.68067 -72.47392 2015 299</code></pre>
+<p>Nous pouvons aussi résumer l’information par groupes, dans le cas présent motusTagID, et appliquer différentes fonctions à ces groupes, par exemple pour obtenir le nombre total de détections (n) de chaque émetteur, le nombre de récepteurs qui ont détecté chaque émetteur, les premières et dernières dates de détection et le nombre total de jours où il y a eu au moins une détection:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tagSummary &lt;-<span class="st"> </span>df.alltags.sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(motusTagID) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">nDet =</span> <span class="kw">n</span>(), <span class="dt">nRecv =</span> <span class="kw">length</span>(<span class="kw">unique</span>(recvDeployName)), 
+        <span class="dt">tsMin =</span> <span class="kw">min</span>(ts), <span class="dt">tsMax =</span> <span class="kw">max</span>(ts), <span class="dt">totDay =</span> <span class="kw">length</span>(<span class="kw">unique</span>(doy)))
+
+<span class="kw">head</span>(tagSummary)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   motusTagID  nDet nRecv tsMin               tsMax               totDay
+##        &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dttm&gt;              &lt;dttm&gt;               &lt;int&gt;
+## 1      16011   122     1 2015-08-03 06:37:11 2015-08-05 20:41:12      3
+## 2      16035   430     5 2015-08-14 17:53:49 2015-09-02 14:06:09      6
+## 3      16036    62     1 2015-08-17 21:56:44 2015-08-17 21:58:52      1
+## 4      16037  1296     3 2015-08-23 15:13:57 2015-09-08 18:37:16     14
+## 5      16038    73     1 2015-08-20 18:42:33 2015-08-22 22:19:37      3
+## 6      16039  1050    10 2015-08-23 02:28:45 2015-09-19 06:08:31      8</code></pre>
+<p>Nous pouvons aussi former des groupements en fonction de multiples variables. En appliquant la même fonction que ci-dessus, mais en groupant par motusTagID et recvDeployName, nous obtiendrons de l’information pour chaque émetteur détecté par chaque récepteur. Comme nous groupons par recvDeployName, il y aura par défaut seulement un recvDeployName dans chaque groupe, de sorte que la variable nRecv sera 1 pour chaque ligne. Cela ne fournit pas beaucoup d’information, mais nous l’incluons pour montrer comment fonctionnent les groupements:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tagRecvSummary &lt;-<span class="st"> </span>df.alltags.sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(motusTagID, 
+    recvDeployName) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">nDet =</span> <span class="kw">n</span>(), <span class="dt">nRecv =</span> <span class="kw">length</span>(<span class="kw">unique</span>(recvDeployName)), 
+    <span class="dt">tsMin =</span> <span class="kw">min</span>(ts), <span class="dt">tsMax =</span> <span class="kw">max</span>(ts), <span class="dt">totDay =</span> <span class="kw">length</span>(<span class="kw">unique</span>(doy)))
+
+<span class="kw">head</span>(tagRecvSummary)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+## # Groups:   motusTagID [2]
+##   motusTagID recvDeployName  nDet nRecv tsMin              
+##        &lt;int&gt; &lt;chr&gt;          &lt;int&gt; &lt;int&gt; &lt;dttm&gt;             
+## 1      16011 North Bluff      122     1 2015-08-03 06:37:11
+## 2      16035 Brier2            41     1 2015-09-02 14:03:19
+## 3      16035 D&#39;Estimauville    32     1 2015-09-02 07:58:43
+## 4      16035 Netitishi        286     1 2015-08-14 17:53:49
+## 5      16035 Southwest Head    65     1 2015-09-02 13:06:13
+## 6      16035 Swallowtail        6     1 2015-09-02 13:21:27
+## # ... with 2 more variables: tsMax &lt;dttm&gt;, totDay &lt;int&gt;</code></pre>
+</div>
+<div id="dataPlotting" class="section level2">
+<h2><span class="header-section-number">6.4</span> Graphiques de données</h2>
+<p>Le graphique est un puissant outil de visualisation des profils de détection à grande et à petite échelles. Nous présentons ici une brève introduction à la production de graphiques au moyen de ggplot2. Nous vous recommandons de consulter l’ouvrage intitulé <a href="http://www.cookbook-r.com/Graphs/">Cookbook for R</a> et l’aide-mémoire <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">ggplot2 cheatsheet</a> de rstudio pour obtenir de l’information plus détaillée sur les utilisations de ggplot2.</p>
+<p>Pour produire des graphiques à échelle grossière avec des fichiers volumineux, nous suggérons de commencer par arrondir les heures de détection à l’heure près ou au jour près afin de réduire le temps de traitement. Ici, nous arrondissons à l’heure près puis nous produisons un graphique de base des détections aux heures par émetteur (motusTagID):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags.sub.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">mutate</span>(df.alltags.sub, <span class="dt">hour =</span> <span class="kw">as.POSIXct</span>(<span class="kw">round</span>(ts, 
+    <span class="st">&quot;hour&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(motusTagID, port, tagDeployStart, 
+    tagDeployLat, tagDeployLon, recvLat, recvLon, recvDeployName, 
+    antBearing, speciesEN, year, doy, hour) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()
+
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.alltags.sub.<span class="dv">2</span>, <span class="kw">aes</span>(hour, <span class="kw">as.factor</span>(motusTagID)))
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;MotusTagID&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Heure (arrondie à l&#39;heure près)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/hourlyPlot-1.png" width="672" /> Concentrons-nous seulement sur les émetteurs déployés en 2016, auxquels nous pouvons attribuer une couleur pour chaque espèce:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">filter</span>(df.alltags.sub.<span class="dv">2</span>, <span class="kw">year</span>(tagDeployStart) <span class="op">==</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">2016</span>), <span class="kw">aes</span>(hour, <span class="kw">as.factor</span>(motusTagID), <span class="dt">col =</span> speciesEN))
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;MotusTagID&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Heure (arrondie à l&#39;heure près)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_colour_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Espèce&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/hourlyPlotSpecies-1.png" width="672" /> En commençant par ordonner en fonction de l’heure et attribuer une couleur aux motusTagID selon l’espèce, nous pouvons voir comment les émetteurs se sont déplacés en latitude:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags.sub.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">arrange</span>(df.alltags.sub.<span class="dv">2</span>, hour)
+
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">filter</span>(df.alltags.sub.<span class="dv">2</span>, <span class="kw">year</span>(tagDeployStart) <span class="op">==</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">2016</span>), <span class="kw">aes</span>(hour, recvLat, <span class="dt">col =</span> <span class="kw">as.factor</span>(motusTagID), 
+    <span class="dt">group =</span> <span class="kw">as.factor</span>(motusTagID)))
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Heure (arrondie à l&#39;heure près)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Latitude du récepteur&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;MotusTagID&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/hourlyPlotLat-1.png" width="672" /> Maintenant, examinons des graphiques plus détaillés de la variation des signaux. Nous utilisons toute la trame de données df.alltags.sub afin d’obtenir la puissance du signal pour chaque détection d’un émetteur particulier. Examinons les détections des signaux de l’émetteur 22897 à Niapiskau effectuées durant l’automne 2016; nous façonnons le graphique par nom de déploiement, dans l’ordre décroissant de la latitude:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">filter</span>(df.alltags.sub, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">22897</span>, 
+    recvDeployName <span class="op">==</span><span class="st"> &quot;Niapiskau&quot;</span>), <span class="kw">aes</span>(ts, sig))
+p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Temps de l&#39;année&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Puissance du signal&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(recvDeployName <span class="op">~</span><span class="st"> </span>
+<span class="st">    </span>.)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plot22897-1.png" width="672" /></p>
+<p>Nous utilisons la fonction sunRiseSet accessible dans le logiciel R de Motus (voir <a href="appendixC.html#sunRiseSet">C.2</a>) pour obtenir les heures du lever et du coucher du soleil pour toutes les détections. Ensuite, nous nous concentrons sur une certaine trame de données et nous ajoutons cette information au graphique ci-dessus en ajoutant une instruction geom_vline() au code, ce qui a pour effet de produire une ligne jaune pour l’heure du lever du soleil et une ligne bleue pour l’heure du coucher du soleil:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ajoutez les heures du lever et du coucher du</span>
+<span class="co"># soleil à la trame de données.</span>
+df.alltags.sub &lt;-<span class="st"> </span><span class="kw">sunRiseSet</span>(df.alltags.sub, <span class="dt">lat =</span> <span class="st">&quot;recvLat&quot;</span>, 
+    <span class="dt">lon =</span> <span class="st">&quot;recvLon&quot;</span>)
+
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">filter</span>(df.alltags.sub, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">22897</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>ts <span class="op">&gt;</span><span class="st"> </span><span class="kw">ymd</span>(<span class="st">&quot;2016-10-11&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>ts <span class="op">&lt;</span><span class="st"> </span><span class="kw">ymd</span>(<span class="st">&quot;2016-10-17&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>recvDeployName <span class="op">==</span><span class="st"> &quot;Niapiskau&quot;</span>), <span class="kw">aes</span>(ts, sig))
+
+p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Temps de l&#39;année&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Puissance du signal&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> df.alltags.sub<span class="op">$</span>sunrise, 
+    <span class="dt">col =</span> <span class="st">&quot;orange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> df.alltags.sub<span class="op">$</span>sunset, 
+    <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotSunriset22897-1.png" width="672" /> Nous constatons que durant la période en question, c’est pendant le jour que l’émetteur a été détecté le plus souvent, ce qui semble indiquer que l’oiseau était actif à la recherche de nourriture dans le secteur en question durant cette période.</p>
+<p>Les mêmes graphiques peuvent fournir de précieux renseignements sur les déplacements lorsque les récepteurs sont ordonnés géographiquement, ce que nous faisons pour l’émetteur 16039:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ordonnons d&#39;abord sitelat par latitude (pour les</span>
+<span class="co"># points)</span>
+df.alltags.sub &lt;-<span class="st"> </span><span class="kw">mutate</span>(df.alltags.sub, <span class="dt">recvDeployName =</span> <span class="kw">as.factor</span>(<span class="kw">as.character</span>(<span class="kw">reorder</span>(recvDeployName, 
+    recvLat))))
+
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">filter</span>(df.alltags.sub, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">16039</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>ts <span class="op">&lt;</span><span class="st"> </span><span class="kw">ymd</span>(<span class="st">&quot;2015-10-01&quot;</span>)), <span class="kw">aes</span>(ts, recvDeployName))
+
+p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Temps de l&#39;année&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Nom du récepteur (ordonné par latitude)&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/latPlot1-1.png" width="672" /></p>
+<p>Nous nous concentrons sur une section de ce graphique et examinons les angles de relèvement des antennes pour déterminer les directions de vol à la hauteur des stations réceptrices:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">filter</span>(df.alltags.sub, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">16039</span>, 
+    ts <span class="op">&gt;</span><span class="st"> </span><span class="kw">ymd</span>(<span class="st">&quot;2015-09-14&quot;</span>), ts <span class="op">&lt;</span><span class="st"> </span><span class="kw">ymd</span>(<span class="st">&quot;2015-10-01&quot;</span>)), 
+    <span class="kw">aes</span>(ts, sig, <span class="dt">col =</span> <span class="kw">as.factor</span>(antBearing)))
+p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Heure du jour&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Puissance du signal&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Angle de relèvement de l&#39;antenne&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_grid</span>(recvDeployName <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plot2-1.png" width="672" /></p>
+<p>Ce graphique indique le profil type du passage d’un animal en migration: la puissance du signal de l’émetteur augmente puis diminue au moment où l’animal passe dans le faisceau des antennes.</p>
+</div>
+<div id="mappingData" class="section level2">
+<h2><span class="header-section-number">6.5</span> Cartes de données</h2>
+<p>Pour générer des cartes de trajectoires d’émetteurs, nous utiliserons de nouveau des données résumées de manière à travailler avec une base de données beaucoup plus petite et à accélérer le traitement. Ici, nous résumerons les détections par date. Comme nous l’avons fait au chapitre <a href="dataCleaning.html#dataCleaning">5</a>, nous créons une fonction simple pour résumer les données vu que nous devrons probablement répéter cette opération à maintes reprises.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simplifiez les données en produisant un sommaire en fonction du runID. </span>
+<span class="co"># Si vous voulez produire un sommaire à une échelle plus fine ou plus grossière, vous pouvez aussi créer d&#39;autres groupes.  </span>
+<span class="co"># L&#39;option de rechange la plus simple est une variable d&#39;estampille temporelle arrondie; par exemple en utilisant </span>
+<span class="co"># l&#39;appel de fonction mutate(ts.h = plyr::round_any(ts, 3600). </span>
+<span class="co"># Une autre option consiste à utiliser juste la date (p. ex. date = as_date(ts)).</span>
+
+<span class="co"># </span>
+fun.getpath &lt;-<span class="st"> </span><span class="cf">function</span>(df) 
+  {
+  df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(tagProjID <span class="op">==</span><span class="st"> </span>proj.num, <span class="co"># Conservez seulement les émetteurs enregistrés dans le cadre du projet 176.</span>
+                           <span class="op">!</span><span class="kw">is.na</span>(recvLat) <span class="op">|</span><span class="st"> </span><span class="op">!</span>(recvLat <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(motusTagID, runID, recvDeployName, ambigID, 
+             tagDeployLon, tagDeployLat, recvLat, recvLon) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">max.runLen =</span> <span class="kw">max</span>(runLen), <span class="dt">ts.h =</span> <span class="kw">mean</span>(ts)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">arrange</span>(motusTagID, ts.h) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">data.frame</span>()
+  } <span class="co"># Fin de l&#39;appel de fonction</span>
+
+df.alltags.path &lt;-<span class="st"> </span><span class="kw">fun.getpath</span>(df.alltags.sub)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df.alltags.sub.path &lt;-<span class="st"> </span>df.alltags.sub <span class="op">%&gt;%</span>
+<span class="st">                </span><span class="kw">filter</span>(tagProjID <span class="op">==</span><span class="st"> </span>proj.num) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Conservez seulement les émetteurs enregistrés dans le cadre du projet 176.</span>
+<span class="st">                </span><span class="kw">arrange</span>(motusTagID, ts) <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># Ordonnez les données par estampille temporelle pour chaque émetteur (motustagID).</span>
+<span class="st">                </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">as_date</span>(ts)) <span class="op">%&gt;%</span><span class="st">    </span><span class="co"># Créez une variable date.</span>
+<span class="st">                </span><span class="kw">group_by</span>(motusTagID, date, recvDeployName, ambigID, 
+                         tagDeployLon, tagDeployLat, recvLat, recvLon)
+
+df.alltags.path &lt;-<span class="st"> </span><span class="kw">fun.getpath</span>(df.alltags.sub.path)</code></pre></div>
+<div id="googleMaps" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> Utilisation de Google Maps</h3>
+<p>L’utilisation de Google Maps peut permettre de visualiser rapidement des trajectoires de vol et de choisir parmi plusieurs couches de base.</p>
+<p>La première étape consiste à créer une carte ayant un centre précis (types de carte: relief, plan, satellite ou hybride) et à choisir le niveau de zoom (nombre entier de 3 à 21, 3 correspondant au niveau du continent et 10 au niveau de la localité). Ensuite, nous ajoutons des points indiquant les positions des récepteurs et des lignes reliant les stations consécutives où chaque émetteur (motusTagID) a été détecté. Nous pouvons également ajouter des points pour toutes les stations réceptrices qui étaient actives durant une certaine période si nous avons déjà téléchargé toutes les métadonnées.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gmap &lt;-<span class="st">  </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="kw">c</span>(<span class="dt">lon =</span> <span class="op">-</span><span class="dv">75</span>, <span class="dt">lat =</span> <span class="dv">40</span>), <span class="co"># Centrez la carte (lon/lat).</span>
+                 <span class="dt">maptype =</span> <span class="st">&quot;satellite&quot;</span>, <span class="co"># Choisissez le type de carte.</span>
+                 <span class="dt">source =</span> <span class="st">&quot;google&quot;</span>,
+                 <span class="dt">zoom =</span> <span class="dv">4</span>) <span class="co"># Entrez le niveau de zoom (nombre entier).</span>
+
+<span class="co"># Utilisez seulement les émetteurs dont nous avons examiné attentivement et filtré les détections (dans le chapitre précédent).</span>
+df.tmp &lt;-<span class="st"> </span><span class="kw">filter</span>(df.alltags.path, 
+                           motusTagID <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">16011</span>, <span class="dv">16035</span>, <span class="dv">16036</span>, <span class="dv">16037</span>, <span class="dv">16038</span>, <span class="dv">16039</span>))
+df.tmp &lt;-<span class="st"> </span><span class="kw">arrange</span>(df.tmp, ts.h) <span class="co"># Disposez par heure.</span>
+df.tmp &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(df.tmp)
+
+p &lt;-<span class="st"> </span><span class="kw">ggmap</span>(gmap)
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data=</span>df.tmp, 
+               <span class="kw">aes</span>(recvLon, recvLat), <span class="dt">pch=</span><span class="dv">21</span>, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;yellow&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>(<span class="dt">data=</span>df.tmp, 
+            <span class="kw">aes</span>(recvLon, recvLat, <span class="dt">group=</span>motusTagID, <span class="dt">col =</span> <span class="kw">as.factor</span>(motusTagID))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name=</span><span class="st">&quot;MotusTagID&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/googleMap-1.png" width="960" /></p>
+<p>Nous produisons la même carte avec des points supplémentaires correspondant aux stations réceptrices qui étaient actives pendant une période déterminée:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Obtenez les métadonnées sur les stations</span>
+<span class="co"># réceptrices.</span>
+tbl.recvDeps &lt;-<span class="st"> </span><span class="kw">tbl</span>(sql.motus, <span class="st">&quot;recvDeps&quot;</span>)
+df.recvDeps &lt;-<span class="st"> </span>tbl.recvDeps <span class="op">%&gt;%</span><span class="st"> </span>collect <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tsStart =</span> <span class="kw">as_datetime</span>(tsStart, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, 
+        <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>), <span class="dt">tsEnd =</span> <span class="kw">as_datetime</span>(tsEnd, 
+        <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>))
+<span class="co"># Dans le cas des déploiements sans date de fin,</span>
+<span class="co"># entrez une date de fin équivalant à un an plus</span>
+<span class="co"># tard.</span>
+df.recvDeps<span class="op">$</span>tsEnd &lt;-<span class="st"> </span><span class="kw">as.POSIXct</span>(<span class="kw">ifelse</span>(<span class="kw">is.na</span>(df.recvDeps<span class="op">$</span>tsEnd), 
+    <span class="kw">as.POSIXct</span>(<span class="kw">format</span>(<span class="kw">Sys.time</span>(), <span class="st">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span>lubridate<span class="op">::</span><span class="kw">dyears</span>(<span class="dv">1</span>), df.recvDeps<span class="op">$</span>tsEnd), <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>, 
+    <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>)
+<span class="co"># Obtenez les intervalles de fonctionnement pour</span>
+<span class="co"># tous les récepteurs déployés.</span>
+siteOp &lt;-<span class="st"> </span><span class="kw">with</span>(df.recvDeps, lubridate<span class="op">::</span><span class="kw">interval</span>(tsStart, 
+    tsEnd))  <span class="co"># Obtenez les intervalles de fonctionnement pour chaque déploiement.</span>
+<span class="co"># Fixez l&#39;intervalle de temps (dates) qui vous</span>
+<span class="co"># intéresse.</span>
+dateRange &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">interval</span>(<span class="kw">as.POSIXct</span>(<span class="st">&quot;2015-08-01&quot;</span>), 
+    <span class="kw">as.POSIXct</span>(<span class="st">&quot;2016-01-01&quot;</span>))
+<span class="co"># Créez une nouvelle variable, «active», qui est</span>
+<span class="co"># établie à TRUE si le récepteur était actif à un</span>
+<span class="co"># moment donné pendant l&#39;intervalle de temps que</span>
+<span class="co"># vous avez fixé, et à FALSE autrement.</span>
+df.recvDeps<span class="op">$</span>active &lt;-<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">int_overlaps</span>(siteOp, 
+    dateRange)
+
+<span class="co"># Créez une carte montrant en rouge les positions</span>
+<span class="co"># des récepteurs qui étaient actifs pendant</span>
+<span class="co"># l&#39;intervalle de temps fixé et en jaune les</span>
+<span class="co"># positions des récepteurs qui ont détecté des</span>
+<span class="co"># émetteurs.</span>
+p &lt;-<span class="st"> </span><span class="kw">ggmap</span>(gmap)
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">subset</span>(df.recvDeps, active <span class="op">==</span><span class="st"> </span>
+<span class="st">    </span><span class="ot">TRUE</span>), ggplot2<span class="op">::</span><span class="kw">aes</span>(longitude, latitude), <span class="dt">pch =</span> <span class="dv">21</span>, 
+    <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.tmp, 
+    <span class="kw">aes</span>(recvLon, recvLat), <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, 
+    <span class="dt">fill =</span> <span class="st">&quot;yellow&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>(<span class="dt">data =</span> df.tmp, <span class="kw">aes</span>(recvLon, 
+    recvLat, <span class="dt">group =</span> motusTagID, <span class="dt">col =</span> <span class="kw">as.factor</span>(motusTagID))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;MotusTagID&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/googleMapRecvs-1.png" width="960" /></p>
+</div>
+<div id="outlineMaps" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> Création de cartes muettes simples</h3>
+<p>Nous chargeons les cartes de base.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">na.lakes &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="dt">map =</span> <span class="st">&quot;lakes&quot;</span>)
+na.lakes &lt;-<span class="st"> </span>na.lakes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">long =</span> long <span class="op">-</span><span class="st"> </span><span class="dv">360</span>)
+
+<span class="co"># Incluez toutes les Amériques pour commencer.</span>
+na.map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="dt">map =</span> <span class="st">&quot;world2&quot;</span>)
+na.map &lt;-<span class="st"> </span>na.map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(region <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Canada&quot;</span>, 
+    <span class="st">&quot;USA&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">long =</span> long <span class="op">-</span><span class="st"> </span><span class="dv">360</span>)</code></pre></div>
+<p>Ensuite, pour tracer les trajectoires, il faut fixer les limites de l’axe des x et de l’axe des y selon la position des récepteurs qui ont détecté des émetteurs. Selon vos données, il faudra peut-être modifier ces limites pour que les positions de déploiement des émetteurs soient incluses si les émetteurs n’ont pas été déployés à proximité de tours de stations où des émetteurs ont été détectés. Ensuite, à l’aide de ggplot, nous produisons la carte et traçons les trajectoires des émetteurs. Ici, nous utilisons la projection de Mercator et nous colorons les trajectoires différemment pour chaque émetteur (motusTagID), en incluant le point où il a été déployé:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fixez les limites de la carte selon la position</span>
+<span class="co"># des récepteurs qui ont détecté des émetteurs en</span>
+<span class="co"># vous assurant que les positions de déploiement</span>
+<span class="co"># des émetteurs soient incluses.</span>
+xmin &lt;-<span class="st"> </span><span class="kw">min</span>(df.tmp<span class="op">$</span>recvLon, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>
+xmax &lt;-<span class="st"> </span><span class="kw">max</span>(df.tmp<span class="op">$</span>recvLon, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
+ymin &lt;-<span class="st"> </span><span class="kw">min</span>(df.tmp<span class="op">$</span>recvLat, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+ymax &lt;-<span class="st"> </span><span class="kw">max</span>(df.tmp<span class="op">$</span>recvLat, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+
+<span class="co"># map</span>
+<span class="kw">ggplot</span>(na.lakes, <span class="kw">aes</span>(long, lat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> na.map, 
+    <span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group), <span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>, 
+    <span class="dt">fill =</span> <span class="st">&quot;grey98&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_polygon</span>(<span class="kw">aes</span>(<span class="dt">group =</span> group), 
+    <span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">coord_map</span>(<span class="dt">projection =</span> <span class="st">&quot;mercator&quot;</span>, 
+    <span class="dt">xlim =</span> <span class="kw">c</span>(xmin, xmax), <span class="dt">ylim =</span> <span class="kw">c</span>(ymin, ymax)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>(<span class="dt">data =</span> df.tmp, 
+    <span class="kw">aes</span>(recvLon, recvLat, <span class="dt">group =</span> <span class="kw">as.factor</span>(motusTagID), 
+        <span class="dt">colour =</span> <span class="kw">as.factor</span>(motusTagID))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.tmp, 
+    <span class="kw">aes</span>(tagDeployLon, tagDeployLat), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, 
+    <span class="dt">shape =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_discrete</span>(<span class="st">&quot;motusTagID&quot;</span>)</code></pre></div>
+<p><img src="images/mapDetections.png" width="1650" style="display: block; margin: auto;" /></p>
+<p>Les fonctions dont il a été question dans le présent chapitre sont des exemples de la façon dont vous pouvez commencer à explorer vos données; il peut certainement exister d’autres façons de faire. L’annexe B ci-après présente des erreurs fréquentes qui peuvent survenir pendant le téléchargement et l’utilisation des fichiers sql .motus. ainsi que les solutions pour corriger ces erreurs.</p>
+
+</div>
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dataCleaning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendixA.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["FrMotusRBook.pdf", "FrMotusRBook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

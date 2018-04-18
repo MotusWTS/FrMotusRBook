@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Guide R pour Motus</title>
+  <meta name="description" content="Guide R pour Motus">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Guide R pour Motus" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="BSC_Motus_Logo.png" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guide R pour Motus" />
+  
+  
+  <meta name="twitter:image" content="BSC_Motus_Logo.png" />
+
+<meta name="author" content="Tara L. Crewe, Zoe Crysler, et Philip Taylor">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="annexe-b-depannage-annexe-b.html">
+<link rel="next" href="appendixD.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Utilisation du langage R appliqué aux données du réseau de radiotélémétrie automatisée Motus</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#whatBookCovers"><i class="fa fa-check"></i><b>1.1</b> Ce que le présent guide ne montre pas</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.2</b> Connaissances préalables</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#sampleData"><i class="fa fa-check"></i><b>1.3</b> Ensemble de données utilisées comme exemples</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i><b>1.4</b> Remerciements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loadingPackages.html"><a href="loadingPackages.html"><i class="fa fa-check"></i><b>2</b> Chargement des logiciels R</a><ul>
+<li class="chapter" data-level="2.1" data-path="loadingPackages.html"><a href="loadingPackages.html#internalProcessing"><i class="fa fa-check"></i><b>2.1</b> Traitement interne des données</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="accessingData.html"><a href="accessingData.html"><i class="fa fa-check"></i><b>3</b> Accès aux données de détection</a><ul>
+<li class="chapter" data-level="3.1" data-path="accessingData.html"><a href="accessingData.html#databaseTypes"><i class="fa fa-check"></i><b>3.1</b> Types de bases de données</a></li>
+<li class="chapter" data-level="3.2" data-path="accessingData.html"><a href="accessingData.html#loadPackages"><i class="fa fa-check"></i><b>3.2</b> Chargement des logiciels R pertinents</a></li>
+<li class="chapter" data-level="3.3" data-path="accessingData.html"><a href="accessingData.html#reglage-de-lenvironnement-systeme"><i class="fa fa-check"></i><b>3.3</b> Réglage de l’environnement système</a></li>
+<li class="chapter" data-level="3.4" data-path="accessingData.html"><a href="accessingData.html#importDetections"><i class="fa fa-check"></i><b>3.4</b> Importation de données de détection</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="accessingData.html"><a href="accessingData.html#telechargement-des-donnees-dun-projet-ou-dun-recepteur-pour-la-premiere-fois"><i class="fa fa-check"></i><b>3.4.1</b> Téléchargement des données d’un projet ou d’un récepteur pour la <em>première fois</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="accessingData.html"><a href="accessingData.html#userAuthentication"><i class="fa fa-check"></i><b>3.4.2</b> Authentification de l’utilisateur</a></li>
+<li class="chapter" data-level="3.4.3" data-path="accessingData.html"><a href="accessingData.html#logout"><i class="fa fa-check"></i><b>3.4.3</b> Fermeture de session</a></li>
+<li class="chapter" data-level="3.4.4" data-path="accessingData.html"><a href="accessingData.html#downloadData"><i class="fa fa-check"></i><b>3.4.4</b> Téléchargement de données de détection</a></li>
+<li class="chapter" data-level="3.4.5" data-path="accessingData.html"><a href="accessingData.html#tagmeUpdate"><i class="fa fa-check"></i><b>3.4.5</b> Ouverture et mise à jour d’une base de données de détection locale</a></li>
+<li class="chapter" data-level="3.4.6" data-path="accessingData.html"><a href="accessingData.html#tellme"><i class="fa fa-check"></i><b>3.4.6</b> Vérification de l’existence de nouvelles données</a></li>
+<li class="chapter" data-level="3.4.7" data-path="accessingData.html"><a href="accessingData.html#forceMeta"><i class="fa fa-check"></i><b>3.4.7</b> Imposition d’une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs</a></li>
+<li class="chapter" data-level="3.4.8" data-path="accessingData.html"><a href="accessingData.html#metadata"><i class="fa fa-check"></i><b>3.4.8</b> Importation de l’ensemble des métadonnées sur les émetteurs et les récepteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="accessingData.html"><a href="accessingData.html#databaseStructure"><i class="fa fa-check"></i><b>3.5</b> Structure des données</a></li>
+<li class="chapter" data-level="3.6" data-path="accessingData.html"><a href="accessingData.html#verification-de-la-version-de-la-base-de-donnees-checkversion"><i class="fa fa-check"></i><b>3.6</b> Vérification de la version de la base de données {checkVersion}</a></li>
+<li class="chapter" data-level="3.7" data-path="accessingData.html"><a href="accessingData.html#convertToFlat"><i class="fa fa-check"></i><b>3.7</b> Conversion d’une table SQLITE en une trame de données plate</a></li>
+<li class="chapter" data-level="3.8" data-path="accessingData.html"><a href="accessingData.html#exportDetections"><i class="fa fa-check"></i><b>3.8</b> Exportation d’une trame de données «plate» sous la forme d’un fichier CSV ou RDS</a></li>
+<li class="chapter" data-level="3.9" data-path="accessingData.html"><a href="accessingData.html#convention-de-noms-dobjets-r"><i class="fa fa-check"></i><b>3.9</b> Convention de noms d’objets R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deployments.html"><a href="deployments.html"><i class="fa fa-check"></i><b>4</b> Déploiements d’émetteurs et de récepteurs</a><ul>
+<li class="chapter" data-level="4.1" data-path="deployments.html"><a href="deployments.html#chargement-des-logiciels-r-pertinents-et-reglage-de-lenvironnement-de-travail"><i class="fa fa-check"></i><b>4.1</b> Chargement des logiciels R pertinents et réglage de l’environnement de travail</a></li>
+<li class="chapter" data-level="4.2" data-path="deployments.html"><a href="deployments.html#chargement-du-fichier-.motus"><i class="fa fa-check"></i><b>4.2</b> Chargement du fichier .motus</a></li>
+<li class="chapter" data-level="4.3" data-path="deployments.html"><a href="deployments.html#tagDeployments"><i class="fa fa-check"></i><b>4.3</b> Déploiements d’émetteurs</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-completes-sur-les-emetteurs-pour-votre-projet"><i class="fa fa-check"></i><b>4.3.1</b> Téléchargement des métadonnées complètes sur les émetteurs pour votre projet</a></li>
+<li class="chapter" data-level="4.3.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres"><i class="fa fa-check"></i><b>4.3.2</b> Détermination du nombre d’émetteurs enregistrés</a></li>
+<li class="chapter" data-level="4.3.3" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres-qui-ont-ete-deployes"><i class="fa fa-check"></i><b>4.3.3</b> Détermination du nombre d’émetteurs enregistrés qui ont été déployés</a></li>
+<li class="chapter" data-level="4.3.4" data-path="deployments.html"><a href="deployments.html#checkNumberTagDeployments"><i class="fa fa-check"></i><b>4.3.4</b> Détermination du nombre de déploiements par émetteur</a></li>
+<li class="chapter" data-level="4.3.5" data-path="deployments.html"><a href="deployments.html#localisation-des-emetteurs-deployes"><i class="fa fa-check"></i><b>4.3.5</b> Localisation des émetteurs déployés</a></li>
+<li class="chapter" data-level="4.3.6" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-demetteurs"><i class="fa fa-check"></i><b>4.3.6</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="deployments.html"><a href="deployments.html#recvMetadata"><i class="fa fa-check"></i><b>4.4</b> Vérification des métadonnées sur les récepteurs</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-sur-tous-les-recepteurs-dans-le-reseau"><i class="fa fa-check"></i><b>4.4.1</b> Téléchargement des métadonnées sur tous les récepteurs dans le réseau</a></li>
+<li class="chapter" data-level="4.4.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-de-recepteurs-deployes-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.2</b> Détermination du nombre de récepteurs déployés dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.3" data-path="deployments.html"><a href="deployments.html#determination-du-moment-du-deploiement-des-recepteurs-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.3</b> Détermination du moment du déploiement des récepteurs dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.4" data-path="deployments.html"><a href="deployments.html#localisation-des-recepteurs-deployes"><i class="fa fa-check"></i><b>4.4.4</b> Localisation des récepteurs déployés</a></li>
+<li class="chapter" data-level="4.4.5" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-des-recepteurs"><i class="fa fa-check"></i><b>4.4.5</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements des récepteurs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dataCleaning.html"><a href="dataCleaning.html"><i class="fa fa-check"></i><b>5</b> Nettoyage des données</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-logiciels-requis"><i class="fa fa-check"></i><b>5.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="5.2" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-donnees-de-detection"><i class="fa fa-check"></i><b>5.2</b> Chargement des données de détection</a></li>
+<li class="chapter" data-level="5.3" data-path="dataCleaning.html"><a href="dataCleaning.html#verifications-preliminaires-des-donnees"><i class="fa fa-check"></i><b>5.3</b> Vérifications préliminaires des données</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="dataCleaning.html"><a href="dataCleaning.html#sommaires-de-donnees-de-detection-demetteurs"><i class="fa fa-check"></i><b>5.3.1</b> Sommaires de données de détection d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dataCleaning.html"><a href="dataCleaning.html#ambigs"><i class="fa fa-check"></i><b>5.4</b> Recherche et examen de détections ambiguës</a></li>
+<li class="chapter" data-level="5.5" data-path="dataCleaning.html"><a href="dataCleaning.html#verification-de-la-validite-des-sequences-dau-moins-2-detections"><i class="fa fa-check"></i><b>5.5</b> Vérification de la validité des séquences d’au moins 2 détections</a></li>
+<li class="chapter" data-level="5.6" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrage-des-donnees"><i class="fa fa-check"></i><b>5.6</b> Filtrage des données</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrer-et-enregistrer-le-resultat-dans-le-format-rds"><i class="fa fa-check"></i><b>5.6.1</b> Filtrer et enregistrer le résultat dans le format RDS</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dataCleaning.html"><a href="dataCleaning.html#enregistrer-un-filtre-personnalise-dans-la-base-de-donnees-motus-et-lappliquer-aux-donnees"><i class="fa fa-check"></i><b>5.6.2</b> Enregistrer un filtre personnalisé dans la base de données motus et l’appliquer aux données</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exploreData.html"><a href="exploreData.html"><i class="fa fa-check"></i><b>6</b> Exploration des données avec le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="6.1" data-path="exploreData.html"><a href="exploreData.html#chargement-des-logiciels-requis-1"><i class="fa fa-check"></i><b>6.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="6.2" data-path="exploreData.html"><a href="exploreData.html#chargement-des-donnees"><i class="fa fa-check"></i><b>6.2</b> Chargement des données</a></li>
+<li class="chapter" data-level="6.3" data-path="exploreData.html"><a href="exploreData.html#dataSummaries"><i class="fa fa-check"></i><b>6.3</b> Sommaires de données</a></li>
+<li class="chapter" data-level="6.4" data-path="exploreData.html"><a href="exploreData.html#dataPlotting"><i class="fa fa-check"></i><b>6.4</b> Graphiques de données</a></li>
+<li class="chapter" data-level="6.5" data-path="exploreData.html"><a href="exploreData.html#mappingData"><i class="fa fa-check"></i><b>6.5</b> Cartes de données</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="exploreData.html"><a href="exploreData.html#googleMaps"><i class="fa fa-check"></i><b>6.5.1</b> Utilisation de Google Maps</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exploreData.html"><a href="exploreData.html#outlineMaps"><i class="fa fa-check"></i><b>6.5.2</b> Création de cartes muettes simples</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Appendix - alltags structure</a></li>
+<li class="chapter" data-level="B" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html"><i class="fa fa-check"></i><b>B</b> Annexe B - Dépannage {#Annexe B}</a><ul>
+<li class="chapter" data-level="B.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#motusLogout"><i class="fa fa-check"></i><b>B.1</b> Fermeture du logiciel motus</a></li>
+<li class="chapter" data-level="B.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#resumeDownload"><i class="fa fa-check"></i><b>B.2</b> Reprise du téléchargement de données</a></li>
+<li class="chapter" data-level="B.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#messages-derreur-courants-et-solutions"><i class="fa fa-check"></i><b>B.3</b> Messages d’erreur courants et solutions</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-auto-disconnecting-sqliteconnection-une-ou-plusieurs-fois-apres-avoir-utilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.1</b> Je reçois le message «Auto-disconnecting SQLiteConnection» une ou plusieurs fois après avoir utilisé la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.2" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-internal-server-error-pendant-que-jutilise-la-fonction-tagme-update-true."><i class="fa fa-check"></i><b>B.3.2</b> Je reçois le message «Internal Server Error» pendant que j’utilise la fonction tagme (…, update = TRUE).</a></li>
+<li class="chapter" data-level="B.3.3" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-forbidden-pendant-que-jutilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.3</b> Je reçois le message «Error: Forbidden» pendant que j’utilise la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.4" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-object-xxxx-not-found-relatif-au-nom-dune-table-ou-dun-champ-ou-encore-certains-de-vos-exemples-dans-le-guide-ne-fonctionnent-pas."><i class="fa fa-check"></i><b>B.3.4</b> Je reçois le message «Error: Object ‘xxxx’ not found», relatif au nom d’une table ou d’un champ, ou encore certains de vos exemples dans le guide ne fonctionnent pas.</a></li>
+<li class="chapter" data-level="B.3.5" data-path="annexe-b-depannage-annexe-b.html"><a href="annexe-b-depannage-annexe-b.html#je-recois-le-message-error-in-rsqlite_connectdbname-loadable.extensions-flags-vfs-could-not-connect-to-database-unable-to-open-database-file-lorsque-je-tente-dexecuter-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.5</b> Je reçois le message «Error in rsqlite_connect(dbname, loadable.extensions, flags, vfs): Could not connect to database: unable to open database file» lorsque je tente d’exécuter la fonction tagme().</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="appendixC.html"><a href="appendixC.html"><i class="fa fa-check"></i><b>C</b> Annexe C - Le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="C.1" data-path="appendixC.html"><a href="appendixC.html#checkVersion.B"><i class="fa fa-check"></i><b>C.1</b> checkVersion</a><ul>
+<li class="chapter" data-level="C.1.1" data-path="appendixC.html"><a href="appendixC.html#description"><i class="fa fa-check"></i><b>C.1.1</b> Description</a></li>
+<li class="chapter" data-level="C.1.2" data-path="appendixC.html"><a href="appendixC.html#dependances"><i class="fa fa-check"></i><b>C.1.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.1.3" data-path="appendixC.html"><a href="appendixC.html#exemple"><i class="fa fa-check"></i><b>C.1.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="appendixC.html"><a href="appendixC.html#sunRiseSet"><i class="fa fa-check"></i><b>C.2</b> sunRiseSet</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="appendixC.html"><a href="appendixC.html#description-1"><i class="fa fa-check"></i><b>C.2.1</b> Description</a></li>
+<li class="chapter" data-level="C.2.2" data-path="appendixC.html"><a href="appendixC.html#dependances-1"><i class="fa fa-check"></i><b>C.2.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.2.3" data-path="appendixC.html"><a href="appendixC.html#exemple-1"><i class="fa fa-check"></i><b>C.2.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.3" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsCoor"><i class="fa fa-check"></i><b>C.3</b> plotAllTagsCoord</a><ul>
+<li class="chapter" data-level="C.3.1" data-path="appendixC.html"><a href="appendixC.html#description-2"><i class="fa fa-check"></i><b>C.3.1</b> Description</a></li>
+<li class="chapter" data-level="C.3.2" data-path="appendixC.html"><a href="appendixC.html#dependances-2"><i class="fa fa-check"></i><b>C.3.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.3.3" data-path="appendixC.html"><a href="appendixC.html#exemple-2"><i class="fa fa-check"></i><b>C.3.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsSite"><i class="fa fa-check"></i><b>C.4</b> plotAllTagsSite</a><ul>
+<li class="chapter" data-level="C.4.1" data-path="appendixC.html"><a href="appendixC.html#description-3"><i class="fa fa-check"></i><b>C.4.1</b> Description</a></li>
+<li class="chapter" data-level="C.4.2" data-path="appendixC.html"><a href="appendixC.html#dependances-3"><i class="fa fa-check"></i><b>C.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.4.3" data-path="appendixC.html"><a href="appendixC.html#exemple-3"><i class="fa fa-check"></i><b>C.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="appendixC.html"><a href="appendixC.html#plotDailySiteSum"><i class="fa fa-check"></i><b>C.5</b> plotDailySiteSum</a><ul>
+<li class="chapter" data-level="C.5.1" data-path="appendixC.html"><a href="appendixC.html#description-4"><i class="fa fa-check"></i><b>C.5.1</b> Description</a></li>
+<li class="chapter" data-level="C.5.2" data-path="appendixC.html"><a href="appendixC.html#dependances-4"><i class="fa fa-check"></i><b>C.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.5.3" data-path="appendixC.html"><a href="appendixC.html#exemple-4"><i class="fa fa-check"></i><b>C.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.6" data-path="appendixC.html"><a href="appendixC.html#plotRouteMap"><i class="fa fa-check"></i><b>C.6</b> plotRouteMap</a><ul>
+<li class="chapter" data-level="C.6.1" data-path="appendixC.html"><a href="appendixC.html#description-5"><i class="fa fa-check"></i><b>C.6.1</b> Description</a></li>
+<li class="chapter" data-level="C.6.2" data-path="appendixC.html"><a href="appendixC.html#exemple-5"><i class="fa fa-check"></i><b>C.6.2</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.7" data-path="appendixC.html"><a href="appendixC.html#plotSite"><i class="fa fa-check"></i><b>C.7</b> plotSite</a><ul>
+<li class="chapter" data-level="C.7.1" data-path="appendixC.html"><a href="appendixC.html#description-6"><i class="fa fa-check"></i><b>C.7.1</b> Description</a></li>
+<li class="chapter" data-level="C.7.2" data-path="appendixC.html"><a href="appendixC.html#dependances-5"><i class="fa fa-check"></i><b>C.7.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.7.3" data-path="appendixC.html"><a href="appendixC.html#exemple-6"><i class="fa fa-check"></i><b>C.7.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="appendixC.html"><a href="appendixC.html#plotSiteSig"><i class="fa fa-check"></i><b>C.8</b> plotSiteSig</a><ul>
+<li class="chapter" data-level="C.8.1" data-path="appendixC.html"><a href="appendixC.html#description-7"><i class="fa fa-check"></i><b>C.8.1</b> Description</a></li>
+<li class="chapter" data-level="C.8.2" data-path="appendixC.html"><a href="appendixC.html#dependances-6"><i class="fa fa-check"></i><b>C.8.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.8.3" data-path="appendixC.html"><a href="appendixC.html#exemple-7"><i class="fa fa-check"></i><b>C.8.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.9" data-path="appendixC.html"><a href="appendixC.html#plotTagSig"><i class="fa fa-check"></i><b>C.9</b> plotTagSig</a><ul>
+<li class="chapter" data-level="C.9.1" data-path="appendixC.html"><a href="appendixC.html#description-8"><i class="fa fa-check"></i><b>C.9.1</b> Description</a></li>
+<li class="chapter" data-level="C.9.2" data-path="appendixC.html"><a href="appendixC.html#dependances-7"><i class="fa fa-check"></i><b>C.9.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.9.3" data-path="appendixC.html"><a href="appendixC.html#exemple-8"><i class="fa fa-check"></i><b>C.9.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.10" data-path="appendixC.html"><a href="appendixC.html#simSiteDet"><i class="fa fa-check"></i><b>C.10</b> simSiteDet</a><ul>
+<li class="chapter" data-level="C.10.1" data-path="appendixC.html"><a href="appendixC.html#description-9"><i class="fa fa-check"></i><b>C.10.1</b> Description</a></li>
+<li class="chapter" data-level="C.10.2" data-path="appendixC.html"><a href="appendixC.html#dependances-8"><i class="fa fa-check"></i><b>C.10.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.10.3" data-path="appendixC.html"><a href="appendixC.html#exemple-9"><i class="fa fa-check"></i><b>C.10.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.11" data-path="appendixC.html"><a href="appendixC.html#siteSum"><i class="fa fa-check"></i><b>C.11</b> siteSum</a><ul>
+<li class="chapter" data-level="C.11.1" data-path="appendixC.html"><a href="appendixC.html#description-10"><i class="fa fa-check"></i><b>C.11.1</b> Description</a></li>
+<li class="chapter" data-level="C.11.2" data-path="appendixC.html"><a href="appendixC.html#dependances-9"><i class="fa fa-check"></i><b>C.11.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.11.3" data-path="appendixC.html"><a href="appendixC.html#exemple-10"><i class="fa fa-check"></i><b>C.11.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.12" data-path="appendixC.html"><a href="appendixC.html#siteSumDaily"><i class="fa fa-check"></i><b>C.12</b> siteSumDaily</a><ul>
+<li class="chapter" data-level="C.12.1" data-path="appendixC.html"><a href="appendixC.html#description-11"><i class="fa fa-check"></i><b>C.12.1</b> Description</a></li>
+<li class="chapter" data-level="C.12.2" data-path="appendixC.html"><a href="appendixC.html#dependances-10"><i class="fa fa-check"></i><b>C.12.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.12.3" data-path="appendixC.html"><a href="appendixC.html#exemple-11"><i class="fa fa-check"></i><b>C.12.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.13" data-path="appendixC.html"><a href="appendixC.html#siteTrans"><i class="fa fa-check"></i><b>C.13</b> siteTrans</a><ul>
+<li class="chapter" data-level="C.13.1" data-path="appendixC.html"><a href="appendixC.html#description-12"><i class="fa fa-check"></i><b>C.13.1</b> Description</a></li>
+<li class="chapter" data-level="C.13.2" data-path="appendixC.html"><a href="appendixC.html#dependances-11"><i class="fa fa-check"></i><b>C.13.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.13.3" data-path="appendixC.html"><a href="appendixC.html#exemple-12"><i class="fa fa-check"></i><b>C.13.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.14" data-path="appendixC.html"><a href="appendixC.html#tagSum"><i class="fa fa-check"></i><b>C.14</b> tagSum</a><ul>
+<li class="chapter" data-level="C.14.1" data-path="appendixC.html"><a href="appendixC.html#description-13"><i class="fa fa-check"></i><b>C.14.1</b> Description</a></li>
+<li class="chapter" data-level="C.14.2" data-path="appendixC.html"><a href="appendixC.html#dependances-12"><i class="fa fa-check"></i><b>C.14.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.14.3" data-path="appendixC.html"><a href="appendixC.html#exemple-13"><i class="fa fa-check"></i><b>C.14.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.15" data-path="appendixC.html"><a href="appendixC.html#tagSumSite"><i class="fa fa-check"></i><b>C.15</b> tagSumSite</a><ul>
+<li class="chapter" data-level="C.15.1" data-path="appendixC.html"><a href="appendixC.html#description-14"><i class="fa fa-check"></i><b>C.15.1</b> Description</a></li>
+<li class="chapter" data-level="C.15.2" data-path="appendixC.html"><a href="appendixC.html#dependances-13"><i class="fa fa-check"></i><b>C.15.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.15.3" data-path="appendixC.html"><a href="appendixC.html#exemple-14"><i class="fa fa-check"></i><b>C.15.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.16" data-path="appendixC.html"><a href="appendixC.html#timeToSunriset"><i class="fa fa-check"></i><b>C.16</b> timeToSunriset</a><ul>
+<li class="chapter" data-level="C.16.1" data-path="appendixC.html"><a href="appendixC.html#description-15"><i class="fa fa-check"></i><b>C.16.1</b> Description</a></li>
+<li class="chapter" data-level="C.16.2" data-path="appendixC.html"><a href="appendixC.html#dependances-14"><i class="fa fa-check"></i><b>C.16.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.16.3" data-path="appendixC.html"><a href="appendixC.html#exemple-15"><i class="fa fa-check"></i><b>C.16.3</b> Exemple</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="appendixD.html"><a href="appendixD.html"><i class="fa fa-check"></i><b>D</b> Annexe D - Le logiciel motusClient - Fonctions de filtrage de données</a><ul>
+<li class="chapter" data-level="D.1" data-path="appendixD.html"><a href="appendixD.html#listRunsFilters"><i class="fa fa-check"></i><b>D.1</b> listRunsFilters</a><ul>
+<li class="chapter" data-level="D.1.1" data-path="appendixD.html"><a href="appendixD.html#description-16"><i class="fa fa-check"></i><b>D.1.1</b> Description</a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="appendixD.html"><a href="appendixD.html#dependances-15"><i class="fa fa-check"></i><b>D.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.3" data-path="appendixD.html"><a href="appendixD.html#exemple-16"><i class="fa fa-check"></i><b>D.3</b> Exemple</a></li>
+<li class="chapter" data-level="D.4" data-path="appendixD.html"><a href="appendixD.html#createRunsFilter"><i class="fa fa-check"></i><b>D.4</b> createRunsFilter</a><ul>
+<li class="chapter" data-level="D.4.1" data-path="appendixD.html"><a href="appendixD.html#description-17"><i class="fa fa-check"></i><b>D.4.1</b> Description</a></li>
+<li class="chapter" data-level="D.4.2" data-path="appendixD.html"><a href="appendixD.html#dependances-16"><i class="fa fa-check"></i><b>D.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.4.3" data-path="appendixD.html"><a href="appendixD.html#exemple-17"><i class="fa fa-check"></i><b>D.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.5" data-path="appendixD.html"><a href="appendixD.html#getRunsFilters"><i class="fa fa-check"></i><b>D.5</b> getRunsFilters</a><ul>
+<li class="chapter" data-level="D.5.1" data-path="appendixD.html"><a href="appendixD.html#description-18"><i class="fa fa-check"></i><b>D.5.1</b> Description</a></li>
+<li class="chapter" data-level="D.5.2" data-path="appendixD.html"><a href="appendixD.html#dependances-17"><i class="fa fa-check"></i><b>D.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.5.3" data-path="appendixD.html"><a href="appendixD.html#exemple-18"><i class="fa fa-check"></i><b>D.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.6" data-path="appendixD.html"><a href="appendixD.html#writeRunsFilter"><i class="fa fa-check"></i><b>D.6</b> writeRunsFilter</a><ul>
+<li class="chapter" data-level="D.6.1" data-path="appendixD.html"><a href="appendixD.html#description-19"><i class="fa fa-check"></i><b>D.6.1</b> Description</a></li>
+<li class="chapter" data-level="D.6.2" data-path="appendixD.html"><a href="appendixD.html#dependances-18"><i class="fa fa-check"></i><b>D.6.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.6.3" data-path="appendixD.html"><a href="appendixD.html#exemples"><i class="fa fa-check"></i><b>D.6.3</b> Exemples</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Guide R pour Motus</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendixC" class="section level1">
+<h1><span class="header-section-number">C</span> Annexe C - Le logiciel R de Motus</h1>
+<p>Le logiciel R de Motus comprend des fonctions qui permettent d’effectuer des calculs communs et de produire des sommaires, des graphiques et des cartes avec les données .motus. Cette annexe présente ces fonctions et des exemples de leur utilisation. Bon nombre des fonctions sont utilisables dans les formats tbl et data.frame; toutefois, pour certaines, les données doivent être dans le format sql tel que spécifié ci-après. Le chapitre <a href="accessingData.html#accessingData">3</a> présente des marches à suivre détaillées pour accéder aux données et les formater. Les exemples présentés tout au long de ce chapitre sont basés sur les données du projet 176 (Programme de suivi des oiseaux de rivage de la baie James) utilisées comme exemples, auxquelles on peut accéder et qu’on peut convertir dans différents formats par l’intermédiaire du code suivant:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Télécharger les données fournies comme exemples</span>
+<span class="co"># dans le format sql et y accéder, nom</span>
+<span class="co"># d&#39;utilisateur: motus.sample, mot de passe:</span>
+<span class="co"># motus.sample</span>
+sql.motus &lt;-<span class="st"> </span><span class="kw">tagme</span>(<span class="dv">176</span>, <span class="dt">new =</span> <span class="ot">TRUE</span>, <span class="dt">update =</span> <span class="ot">TRUE</span>, 
+    <span class="dt">dir =</span> <span class="st">&quot;./data&quot;</span>)
+
+<span class="co"># Extraire la table «alltags» du fichier sql</span>
+<span class="co"># «sql.motus».</span>
+tbl.alltags &lt;-<span class="st"> </span><span class="kw">tbl</span>(sql.motus, <span class="st">&quot;alltags&quot;</span>)
+
+## Convertir la table «tbl.alltags» en une trame de
+## données appelée «df.alltags».
+df.alltags &lt;-<span class="st"> </span>tbl.alltags <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<p>Vous pouvez accéder aux pages d’aide relatives aux fonctions en utilisant «??sunRiseSet» dans la console R. Vous pouvez aussi voir le code sous-jacent à la fonction comme suit:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sunRiseSet</code></pre></div>
+<div id="checkVersion.B" class="section level2">
+<h2><span class="header-section-number">C.1</span> checkVersion</h2>
+<div id="description" class="section level3">
+<h3><span class="header-section-number">C.1.1</span> Description</h3>
+<p>Lorsque vous appelez la fonction tagme() pour charger la base de données sqlite, le système vérifie que la version de votre base de données correspond à la plus récente version du logiciel motus et stocke la version dans une nouvelle table appelée admInfo. Au fil du temps, des changements sont apportés qui nécessitent l’ajout de tables, de vues ou de champs à la base de données. La fonction suivante vérifie que la version de votre base de données a été mise à jour de manière à correspondre à la version courante du logiciel motus. Si le système affiche un avertissement, reportez-vous à l’annexe B pour savoir quoi faire. Si la version de votre base de données n’est pas à jour, reportez-vous au chapitre <a href="loadingPackages.html#loadingPackages">2</a> pour savoir comment mettre à jour les versions des logiciels motus et motusClient.</p>
+</div>
+<div id="dependances" class="section level3">
+<h3><span class="header-section-number">C.1.2</span> Dépendances</h3>
+<p><strong>sql.motus</strong> Une base sqlite de données .motus téléchargée au moyen de la fonction tagme()</p>
+</div>
+<div id="exemple" class="section level3">
+<h3><span class="header-section-number">C.1.3</span> Exemple</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">checkVersion</span>(sql.motus)</code></pre></div>
+</div>
+</div>
+<div id="sunRiseSet" class="section level2">
+<h2><span class="header-section-number">C.2</span> sunRiseSet</h2>
+<div id="description-1" class="section level3">
+<h3><span class="header-section-number">C.2.1</span> Description</h3>
+<p>Cette fonction crée une variable heure du lever du soleil (sunrise) et heure du coucher du soleil (sunset) et l’ajoute à une trame de données comprenant des valeurs de latitude, de longitude et de date/heure dans le format POSIXct ou numérique.</p>
+</div>
+<div id="dependances-1" class="section level3">
+<h3><span class="header-section-number">C.2.2</span> Dépendances</h3>
+<p><strong>data</strong> Peut être une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure, latitude et longitude.<br />
+<strong>lat</strong> Variable avec valeurs de latitude, par défaut les valeurs de recvDeployLat.<br />
+<strong>lon</strong> Variable avec valeurs de longitude, par défaut les valeurs de recvDeployLon.<br />
+<strong>ts</strong> Variable de l’heure UTC dans le format numérique ou POSIXct, par défaut les valeurs de ts.</p>
+</div>
+<div id="exemple-1" class="section level3">
+<h3><span class="header-section-number">C.2.3</span> Exemple</h3>
+<p>Ajout des variables sunrise/sunset à la trame de données alltags</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alltags.df.sun &lt;-<span class="st"> </span><span class="kw">sunRiseSet</span>(df.alltags)
+<span class="kw">head</span>(alltags.df.sun)</code></pre></div>
+<pre><code>##    hitID runID batchID                  ts sig sigsd noise freq freqsd
+## 1  45107  8886      53 2015-10-26 11:19:49  52     0   -96    4      0
+## 2  45108  8886      53 2015-10-26 11:20:28  54     0   -96    4      0
+## 3  45109  8886      53 2015-10-26 11:21:17  55     0   -96    4      0
+## 4  45110  8886      53 2015-10-26 11:21:55  52     0   -96    4      0
+## 5  45111  8886      53 2015-10-26 11:22:44  49     0   -96    4      0
+## 6 199885 23305      64 2015-10-26 11:12:04  33     0   -96    4      0
+##    slop burstSlop done motusTagID ambigID port runLen bootnum tagProjID
+## 1 1e-04    0.0000    1      16047      NA    3      5      11       176
+## 2 1e-04   -0.0021    1      16047      NA    3      5      11       176
+## 3 1e-04    0.0001    1      16047      NA    3      5      11       176
+## 4 1e-04   -0.0010    1      16047      NA    3      5      11       176
+## 5 1e-04    0.0001    1      16047      NA    3      5      11       176
+## 6 1e-04    0.0000    1      16047      NA    1     11       4       176
+##   mfgID tagType codeSet   mfg tagModel tagLifespan nomFreq  tagBI pulseLen
+## 1   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 2   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 3   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 4   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 5   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 6   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+##   tagDeployID speciesID markerNumber markerType tagDeployStart
+## 1        1839      4670    135268103 metal band     1441908000
+## 2        1839      4670    135268103 metal band     1441908000
+## 3        1839      4670    135268103 metal band     1441908000
+## 4        1839      4670    135268103 metal band     1441908000
+## 5        1839      4670    135268103 metal band     1441908000
+## 6        1839      4670    135268103 metal band     1441908000
+##   tagDeployEnd tagDeployLat tagDeployLon tagDeployAlt
+## 1   1457632800      51.4839       -80.45           NA
+## 2   1457632800      51.4839       -80.45           NA
+## 3   1457632800      51.4839       -80.45           NA
+## 4   1457632800      51.4839       -80.45           NA
+## 5   1457632800      51.4839       -80.45           NA
+## 6   1457632800      51.4839       -80.45           NA
+##                                                                                                                                                                                             tagDeployComments
+## 1 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 2 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 3 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 4 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 5 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 6 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+##                               fullID deviceID recvDeployID recvDeployLat
+## 1 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 2 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 3 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 4 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 5 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 6 SampleData#378:9.7@166.38(M.16047)      515         2512      42.68067
+##   recvDeployLon recvDeployAlt      recv recvDeployName recvSiteName
+## 1     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 2     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 3     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 4     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 5     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 6     -72.47392            NA Lotek-164  BennettMeadow         &lt;NA&gt;
+##   isRecvMobile recvProjID antType antBearing antHeight speciesEN
+## 1            0         74  yagi-9        127        NA  Red Knot
+## 2            0         74  yagi-9        127        NA  Red Knot
+## 3            0         74  yagi-9        127        NA  Red Knot
+## 4            0         74  yagi-9        127        NA  Red Knot
+## 5            0         74  yagi-9        127        NA  Red Knot
+## 6            0         74  yagi-9        243        NA  Red Knot
+##            speciesFR       speciesSci speciesGroup tagProjName
+## 1 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 2 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 3 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 4 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 5 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 6 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+##   recvProjName gpsLat gpsLon gpsAlt             sunrise
+## 1         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 2         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 3         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 4         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 5         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 6         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:15:58
+##                sunset
+## 1 2015-10-26 21:52:11
+## 2 2015-10-26 21:52:11
+## 3 2015-10-26 21:52:11
+## 4 2015-10-26 21:52:11
+## 5 2015-10-26 21:52:11
+## 6 2015-10-26 21:51:06</code></pre>
+</div>
+</div>
+<div id="plotAllTagsCoor" class="section level2">
+<h2><span class="header-section-number">C.3</span> plotAllTagsCoord</h2>
+<div id="description-2" class="section level3">
+<h3><span class="header-section-number">C.3.1</span> Description</h3>
+<p>Cette fonction pointe sur un graphique la latitude/longitude par rapport à l’heure (UTC arrondie à l’heure près) pour chaque émetteur à partir des données de détection .motus. Par défaut, les coordonnées géographiques sont tirées des enregistrements effectués par les GPS des récepteurs.</p>
+</div>
+<div id="dependances-2" class="section level3">
+<h3><span class="header-section-number">C.3.2</span> Dépendances</h3>
+<p><strong>data</strong> Peut être une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure et latitude ou longitude.<br />
+<strong>tagsPerPanel</strong> Nombre d’émetteurs indiqués dans chaque panneau du graphique, par défaut 5.<br />
+<strong>coordinate</strong> Variable avec valeurs de position, par défaut les valeurs de recvDeployLat.<br />
+<strong>ts</strong> Variable de l’heure UTC dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>fullID</strong> Variable de l’identifiant complet de l’émetteur. <strong>mfgID</strong> Variable de l’identifiant de l’émetteur attribué par le fabricant.</p>
+</div>
+<div id="exemple-2" class="section level3">
+<h3><span class="header-section-number">C.3.3</span> Exemple</h3>
+<p>Pointage sur un graphique des coordonnées de certains émetteurs à partir d’une table tbl.alltags, à raison de 3 émetteurs par panneau</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotAllTagsCoord</span>(<span class="kw">filter</span>(tbl.alltags, motusTagID <span class="op">%in%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">c</span>(<span class="dv">19129</span>, <span class="dv">16011</span>, <span class="dv">17357</span>, <span class="dv">16035</span>, <span class="dv">22897</span>, <span class="dv">23316</span>)), <span class="dt">tagsPerPanel =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotAllTagsCoord-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plotAllTagsSite" class="section level2">
+<h2><span class="header-section-number">C.4</span> plotAllTagsSite</h2>
+<div id="description-3" class="section level3">
+<h3><span class="header-section-number">C.4.1</span> Description</h3>
+<p>Cette fonction pointe sur un graphique la latitude/longitude par rapport à l’heure (UTC arrondie à l’heure près) pour chaque émetteur à partir des données de détection .motus. Par défaut, les coordonnées sont tirées des enregistrements de la latitude effectués par les GPS des récepteurs.</p>
+</div>
+<div id="dependances-3" class="section level3">
+<h3><span class="header-section-number">C.4.2</span> Dépendances</h3>
+<p><strong>data</strong> Peut être une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure et latitude ou longitude.<br />
+<strong>tagsPerPanel</strong> Nombre d’émetteurs indiqués dans chaque panneau du graphique, par défaut 5.<br />
+<strong>coordinate</strong> Variable avec valeurs de position, par défaut les valeurs de recvDeployLat.<br />
+<strong>ts</strong> Variable de l’heure UTC dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>fullID</strong> Variable de l’identifiant complet de l’émetteur. <strong>mfgID</strong> Variable de l’identifiant de l’émetteur attribué par le fabricant.</p>
+</div>
+<div id="exemple-3" class="section level3">
+<h3><span class="header-section-number">C.4.3</span> Exemple</h3>
+<p>Pointage sur un graphique des coordonnées à partir d’une table tbl.alltags pour l’espèce choisie, à savoir le Bécasseau maubèche, à raison de 3 émetteurs par panneau.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotAllTagsSite</span>(<span class="kw">filter</span>(tbl.alltags, speciesEN <span class="op">==</span><span class="st"> &quot;Red Knot&quot;</span>), 
+    <span class="dt">coordinate =</span> <span class="st">&quot;recvDeployLat&quot;</span>, <span class="dt">tagsPerPanel =</span> <span class="dv">3</span>)</code></pre></div>
+<pre><code>## Warning: Missing values are always removed in SQL.
+## Use `AVG(x, na.rm = TRUE)` to silence this warning</code></pre>
+<p><img src="FrMotusRBook_files/figure-html/plotAllTagsSite-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plotDailySiteSum" class="section level2">
+<h2><span class="header-section-number">C.5</span> plotDailySiteSum</h2>
+<div id="description-4" class="section level3">
+<h3><span class="header-section-number">C.5.1</span> Description</h3>
+<p>Cette fonction pointe sur des graphiques le nombre total de détections de tous les émetteurs et le nombre total d’émetteurs détectés, par jour, à un site déterminé. Elle dépend de la fonction siteSumDaily.</p>
+</div>
+<div id="dependances-4" class="section level3">
+<h3><span class="header-section-number">C.5.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, recvDepName et ts.<br />
+<strong>motusTagID</strong> Variable consistant en un identifiant d’émetteur motus (motus tag ID).<br />
+<strong>sig</strong> Variable de puissance de signal.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.</p>
+</div>
+<div id="exemple-4" class="section level3">
+<h3><span class="header-section-number">C.5.3</span> Exemple</h3>
+<p>Pointage sur des graphiques du nombre total de détections de tous les émetteurs et du nombre total d’émetteurs détectés au site Longridge à partir de data.frame et df.alltags</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDailySiteSum</span>(df.alltags, <span class="dt">recvDeployName =</span> <span class="st">&quot;Longridge&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotDailySiteSum-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plotRouteMap" class="section level2">
+<h2><span class="header-section-number">C.6</span> plotRouteMap</h2>
+<div id="description-5" class="section level3">
+<h3><span class="header-section-number">C.6.1</span> Description</h3>
+<p>Cette fonction pointe sur une carte Google les trajectoires d’émetteurs détectés, la trajectoire de chaque émetteur étant représentée par une couleur distincte. L’utilisateur fixe un intervalle de temps entre deux dates pour que la carte indique la position des récepteurs qui fonctionnaient à un moment donné pendant cet intervalle. ### Dépendances <strong>data</strong> Un fichier sql .motus.<br />
+<strong>maptype</strong> Type de carte Google à afficher: relief, plan, satellite ou hybride.<br />
+<strong>latCentre</strong> Latitude du point central de la carte.<br />
+<strong>lonCentre</strong> Longitude du point central de la carte.<br />
+<strong>zoom</strong> Nombre entier de 3 à 21, 3 correspondant au niveau du continent et 10 au niveau de la localité.<br />
+<strong>recvStart</strong> Date du début de l’intervalle de temps pour l’indication des récepteurs actifs.<br />
+<strong>recvEnd</strong> Date de la fin de l’intervalle de temps pour l’indication des récepteurs actifs.</p>
+</div>
+<div id="exemple-5" class="section level3">
+<h3><span class="header-section-number">C.6.2</span> Exemple</h3>
+<p>Pointage sur une carte de trajectoires de type «relief» à partir de toutes les données de détection, avec indication des récepteurs actifs entre le 1er janvier 2016 (2016-01-01) et le 1er janvier 2017 (2017-01-01).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotRouteMap</span>(sql.motus, <span class="dt">maptype =</span> <span class="st">&quot;terrain&quot;</span>, <span class="dt">latCentre =</span> <span class="dv">44</span>, 
+    <span class="dt">lonCentre =</span> <span class="op">-</span><span class="dv">70</span>, <span class="dt">zoom =</span> <span class="dv">5</span>, <span class="dt">recvStart =</span> <span class="st">&quot;2016-01-01&quot;</span>, 
+    <span class="dt">recvEnd =</span> <span class="st">&quot;2016-12-31&quot;</span>)</code></pre></div>
+<pre><code>## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=44,-70&amp;zoom=5&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;sensor=false</code></pre>
+<pre><code>## Warning: Removed 120 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 685 rows containing missing values (geom_path).</code></pre>
+<p><img src="FrMotusRBook_files/figure-html/plotRouteMap-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plotSite" class="section level2">
+<h2><span class="header-section-number">C.7</span> plotSite</h2>
+<div id="description-6" class="section level3">
+<h3><span class="header-section-number">C.7.1</span> Description</h3>
+</div>
+<div id="dependances-5" class="section level3">
+<h3><span class="header-section-number">C.7.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables ts, antBearing, fullID et recvDepName.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>antBearing</strong> Variable de l’angle de relèvement de l’antenne.<br />
+<strong>fullID</strong> Variable de l’identifiant complet de l’émetteur.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.</p>
+</div>
+<div id="exemple-6" class="section level3">
+<h3><span class="header-section-number">C.7.3</span> Exemple</h3>
+<p>Pointage seulement des données de détection à un site particulier (Piskwamish) à partir de data.frame et de df.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSite</span>(<span class="kw">filter</span>(df.alltags, recvDeployName <span class="op">==</span><span class="st"> &quot;Piskwamish&quot;</span>))</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotSite-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plotSiteSig" class="section level2">
+<h2><span class="header-section-number">C.8</span> plotSiteSig</h2>
+<div id="description-7" class="section level3">
+<h3><span class="header-section-number">C.8.1</span> Description</h3>
+<p>Cette fonction pointe sur un graphique la puissance du signal par rapport au temps de l’année pour tous les émetteurs détectés à un site particulier, les couleurs variant selon la gamme des angles de relèvement des antennes.</p>
+</div>
+<div id="dependances-6" class="section level3">
+<h3><span class="header-section-number">C.8.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables antBearing, ts, lat, sig, fullID et recvDepName.<br />
+<strong>antBearing</strong> Variable de l’angle de relèvement de l’antenne.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>recvDeployLat</strong> Variable de la latitude de la position du récepteur.<br />
+<strong>sig</strong> Variable de la puissance du signal de l’émetteur.<br />
+<strong>fullID</strong> Variable de l’identifiant complet de l’émetteur.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.</p>
+</div>
+<div id="exemple-7" class="section level3">
+<h3><span class="header-section-number">C.8.3</span> Exemple</h3>
+<p>Pointage de la puissance du signal de certains émetteurs détectés au site de Piskwamish.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSiteSig</span>(<span class="kw">filter</span>(df.alltags, motusTagID <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">16037</span>, 
+    <span class="dv">16039</span>, <span class="dv">16035</span>)), <span class="dt">recvDeployName =</span> <span class="st">&quot;Netitishi&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotSiteSig-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plotTagSig" class="section level2">
+<h2><span class="header-section-number">C.9</span> plotTagSig</h2>
+<div id="description-8" class="section level3">
+<h3><span class="header-section-number">C.9.1</span> Description</h3>
+<p>Cette fonction pointe sur un graphique la puissance du signal d’un émetteur particulier par rapport au temps de l’année, à raison d’un panneau de graphique par site (dans l’ordre de la latitude), les couleurs variant selon la gamme des angles de relèvement des antennes.</p>
+</div>
+<div id="dependances-7" class="section level3">
+<h3><span class="header-section-number">C.9.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, ts, antBearing, recvDeployLat, fullID et recvDepName.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus.<br />
+<strong>antBearing</strong> Variable de l’angle de relèvement de l’antenne.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>recvDeployLat</strong> Variable de la latitude de la position du récepteur.<br />
+<strong>sig</strong> Variable de la puissance du signal de l’émetteur. <strong>fullID</strong> Variable de l’identifiant complet de l’émetteur. <strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.</p>
+</div>
+<div id="exemple-8" class="section level3">
+<h3><span class="header-section-number">C.9.3</span> Exemple</h3>
+<p>Pointage de la puissance du signal d’un émetteur particulier à partir de la table de données tbl.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotTagSig</span>(tbl.alltags, <span class="dt">motusTagID =</span> <span class="dv">16035</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotTagSig-1.png" width="672" /></p>
+</div>
+</div>
+<div id="simSiteDet" class="section level2">
+<h2><span class="header-section-number">C.10</span> simSiteDet</h2>
+<div id="description-9" class="section level3">
+<h3><span class="header-section-number">C.10.1</span> Description</h3>
+<p>Cette fonction crée une trame de données comprenant seulement les données de détection des émetteurs détectés par deux récepteurs ou plus en même temps.</p>
+</div>
+<div id="dependances-8" class="section level3">
+<h3><span class="header-section-number">C.10.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables ts, motusTagID et recvDepName.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.</p>
+</div>
+<div id="exemple-9" class="section level3">
+<h3><span class="header-section-number">C.10.3</span> Exemple</h3>
+<p>Obtention, à partir d’une trame de données df.alltags, d’une trame de données appelée «simSites» comprenant seulement les données de détection simultanée d’émetteurs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simSites &lt;-<span class="st"> </span><span class="kw">simSiteDet</span>(df.alltags)
+<span class="kw">head</span>(simSites)</code></pre></div>
+<pre><code>##   motusTagID                  ts num.dup     hitID    runID batchID
+## 1      16047 2015-10-26 11:20:28       2     45108     8886      53
+## 2      16047 2015-10-26 11:20:28       2    199896    23305      64
+## 3      16047 2015-10-26 11:22:44       2    199902    23306      64
+## 4      16047 2015-10-26 11:22:44       2     45111     8886      53
+## 5      22897 2017-05-18 02:27:59       2 159449264  9005196   64491
+## 6      22897 2017-05-18 02:27:59       2 201832550 10191953   66308
+##        sig   sigsd    noise   freq freqsd  slop burstSlop done ambigID
+## 1  54.0000  0.0000 -96.0000 4.0000 0.0000 1e-04   -0.0021    1      NA
+## 2  20.0000  0.0000 -96.0000 4.0000 0.0000 1e-04    0.0012    1      NA
+## 3  28.0000  0.0000 -96.0000 4.0000 0.0000 1e-04   -0.0006    1      NA
+## 4  49.0000  0.0000 -96.0000 4.0000 0.0000 1e-04    0.0001    1      NA
+## 5 -63.7422 14.6880 -76.3434 2.7883 0.0196 1e-04    0.0003    1    -114
+## 6 -67.5413 14.6268 -75.6038 2.6942 0.0061 1e-04    0.0000    1    -114
+##   port runLen bootnum tagProjID mfgID tagType codeSet   mfg tagModel
+## 1    3      5      11       176   378      ID  Lotek4 Lotek NTQB-3-2
+## 2    1     11       4       176   378      ID  Lotek4 Lotek NTQB-3-2
+## 3    3      6       4       176   378      ID  Lotek4 Lotek NTQB-3-2
+## 4    3      5      11       176   378      ID  Lotek4 Lotek NTQB-3-2
+## 5    3      5     145       176 303.1      ID  Lotek4 Lotek NTQB-4-2
+## 6    1      6     374       176 303.1      ID  Lotek4 Lotek NTQB-4-2
+##   tagLifespan nomFreq  tagBI pulseLen tagDeployID speciesID markerNumber
+## 1          NA  166.38 9.6971      2.5        1839      4670    135268103
+## 2          NA  166.38 9.6971      2.5        1839      4670    135268103
+## 3          NA  166.38 9.6971      2.5        1839      4670    135268103
+## 4          NA  166.38 9.6971      2.5        1839      4670    135268103
+## 5          NA  166.38 5.2978      2.5       10485      4670   9822-53123
+## 6          NA  166.38 5.2978      2.5       10485      4670   9822-53123
+##   markerType tagDeployStart tagDeployEnd tagDeployLat tagDeployLon
+## 1 metal band     1441908000   1457632800     51.48390    -80.45000
+## 2 metal band     1441908000   1457632800     51.48390    -80.45000
+## 3 metal band     1441908000   1457632800     51.48390    -80.45000
+## 4 metal band     1441908000   1457632800     51.48390    -80.45000
+## 5 metal band     1475337600   1497283200     50.19278    -63.74528
+## 6 metal band     1475337600   1497283200     50.19278    -63.74528
+##   tagDeployAlt
+## 1           NA
+## 2           NA
+## 3           NA
+## 4           NA
+## 5           NA
+## 6           NA
+##                                                                                                                                                                                             tagDeployComments
+## 1 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 2 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 3 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 4 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 5                                                                                                                                                                                                        &lt;NA&gt;
+## 6                                                                                                                                                                                                        &lt;NA&gt;
+##                                 fullID deviceID recvDeployID recvDeployLat
+## 1   SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 2   SampleData#378:9.7@166.38(M.16047)      515         2512      42.68067
+## 3   SampleData#378:9.7@166.38(M.16047)      515         2512      42.68067
+## 4   SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 5 SampleData#303.1:5.3@166.38(M.22897)      297         2146      42.61540
+## 6 SampleData#303.1:5.3@166.38(M.22897)      304         2549      42.58290
+##   recvDeployLon recvDeployAlt            recv recvDeployName recvSiteName
+## 1     -72.71657            NA       Lotek-159      Shelburne         &lt;NA&gt;
+## 2     -72.47392            NA       Lotek-164  BennettMeadow         &lt;NA&gt;
+## 3     -72.47392            NA       Lotek-164  BennettMeadow         &lt;NA&gt;
+## 4     -72.71657            NA       Lotek-159      Shelburne         &lt;NA&gt;
+## 5     -80.45810            NA SG-5113BBBK2853         BSC HQ         &lt;NA&gt;
+## 6     -80.39840            NA SG-5113BBBK2972        Old Cut         &lt;NA&gt;
+##   isRecvMobile recvProjID      antType antBearing antHeight speciesEN
+## 1            0         74       yagi-9        127        NA  Red Knot
+## 2            0         74       yagi-9        243        NA  Red Knot
+## 3            0         74       yagi-9        120        NA  Red Knot
+## 4            0         74       yagi-9        127        NA  Red Knot
+## 5            0          1 yagi-9-laird        180        NA  Red Knot
+## 6            0          1 yagi-9-laird        290        25  Red Knot
+##            speciesFR       speciesSci speciesGroup tagProjName
+## 1 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 2 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 3 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 4 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 5 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 6 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+##   recvProjName gpsLat gpsLon gpsAlt
+## 1         &lt;NA&gt;     NA     NA     NA
+## 2         &lt;NA&gt;     NA     NA     NA
+## 3         &lt;NA&gt;     NA     NA     NA
+## 4         &lt;NA&gt;     NA     NA     NA
+## 5         &lt;NA&gt;     NA     NA     NA
+## 6         &lt;NA&gt;     NA     NA     NA</code></pre>
+</div>
+</div>
+<div id="siteSum" class="section level2">
+<h2><span class="header-section-number">C.11</span> siteSum</h2>
+<div id="description-10" class="section level3">
+<h3><span class="header-section-number">C.11.1</span> Description</h3>
+<p>Cette fonction crée un sommaire des données sur la première et la dernière détections à un site déterminé, avec indications de l’intervalle de temps entre celles-ci, du nombre d’émetteurs détectés et du nombre total de détections. Elle pointe sur des graphiques le nombre total de détections de tous les émetteurs et le nombre total d’émetteurs détectés à chaque site.</p>
+</div>
+<div id="dependances-9" class="section level3">
+<h3><span class="header-section-number">C.11.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, recvDeploLat, recvDepName et ts.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus.<br />
+<strong>sig</strong> Variable de la puissance du signal.<br />
+<strong>recvDeployLat</strong> Variable de la latitude du lieu de déploiement du récepteur.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>units</strong> Unités de temps indiquant l’intervalle de temps. Options: secondes, minutes, heures, jours et semaines. Par défaut en heures.</p>
+</div>
+<div id="exemple-10" class="section level3">
+<h3><span class="header-section-number">C.11.3</span> Exemple</h3>
+<p>Création de sommaires par site pour des sites sélectionnés, avec indication du temps en minutes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">site_summary &lt;-<span class="st"> </span><span class="kw">siteSum</span>(<span class="kw">filter</span>(df.alltags, recvDeployName <span class="op">%in%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;Niapiskau&quot;</span>, <span class="st">&quot;Netitishi&quot;</span>, <span class="st">&quot;Old Cur&quot;</span>, <span class="st">&quot;Washkaugou&quot;</span>)), 
+    <span class="dt">units =</span> <span class="st">&quot;mins&quot;</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/siteSum-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(site_summary)</code></pre></div>
+<pre><code>## # A tibble: 3 x 6
+##   recvDeployName  first_ts            last_ts             tot_ts  num.tags
+##   &lt;fct&gt;           &lt;dttm&gt;              &lt;dttm&gt;              &lt;time&gt;     &lt;int&gt;
+## 1 Niapiskau_50.2… 2016-10-01 23:47:57 2016-10-27 00:03:21 36015.…        6
+## 2 Washkaugou_51.… 2016-10-09 23:52:45 2016-10-10 00:00:42 7.9468…        2
+## 3 Netitishi_51.3… 2015-08-14 17:53:49 2015-09-08 01:10:13 34996.…        7
+## # ... with 1 more variable: num.det &lt;int&gt;</code></pre>
+</div>
+</div>
+<div id="siteSumDaily" class="section level2">
+<h2><span class="header-section-number">C.12</span> siteSumDaily</h2>
+<div id="description-11" class="section level3">
+<h3><span class="header-section-number">C.12.1</span> Description</h3>
+<p>Cette fonction crée un sommaire des données sur la première et la dernière détections à un site déterminé, avec indications de l’intervalle de temps entre celles-ci, du nombre d’émetteurs détectés et du nombre total de détections pour chaque jour. Elle produit le même sommaire que la fonction siteSum, mais pour chaque jour par site.</p>
+</div>
+<div id="dependances-10" class="section level3">
+<h3><span class="header-section-number">C.12.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, sig, recvDepName et ts.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus.<br />
+<strong>sig</strong> Variable de la puissance du signal.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>units</strong> Unités de temps indiquant l’intervalle de temps. Options: secondes, minutes, heures, jours et semaines. Par défaut en heures.</p>
+</div>
+<div id="exemple-11" class="section level3">
+<h3><span class="header-section-number">C.12.3</span> Exemple</h3>
+<p>Création de sommaires par site à partir des données de détection des émetteurs de l’utilisateur, pour tous les sites pour chaque jour, avec indication du temps en minutes, en utilisant la table de données tbl.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">daily_site_summary &lt;-<span class="st"> </span><span class="kw">siteSumDaily</span>(tbl.alltags, <span class="dt">units =</span> <span class="st">&quot;mins&quot;</span>)
+<span class="kw">head</span>(daily_site_summary)</code></pre></div>
+<pre><code>##                            recvDeployName       date            first_ts
+## 1      Assateague State Park\n38.2, -75.1 2015-09-13 2015-09-13 10:12:50
+## 2                    Baccaro\n43.5, -65.5 2017-05-19 2017-05-19 16:01:21
+## 3              BennettMeadow\n42.7, -72.5 2015-10-26 2015-10-26 11:12:04
+## 4 Binbrook_Conservation_Area\n43.1, -79.8 2017-05-18 2017-05-18 03:13:25
+## 5                       BISE\n41.2, -71.6 2015-10-26 2015-10-26 17:55:47
+## 6                  Blandford\n44.5, -64.1 2015-12-26 2015-12-26 14:58:27
+##               last_ts         tot_ts num_tags num_det
+## 1 2015-09-13 10:14:40  1.828847 mins        1       6
+## 2 2017-05-19 16:02:40  1.323297 mins        3       6
+## 3 2015-10-26 11:30:49 18.747692 mins        1      27
+## 4 2017-05-18 03:13:46  0.353195 mins        2       6
+## 5 2015-10-26 19:16:55 81.132212 mins        1      44
+## 6 2015-12-26 14:58:47  0.323150 mins        1       2</code></pre>
+</div>
+</div>
+<div id="siteTrans" class="section level2">
+<h2><span class="header-section-number">C.13</span> siteTrans</h2>
+<div id="description-12" class="section level3">
+<h3><span class="header-section-number">C.13.1</span> Description</h3>
+<p>Cette fonction crée une trame de données sur les transitions entre des sites; les données de détection sont ordonnées en fonction de l’heure de détection. Par transition on entend l’intervalle de temps entre la dernière détection au site x («départ» possible) et la première détection au site y («arrivée» possible); les données sont présentées dans l’ordre chronologique. Chaque ligne contient les indications suivantes: heure de la dernière détection et de la latitude/longitude au site x; heure de la première détection et de la latitude/longitude au site y; distance entre les deux sites; intervalle de temps entre les deux détections; vitesse du déplacement entre les détections; et angle de relèvement (cap) entre les deux sites.</p>
+</div>
+<div id="dependances-11" class="section level3">
+<h3><span class="header-section-number">C.13.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables ts, motusTagID, tagDeployID, recvDeployLat, recvDeployLon et recvDepName.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus.<br />
+<strong>tagDeployID</strong> Variable de l’identifiant du lieu de déploiement de l’émetteur Motus.<br />
+<strong>recvDeployLat</strong> Variable de la latitude du lieu de déploiement du récepteur.<br />
+<strong>recvDeployLon</strong> Variable de la longitude du lieu de déploiement du récepteur.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.</p>
+</div>
+<div id="exemple-12" class="section level3">
+<h3><span class="header-section-number">C.13.3</span> Exemple</h3>
+<p>Visualisation des transitions entre des sites seulement pour l’émetteur 16037 à partir de la trame de données df.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transitions &lt;-<span class="st"> </span><span class="kw">siteTrans</span>(<span class="kw">filter</span>(df.alltags, motusTagID <span class="op">==</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">16037</span>), <span class="dt">latCoord =</span> <span class="st">&quot;recvDeployLat&quot;</span>, <span class="dt">lonCoord =</span> <span class="st">&quot;recvDeployLon&quot;</span>)
+<span class="kw">head</span>(transitions)</code></pre></div>
+<pre><code>## # A tibble: 6 x 14
+## # Groups:   motusTagID, tagDeployID [1]
+##   motusTagID tagDeployID ts.x                lat.x lon.x recvDeployName.x 
+##        &lt;int&gt;       &lt;int&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;            
+## 1      16037        1825 2015-08-17 17:02:39  NA    NA   NP mobile_NA, NA 
+## 2      16037        1825 2015-08-28 16:40:18  51.5 -80.4 North Bluff_51.5…
+## 3      16037        1825 2015-09-08 01:10:13  51.3 -80.1 Netitishi_51.3, …
+## 4      16037        1825 2015-09-08 18:37:16  44.6 -65.8 Comeau (Marshall…
+## 5      16037        1825 2015-09-13 19:46:27  39.0 -74.8 NWW_39, -74.8    
+## 6      16037        1825 2015-09-14 15:56:49  37.1 -76.0 BULL_37.1, -76   
+## # ... with 8 more variables: ts.y &lt;dttm&gt;, lat.y &lt;dbl&gt;, lon.y &lt;dbl&gt;,
+## #   recvDeployName.y &lt;chr&gt;, tot_ts &lt;time&gt;, dist &lt;dbl&gt;, rate &lt;dbl&gt;,
+## #   bearing &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="tagSum" class="section level2">
+<h2><span class="header-section-number">C.14</span> tagSum</h2>
+<div id="description-13" class="section level3">
+<h3><span class="header-section-number">C.14.1</span> Description</h3>
+<p>Cette fonction crée un sommaire, pour chaque émetteur, des données sur les heures de la première et de la dernière détections, les sites de la première et de la dernière détections, l’intervalle de temps entre la première et la dernière détections, la distance en ligne droite entre les sites de la première et de la dernière détections, la vitesse de déplacement de l’émetteur et l’angle de relèvement entre les deux sites.</p>
+</div>
+<div id="dependances-12" class="section level3">
+<h3><span class="header-section-number">C.14.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, fullID, recvDeployLat, recvDeployLon, recvDepName et ts.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus. <strong>fullID</strong> Variable de l’identifiant complet de l’émetteur.<br />
+<strong>recvDeployLat</strong> Variable de la latitude du lieu de déploiement du récepteur.<br />
+<strong>recvDeployLon</strong> Variable de la longitude du lieu de déploiement du récepteur.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.</p>
+</div>
+<div id="exemple-13" class="section level3">
+<h3><span class="header-section-number">C.14.3</span> Exemple</h3>
+<p>Création d’un sommaire de données pour tous les émetteurs à partir de l’ensemble des données de détection en utilisant la trame de données df.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tag_summary &lt;-<span class="st"> </span><span class="kw">tagSum</span>(tbl.alltags)
+<span class="kw">head</span>(tag_summary)</code></pre></div>
+<pre><code>##                               fullID            first_ts
+## 1      Niles#152:6.1@166.38(M.10811) 2015-08-03 06:37:11
+## 2                   ?proj?-0#395:9.7 2015-07-23 10:10:54
+## 3      Selva#172:6.1@166.38(M.17021) 2015-09-02 04:06:07
+## 4 SampleData#152:6.1@166.38(M.16011) 2015-08-03 06:37:11
+## 5 SampleData#395:9.7@166.38(M.16052) 2015-09-12 17:38:04
+## 6 SampleData#179:6.1@166.38(M.16037) 2015-08-17 17:01:38
+##               last_ts              first_site               last_site
+## 1 2015-08-03 06:37:35 North Bluff_51.5, -80.5 North Bluff_51.5, -80.5
+## 2 2015-09-02 20:06:13     Machias_44.5, -67.1     Ruby&#39;s_62.9, -143.7
+## 3 2015-09-03 00:27:16   Netitishi_51.3, -80.1           MDR_44, -68.1
+## 4 2015-09-18 09:37:39 North Bluff_51.5, -80.5           NWW_39, -74.8
+## 5 2015-10-20 20:43:43   Longridge_51.8, -80.7    Mount Thom_45.6, -63
+## 6 2015-11-02 13:21:42        NP mobile_NA, NA Hillman_Marsh_42, -82.5
+##   recvLat.x recvLon.x recvLat.y  recvLon.y           tot_ts    dist
+## 1   51.4839  -80.4500  51.48390  -80.45000      24.386 secs       0
+## 2   44.5023  -67.1018  62.89072 -143.68170 3578118.674 secs 5087724
+## 3   51.2913  -80.1168  43.96893  -68.12830   73268.958 secs 1211577
+## 4   51.4839  -80.4500  39.02827  -74.81004 3985228.228 secs 1452237
+## 5   51.8231  -80.6912  45.55480  -62.98590 3294338.784 secs 1472844
+## 6        NA        NA  42.04270  -82.51440 6639604.044 secs      NA
+##         rate    bearing num_det
+## 1  0.0000000 -180.00000       4
+## 2  1.4218993  -38.36268      12
+## 3 16.5360200  127.53144     279
+## 4  0.3644051  160.20437     127
+## 5  0.4470832  111.25011     147
+## 6         NA         NA    1353</code></pre>
+</div>
+</div>
+<div id="tagSumSite" class="section level2">
+<h2><span class="header-section-number">C.15</span> tagSumSite</h2>
+<div id="description-14" class="section level3">
+<h3><span class="header-section-number">C.15.1</span> Description</h3>
+<p>Cette fonction crée un sommaire de données pour chaque émetteur indiquant les heures de la première et de la dernière détections à chaque site, l’intervalle de temps entre les première et dernière détections à chaque site et le nombre total de détections à chaque site.</p>
+</div>
+<div id="dependances-13" class="section level3">
+<h3><span class="header-section-number">C.15.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables motusTagID, fullID, recvDepName et ts.<br />
+<strong>motusTagID</strong> Variable de l’identifiant de l’émetteur Motus.<br />
+<strong>fullID</strong> Variable de l’identifiant complet de l’émetteur.<br />
+<strong>recvDepName</strong> Variable du nom du lieu de déploiement du récepteur.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.</p>
+</div>
+<div id="exemple-14" class="section level3">
+<h3><span class="header-section-number">C.15.3</span> Exemple</h3>
+<p>Création de sommaires de données pour seulement certains émetteurs avec indication du temps en heures par défaut, à partir de la trame de données df.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tag_site_summary &lt;-<span class="st"> </span><span class="kw">tagSumSite</span>(<span class="kw">filter</span>(df.alltags, motusTagID <span class="op">%in%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">c</span>(<span class="dv">16047</span>, <span class="dv">16037</span>, <span class="dv">16039</span>)))
+<span class="kw">head</span>(tag_site_summary)</code></pre></div>
+<pre><code>##                               fullID                     recvDeployName
+## 1 SampleData#179:6.1@166.38(M.16037)                    BULL\n37.1, -76
+## 2 SampleData#179:6.1@166.38(M.16037) Comeau (Marshalltown)\n44.6, -65.8
+## 3 SampleData#179:6.1@166.38(M.16037)           Hillman_Marsh\n42, -82.5
+## 4 SampleData#179:6.1@166.38(M.16037)             Netitishi\n51.3, -80.1
+## 5 SampleData#179:6.1@166.38(M.16037)           North Bluff\n51.5, -80.5
+## 6 SampleData#179:6.1@166.38(M.16037)                  NP mobile\nNA, NA
+##              first_ts             last_ts             tot_ts num_det
+## 1 2015-09-14 15:55:48 2015-09-14 15:56:49   0.01693000 hours       2
+## 2 2015-09-08 18:29:57 2015-09-08 18:37:16   0.12192881 hours       6
+## 3 2015-11-02 13:20:47 2015-11-02 13:21:42   0.01525056 hours       2
+## 4 2015-08-30 01:36:08 2015-09-08 01:10:13 215.56819269 hours    1166
+## 5 2015-08-23 15:13:57 2015-08-28 16:40:18 121.43902892 hours      26
+## 6 2015-08-17 17:01:38 2015-08-17 17:02:39   0.01693344 hours      11</code></pre>
+</div>
+</div>
+<div id="timeToSunriset" class="section level2">
+<h2><span class="header-section-number">C.16</span> timeToSunriset</h2>
+<div id="description-15" class="section level3">
+<h3><span class="header-section-number">C.16.1</span> Description</h3>
+<p>Cette fonction crée et ajoute des variables du temps jusqu’au lever/coucher du soleil et du temps depuis le lever/coucher du soleil à partir d’une trame de données comprenant des valeurs de latitude, de longitude et de date/heure dans le format POSIXct.</p>
+</div>
+<div id="dependances-14" class="section level3">
+<h3><span class="header-section-number">C.16.2</span> Dépendances</h3>
+<p><strong>data</strong> Une table choisie à partir de données de détection .motus, p. ex., «alltags», ou une trame de données de détection incluant au minimum les variables date/heure, latitude et longitude.<br />
+<strong>lat</strong> Variable de la latitude, par défaut les valeurs de recvDeployLat.<br />
+<strong>lon</strong> Variable de la longitude, par défaut les valeurs de recvDeployLon.<br />
+<strong>ts</strong> Variable de la date et de l’heure dans le format numérique ou POSIXct, par défaut les valeurs de ts.<br />
+<strong>units</strong> Unités de temps indiquant l’intervalle de temps. Options: secondes, minutes, heures, jours et semaines. Par défaut en heures.</p>
+</div>
+<div id="exemple-15" class="section level3">
+<h3><span class="header-section-number">C.16.3</span> Exemple</h3>
+<p>Obtention d’information sur le temps jusqu’au lever/coucher du soleil et du temps depuis le lever/coucher du soleil, en minutes, à partir de la table tbl.alltags.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sunrise &lt;-<span class="st"> </span><span class="kw">timeToSunriset</span>(tbl.alltags, <span class="dt">units =</span> <span class="st">&quot;mins&quot;</span>)
+<span class="kw">head</span>(sunrise)</code></pre></div>
+<pre><code>##    hitID runID batchID                  ts sig sigsd noise freq freqsd
+## 1  45107  8886      53 2015-10-26 11:19:49  52     0   -96    4      0
+## 2  45108  8886      53 2015-10-26 11:20:28  54     0   -96    4      0
+## 3  45109  8886      53 2015-10-26 11:21:17  55     0   -96    4      0
+## 4  45110  8886      53 2015-10-26 11:21:55  52     0   -96    4      0
+## 5  45111  8886      53 2015-10-26 11:22:44  49     0   -96    4      0
+## 6 199885 23305      64 2015-10-26 11:12:04  33     0   -96    4      0
+##    slop burstSlop done motusTagID ambigID port runLen bootnum tagProjID
+## 1 1e-04    0.0000    1      16047      NA    3      5      11       176
+## 2 1e-04   -0.0021    1      16047      NA    3      5      11       176
+## 3 1e-04    0.0001    1      16047      NA    3      5      11       176
+## 4 1e-04   -0.0010    1      16047      NA    3      5      11       176
+## 5 1e-04    0.0001    1      16047      NA    3      5      11       176
+## 6 1e-04    0.0000    1      16047      NA    1     11       4       176
+##   mfgID tagType codeSet   mfg tagModel tagLifespan nomFreq  tagBI pulseLen
+## 1   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 2   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 3   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 4   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 5   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+## 6   378      ID  Lotek4 Lotek NTQB-3-2          NA  166.38 9.6971      2.5
+##   tagDeployID speciesID markerNumber markerType tagDeployStart
+## 1        1839      4670    135268103 metal band     1441908000
+## 2        1839      4670    135268103 metal band     1441908000
+## 3        1839      4670    135268103 metal band     1441908000
+## 4        1839      4670    135268103 metal band     1441908000
+## 5        1839      4670    135268103 metal band     1441908000
+## 6        1839      4670    135268103 metal band     1441908000
+##   tagDeployEnd tagDeployLat tagDeployLon tagDeployAlt
+## 1   1457632800      51.4839       -80.45           NA
+## 2   1457632800      51.4839       -80.45           NA
+## 3   1457632800      51.4839       -80.45           NA
+## 4   1457632800      51.4839       -80.45           NA
+## 5   1457632800      51.4839       -80.45           NA
+## 6   1457632800      51.4839       -80.45           NA
+##                                                                                                                                                                                             tagDeployComments
+## 1 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 2 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 3 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 4 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 5 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+## 6 {&quot;ageID&quot;:&quot;HY&quot;,&quot;bill&quot;:36.5,&quot;blood&quot;:&quot;Y&quot;,&quot;country&quot;:&quot;Canada&quot;,&quot;culmen&quot;:36.5,&quot;fatScore&quot;:3,&quot;locationID&quot;:&quot;NorthPoint_net&quot;,&quot;province&quot;:&quot;Ontario&quot;,&quot;sexID&quot;:&quot;U&quot;,&quot;tarsus&quot;:33.3,&quot;weight&quot;:137.8,&quot;wing&quot;:162,&quot;comments&quot;:null}
+##                               fullID deviceID recvDeployID recvDeployLat
+## 1 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 2 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 3 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 4 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 5 SampleData#378:9.7@166.38(M.16047)      486         2510      42.60699
+## 6 SampleData#378:9.7@166.38(M.16047)      515         2512      42.68067
+##   recvDeployLon recvDeployAlt      recv recvDeployName recvSiteName
+## 1     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 2     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 3     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 4     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 5     -72.71657            NA Lotek-159      Shelburne         &lt;NA&gt;
+## 6     -72.47392            NA Lotek-164  BennettMeadow         &lt;NA&gt;
+##   isRecvMobile recvProjID antType antBearing antHeight speciesEN
+## 1            0         74  yagi-9        127        NA  Red Knot
+## 2            0         74  yagi-9        127        NA  Red Knot
+## 3            0         74  yagi-9        127        NA  Red Knot
+## 4            0         74  yagi-9        127        NA  Red Knot
+## 5            0         74  yagi-9        127        NA  Red Knot
+## 6            0         74  yagi-9        243        NA  Red Knot
+##            speciesFR       speciesSci speciesGroup tagProjName
+## 1 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 2 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 3 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 4 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 5 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+## 6 Bécasseau maubèche Calidris canutus        BIRDS  SampleData
+##   recvProjName gpsLat gpsLon gpsAlt             sunrise
+## 1         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 2         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 3         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 4         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 5         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:16:49
+## 6         &lt;NA&gt;     NA     NA     NA 2015-10-26 11:15:58
+##                sunset ts_to_set ts_since_set  ts_to_rise ts_since_rise
+## 1 2015-10-26 21:52:11  632.3533     806.2056 1438.215974      3.013824
+## 2 2015-10-26 21:52:11  631.7104     806.8485 1437.573097      3.656701
+## 3 2015-10-26 21:52:11  630.9109     807.6480 1436.773577      4.456221
+## 4 2015-10-26 21:52:11  630.2513     808.3076 1436.113997      5.115801
+## 5 2015-10-26 21:52:11  629.4518     809.1071 1435.314477      5.915321
+## 6 2015-10-26 21:51:06  639.0310     799.5242    3.896393   1437.332308</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="annexe-b-depannage-annexe-b.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendixD.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["FrMotusRBook.pdf", "FrMotusRBook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
