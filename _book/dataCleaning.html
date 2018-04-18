@@ -174,7 +174,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Appendix - alltags structure</a></li>
+<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Annexe A - structure alltags</a></li>
 <li class="chapter" data-level="B" data-path="appendixB.html"><a href="appendixB.html"><i class="fa fa-check"></i><b>B</b> Annexe B - Dépannage</a><ul>
 <li class="chapter" data-level="B.1" data-path="appendixB.html"><a href="appendixB.html#motusLogout"><i class="fa fa-check"></i><b>B.1</b> Fermeture du logiciel motus</a></li>
 <li class="chapter" data-level="B.2" data-path="appendixB.html"><a href="appendixB.html#resumeDownload"><i class="fa fa-check"></i><b>B.2</b> Reprise du téléchargement de données</a></li>
@@ -789,7 +789,7 @@ df.<span class="fl">56.</span>tmp &lt;-<span class="st"> </span><span class="kw"
 
 <span class="kw">siteTrans</span>(df.<span class="fl">56.</span>tmp, <span class="dt">latCoord =</span> <span class="st">&quot;recvLat&quot;</span>, <span class="dt">lonCoord =</span> <span class="st">&quot;recvLon&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(rate <span class="op">&lt;</span><span class="st"> </span><span class="dv">60</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get rid of simultaneous detections</span>
+<span class="st">  </span><span class="kw">filter</span>(rate <span class="op">&lt;</span><span class="st"> </span><span class="dv">60</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Éliminez les données sur les détections simultanées</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">total.time =</span> <span class="kw">as.numeric</span>(<span class="kw">round</span>(<span class="kw">seconds_to_period</span>(tot_ts)))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="dt">start=</span>recvDeployName.x, 
          <span class="dt">end=</span>recvDeployName.y, 

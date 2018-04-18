@@ -605,7 +605,7 @@ df.56.tmp <- filter(df.ambig.56, !(recvLat == 50.2), motusTagID == 22867)
 
 siteTrans(df.56.tmp, latCoord = "recvLat", lonCoord = "recvLon") %>%
   ungroup() %>%
-  filter(rate < 60) %>% # get rid of simultaneous detections
+  filter(rate < 60) %>% # Éliminez les données sur les détections simultanées
   mutate(total.time = as.numeric(round(seconds_to_period(tot_ts)))) %>%
   select(start=recvDeployName.x, 
          end=recvDeployName.y, 

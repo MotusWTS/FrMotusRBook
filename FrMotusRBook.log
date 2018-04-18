@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.20)  18 APR 2018 18:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.20)  18 APR 2018 20:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1770,7 +1770,7 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 6051.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 6051.
 
 Package rerunfilecheck Info: File `FrMotusRBook.out' has not changed.
-(rerunfilecheck)             Checksum: D56BDAC3D37CD3DBD995AED2AA4D1B4B;13407.
+(rerunfilecheck)             Checksum: 0C0C0833C5359941629BE9B5AB03C933;13410.
 
 LaTeX Warning: There were undefined references.
 
@@ -1797,7 +1797,7 @@ fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts
 lic/lm/lmtk10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/l
 m/lmtt10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/lm/lmt
 ti10.pfb>
-Output written on FrMotusRBook.pdf (112 pages, 8144381 bytes).
+Output written on FrMotusRBook.pdf (112 pages, 8144413 bytes).
 PDF statistics:
  1363 PDF objects out of 1440 (max. 8388607)
  1152 compressed objects within 12 object streams
