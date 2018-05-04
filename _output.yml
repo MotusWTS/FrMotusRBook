@@ -3,7 +3,7 @@ bookdown::gitbook:
     toc:
       collapse: section
       before: |
-        <li><strong><a href="./">R for Motus</a></strong></li>
+        <li><strong><a href="./">Guide R pour Motus</a></strong></li>
 
 
 bookdown::pdf_book: 

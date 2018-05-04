@@ -1,6 +1,5 @@
 ---
-title: "Guide R pour Motus
-"
+title: "Guide R pour Motus"
 author: "Tara L. Crewe, Zoe Crysler, et Philip Taylor"
 #date: "`r Sys.Date()`"
 output: bookdown::gitbook
