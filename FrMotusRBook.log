@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.20)  4 MAY 2018 16:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.20)  4 MAY 2018 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1033,14 +1033,19 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 \tf@toc=\write5
 \openout5 = `FrMotusRBook.toc'.
 
-[3] <images/BSC_Motus_Logo.png, id=352, 232.7094pt x 72.27pt>
-File: images/BSC_Motus_Logo.png Graphic file (type png)
-<use images/BSC_Motus_Logo.png>
-Package pdftex.def Info: images/BSC_Motus_Logo.png used on input line 154.
-(pdftex.def)             Requested size: 232.71947pt x 72.2731pt.
+[3] <images/BSC_Motus_Logo_FR.png, id=352, 961.5925pt x 278.03876pt>
+File: images/BSC_Motus_Logo_FR.png Graphic file (type png)
+<use images/BSC_Motus_Logo_FR.png>
+Package pdftex.def Info: images/BSC_Motus_Logo_FR.png used on input line 154.
+(pdftex.def)             Requested size: 702.64632pt x 203.166pt.
+
+Overfull \hbox (232.8913pt too wide) in paragraph at lines 154--154
+ [] 
+ []
+
 [4
 
- <./images/BSC_Motus_Logo.png>]
+ <./images/BSC_Motus_Logo_FR.png>]
 Chapter 1.
 <images/Motus-System-IG-final-FR.png, id=362, 1027.84pt x 650.43pt>
 File: images/Motus-System-IG-final-FR.png Graphic file (type png)
@@ -1775,8 +1780,8 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 6069.
  ) 
 Here is how much of TeX's memory you used:
  13891 strings out of 494447
- 207706 string characters out of 6166766
- 315789 words of memory out of 5000000
+ 207718 string characters out of 6166766
+ 315793 words of memory out of 5000000
  16596 multiletter control sequences out of 15000+600000
  69099 words of font info for 103 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
@@ -1794,7 +1799,7 @@ fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts
 lic/lm/lmtk10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/l
 m/lmtt10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/lm/lmt
 ti10.pfb>
-Output written on FrMotusRBook.pdf (114 pages, 8146397 bytes).
+Output written on FrMotusRBook.pdf (114 pages, 8175093 bytes).
 PDF statistics:
  1373 PDF objects out of 1440 (max. 8388607)
  1160 compressed objects within 12 object streams
