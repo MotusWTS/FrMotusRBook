@@ -1,0 +1,124 @@
+# Annexe D - Le logiciel motusClient - Fonctions de filtrage de données {#appendixD}
+
+```{r tidyr11, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
+
+```
+
+Le logiciel R motusClient intègre des fonctions qu’on peut utiliser pour attribuer des probabilités aux données de détection d’émetteurs et filtrer ces données en fonction de ces probabilités. Par exemple, alors que vous explorez vos données pour éliminer les faux positifs et les détections ambiguës (voyez le chapitre \@ref(dataCleaning)), il se peut que vous constatiez que certaines détections ne se rapportent pas à votre émetteur ou vos émetteurs. Au lieu de simplement utiliser un script R pour éliminer ces détections, vous pouvez faire appel aux fonctions de filtrage présentées ici pour créer un filtre sur mesure et l’enregistrer dans votre fichier .motus; ce filtre attribue une valeur de probabilité entre 0 et 1 aux runID fournis dans le filtre. 
+
+Les fonctions de filtrage de données du logiciel R opèrent au niveau de la séquence. Une séquence est un groupe de détections consécutives des signaux d’un émetteur par un récepteur. En général, le risque est élevé qu’une séquence d’au moins 2 détections (c.-à-d. 2 pulsations) représente un faux positif. Il existe de multiples façons d’attribuer des probabilités aux données associées à chaque runID, entre autres au niveau le plus simple, à savoir générer une liste de 0 et de 1 pour les enregistrements que vous aimeriez exclure ou inclure. Vous pourriez aussi élaborer un modèle qui attribue une probabilité à chaque runID dans vos données.
+
+## listRunsFilters {#listRunsFilters}
+
+### Description
+
+Cette fonction renvoie une trame de données contenant les filterID, login, noms, projectID et descriptions pour le projectID propre à un émetteur ou un récepteur déterminé qui se trouve dans la base de données locale.
+
+## Dépendances
+
+**src** L’objet SQLite que vous obtenez lorsque vous chargez un fichier .motus dans R, p. ex., le fichier «sql.motus» dans le chapitre \@ref(accessingData). 
+
+## Exemple
+
+```{r listRunsFilters.C, eval = FALSE}
+
+filt.df <- listRunsFilters(src = sql.motus)
+
+```
+
+## createRunsFilter {#createRunsFilter}
+
+### Description
+
+Cette fonction peut servir principalement à modifier les propriétés de filtres existants, comme la description du filtre ou l’identifiant du projet (projectID), mais elle est également appelée à l’interne par l’instruction «writeRunsFilter» (section \@ref(writeRunsFilter)) pour générer un nouvel identifiant de filtre (filterID). Pour sauvegarder les enregistrements de filtres, vous devez utiliser «writeRunsFilter» (section \@ref(writeRunsFilter)). La fonction renvoie dans la base de données locale l’identifiant de filtre (nombre entier) qui correspond au nouveau filtre ou au filtre existant portant le nom de filtre (filterName) fourni. S’il existe déjà un filtre du même nom, la fonction génère un avertissement et renvoie l’identifiant du filtre existant. 
+
+### Dépendances
+
+**src** L’objet SQLite que vous obtenez lorsque vous chargez un fichier .motus dans R, p. ex., le fichier «sql.motus» dans le chapitre \@ref(accessingData).   
+**filterName** Le nom que vous voudriez attribuer au filtre. La fonction crée un nouveau filtre seulement s'il n'existe pas de filtre du même nom dans la base de données locale.  
+**motusProjID** L’identifiant numérique associé à un projet. Par exemple, les données utilisées à titre d’exemples tout au long du présent guide sont celles du projet 176 (Programme de suivi des oiseaux de rivage de la baie James). Par défaut, l’identifiant du projet est «NA» lorsqu’il n’existe pas déjà d’identifiant; c’est la valeur recommandée pour le moment. L’identifiant de projet attribué à un filtre sera utile surtout pour la synchronisation future des filtres avec le serveur de Motus. Il n’est pas nécessaire que les enregistrements de détections contenus dans le filtre portent l’identifiant attribué au filtre.
+**descr** Description du filtre (facultatif). Par défaut = NA. 
+**update** Expression booléenne (par défaut = FALSE). Si le filtre existe déjà, détermine si les propriétés (p. ex. descr) sont conservées ou mises à jour.
+
+### Exemple
+
+Création pour la base de données sql.motus d’un nouveau filtre appelé «myfilter» qui n’est pas relié à un projet spécifique:
+
+```{r createRunsFilter2, eval = FALSE}
+
+createRunsFilter(sql.motus, "myfilter")
+
+# OU ajout d'une attribution à un projet
+
+createRunsFilter(sql.motus, "myfilter", motusProjID = 176)
+
+# OU ajout d'un projet et d'une description, ce qui peut entraîner la mise à jour d'une possible version antérieure appelée myfilter.
+
+createRunsFilter(sql.motus, "myfilter", motusProjID = 176, descr = "assign probability of 0 to false positives", update=TRUE)
+
+```
+
+## getRunsFilters {#getRunsFilters}
+
+### Description
+
+Cette fonction renvoie une référence à une table SQLite aux enregistrements runsFilters enregistrés dans la base de données (runID, motusTagID et probabilité) associés à un nom spécifique (et, facultativement, à un projet spécifique) à partir de la base de données locale. La section \@ref(saveFilter) du chapitre 5 présente des exemples de façons d’utiliser la table renvoyée pour la fusionner avec des données de détection.
+
+### Dépendances
+
+**src** L’objet SQLite que vous obtenez lorsque vous chargez un fichier .motus dans R, p. ex., le fichier «sql.motus» dans le chapitre \@ref(accessingData).   
+**filterName** Le nom que vous avez attribué au filtre que vous avez créé ou enregistré. La fonction renvoie un avertissement si le nom du filtre n'existe pas.  
+**motusProjID** L’identifiant numérique associé à un projet. Par exemple, les données utilisées à titre d’exemples tout au long du présent guide sont celles du projet 176 (Programme de suivi des oiseaux de rivage de la baie James). Par défaut, l’identifiant du projet est «NA» lorsqu’il n’existe pas déjà d’identifiant.  
+
+### Exemple
+
+```{r getRunsFilters, eval = FALSE}
+
+tbl.filt <- getRunsFilters(src = sql.motus, filterName = "myfilter")
+tbl.filt2 <- getRunsFilters(sql.motus, "myfilter2")
+
+# Filtrez les enregistrements contenus dans la trame de données qui sont dans la table tbl.filt.
+df <- left_join(df, tbl.filt, by = c("runID", "motusTagID")) %>%
+  mutate(probability = ifelse(is.na(probability), 1, probability)) %>%
+  filter(probability > 0)
+
+# Vous pouvez appliquer un deuxième filtre, tbl.filt2, au résultat de l'utilisation du filtre précédent.
+df <- left_join(df, tbl.filt2, by = c("runID", "motusTagID")) %>%
+  mutate(probability = ifelse(is.na(probability), 1, probability)) %>%
+  filter(probability > 0)
+
+```
+
+## writeRunsFilter {#writeRunsFilter}
+
+### Description
+
+Cette fonction écrit dans la base de données locale (fichier SQLite) le contenu d’une trame de données contenant runID, motusTagID et une probabilité attribuée. Si le nom de filtre («filterName») n’existe pas, elle appellera la fonction «createRunsFilter» (section \@ref(createRunsFilter)) pour en créer un dans votre base de données. Par défaut, cette fonction crée la situation suivante: tout nouvel enregistrement dans la trame de données est annexé au filtre existant ou au nouveau filtre appelé «filterName» et les enregistrements déjà existants (mêmes runID et motusTagID) sont remplacés (overwrite = TRUE), mais ceux qui ne sont pas dans la trame de données sont retenus dans la table de filtre existante (delete = FALSE). Pour remplacer la totalité des valeurs de filtre existantes par celles de la nouvelle trame de données, utilisez delete = TRUE. La fonction renvoie une référence de table SQLite au filtre, de la même manière que si la fonction «getRunsFilter» (section \@ref(getRunsFilters)) était appelée.
+
+### Dépendances
+
+**src** L’objet SQLite que vous obtenez lorsque vous chargez un fichier .motus dans R, p. ex., le fichier «sql.motus» dans le chapitre \@ref(accessingData).   
+**filterName** Le nom du filtre auquel vous voudriez affecter la base de données.  
+**motusProjID** L’identifiant numérique associé à un projet. Par exemple, les données utilisées à titre d’exemples tout au long du présent guide sont celles du projet 176 (Programme de suivi des oiseaux de rivage de la baie James). Par défaut, l’identifiant du projet est «NA» lorsqu’il n’existe pas déjà d’identifiant.  
+**df** La trame de données qui contient le runID (nombre entier), le motusTagID (nombre entier) et la probabilité (nombre à virgule flottante) de détections auxquels vous aimeriez affecter un filtre. MotusTagID devrait correspondre à l’identifiant de l’émetteur (tag ID) et non à l’identifiant ambigID négatif associé aux détections ambiguës.
+**overwrite** Par défaut = "TRUE". Lorsque TRUE est choisi, les enregistrements existants (mêmes runID et motusTagID) qui correspondent aux mêmes filterName et runID sont remplacés dans la base de données locale.
+**delete** Par défaut = "FALSE". Lorsque TRUE est choisi, tous les enregistrements de filtres existants associés au nom de filtre (filterName) sont éliminés et ceux qui se trouvent dans la trame de données (df) sont réinsérés. Vous devriez utiliser cette option si la trame de données contient l'ensemble des filtres que vous voulez enregistrer.
+
+### Exemples
+
+```{r writeRunsFilter, eval = FALSE}
+
+# Écrire sur «myfilter» une trame de données contenant les enregistrements de filtres (runID, motusTagID et probabilité).
+writeRunsFilter(src = sql.motus, filterName = "myfilter", df = filter.df)
+
+# Écrire sur «myfilter» une trame de données contenant les enregistrements de filtres (runID, motusTagID et probabilité) en écrasant la version précédente dans sa totalité.
+writeRunsFilter(src = sql.motus, fileName = "myfilter", df = filter.df, delete = TRUE)
+
+# Écrire sur «myfilter» une trame de données contenant les enregistrements de filtres (runID, motusTagID et probabilité), mais seulement en annexant les nouveaux enregistrements, sans supprimer ceux qui ont été créés précédemment.
+writeRunsFilter(src = sql.motus, "myfilter", df = filter.df, overwrite = FALSE)
+
+```
+

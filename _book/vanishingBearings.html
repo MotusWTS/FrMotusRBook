@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Guide R pour Motus</title>
+  <meta name="description" content="Guide R pour Motus">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Guide R pour Motus" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="BSC_Motus_Logo.png" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guide R pour Motus" />
+  
+  
+  <meta name="twitter:image" content="BSC_Motus_Logo.png" />
+
+<meta name="author" content="Tara L. Crewe, Zoe Crysler, et Philip Taylor">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="exploreData.html">
+<link rel="next" href="appendixA.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">Guide R pour Motus</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Utilisation du langage R appliqué aux données du réseau de radiotélémétrie automatisée Motus</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#whatBookCovers"><i class="fa fa-check"></i><b>1.1</b> Ce que le présent guide ne montre pas</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.2</b> Connaissances préalables</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#sampleData"><i class="fa fa-check"></i><b>1.3</b> Ensemble de données utilisées comme exemples</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i><b>1.4</b> Remerciements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="loadingPackages.html"><a href="loadingPackages.html"><i class="fa fa-check"></i><b>2</b> Chargement des logiciels R</a><ul>
+<li class="chapter" data-level="2.1" data-path="loadingPackages.html"><a href="loadingPackages.html#internalProcessing"><i class="fa fa-check"></i><b>2.1</b> Traitement interne des données</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="accessingData.html"><a href="accessingData.html"><i class="fa fa-check"></i><b>3</b> Accès aux données de détection</a><ul>
+<li class="chapter" data-level="3.1" data-path="accessingData.html"><a href="accessingData.html#databaseStructure"><i class="fa fa-check"></i><b>3.1</b> Structure des données</a></li>
+<li class="chapter" data-level="3.2" data-path="accessingData.html"><a href="accessingData.html#databaseTypes"><i class="fa fa-check"></i><b>3.2</b> Types de bases de données</a></li>
+<li class="chapter" data-level="3.3" data-path="accessingData.html"><a href="accessingData.html#loadPackages"><i class="fa fa-check"></i><b>3.3</b> Chargement des logiciels R pertinents</a></li>
+<li class="chapter" data-level="3.4" data-path="accessingData.html"><a href="accessingData.html#reglage-de-lenvironnement-systeme"><i class="fa fa-check"></i><b>3.4</b> Réglage de l’environnement système</a></li>
+<li class="chapter" data-level="3.5" data-path="accessingData.html"><a href="accessingData.html#importDetections"><i class="fa fa-check"></i><b>3.5</b> Importation de données de détection</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="accessingData.html"><a href="accessingData.html#downloadData"><i class="fa fa-check"></i><b>3.5.1</b> Téléchargement des données d’un projet pour la <em>première fois</em></a></li>
+<li class="chapter" data-level="3.5.2" data-path="accessingData.html"><a href="accessingData.html#userAuthentication"><i class="fa fa-check"></i><b>3.5.2</b> Authentification de l’utilisateur</a></li>
+<li class="chapter" data-level="3.5.3" data-path="accessingData.html"><a href="accessingData.html#telechargement-des-donnees-dun-recepteur-pour-la-premiere-fois"><i class="fa fa-check"></i><b>3.5.3</b> Téléchargement des données d’un récepteur pour la <em>première fois</em></a></li>
+<li class="chapter" data-level="3.5.4" data-path="accessingData.html"><a href="accessingData.html#acceder-aux-donnees-de-detection-telechargees-accesssql."><i class="fa fa-check"></i><b>3.5.4</b> Accéder aux données de détection téléchargées {#accessSQL}.</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="accessingData.html"><a href="accessingData.html#exportDetections"><i class="fa fa-check"></i><b>3.6</b> Exportation d’une trame de données «plate» sous la forme d’un fichier CSV ou RDS</a></li>
+<li class="chapter" data-level="3.7" data-path="accessingData.html"><a href="accessingData.html#mettre-a-jour-etou-ouvrir-une-base-de-donnees-existante-tagmeupdate."><i class="fa fa-check"></i><b>3.7</b> Mettre à jour et/ou ouvrir une base de données existante {#tagmeUpdate}.</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="accessingData.html"><a href="accessingData.html#tellme"><i class="fa fa-check"></i><b>3.7.1</b> Vérification de l’existence de nouvelles données</a></li>
+<li class="chapter" data-level="3.7.2" data-path="accessingData.html"><a href="accessingData.html#forceMeta"><i class="fa fa-check"></i><b>3.7.2</b> Imposition d’une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs</a></li>
+<li class="chapter" data-level="3.7.3" data-path="accessingData.html"><a href="accessingData.html#metadata"><i class="fa fa-check"></i><b>3.7.3</b> Importation de l’ensemble des métadonnées sur les émetteurs et les récepteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="accessingData.html"><a href="accessingData.html#verification-de-la-version-de-la-base-de-donnees-checkversion"><i class="fa fa-check"></i><b>3.8</b> Vérification de la version de la base de données {checkVersion}</a></li>
+<li class="chapter" data-level="3.9" data-path="accessingData.html"><a href="accessingData.html#convention-de-noms-dobjets-r"><i class="fa fa-check"></i><b>3.9</b> Convention de noms d’objets R</a></li>
+<li class="chapter" data-level="3.10" data-path="accessingData.html"><a href="accessingData.html#sommaire-telechargement-de-donnees-acces-aux-donnees-et-exportation-de-donnees"><i class="fa fa-check"></i><b>3.10</b> Sommaire: téléchargement de données, accès aux données et exportation de données</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deployments.html"><a href="deployments.html"><i class="fa fa-check"></i><b>4</b> Déploiements d’émetteurs et de récepteurs</a><ul>
+<li class="chapter" data-level="4.1" data-path="deployments.html"><a href="deployments.html#chargement-des-logiciels-r-pertinents-et-reglage-de-lenvironnement-de-travail"><i class="fa fa-check"></i><b>4.1</b> Chargement des logiciels R pertinents et réglage de l’environnement de travail</a></li>
+<li class="chapter" data-level="4.2" data-path="deployments.html"><a href="deployments.html#chargement-du-fichier-.motus"><i class="fa fa-check"></i><b>4.2</b> Chargement du fichier .motus</a></li>
+<li class="chapter" data-level="4.3" data-path="deployments.html"><a href="deployments.html#tagDeployments"><i class="fa fa-check"></i><b>4.3</b> Déploiements d’émetteurs</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-completes-sur-les-emetteurs-pour-votre-projet"><i class="fa fa-check"></i><b>4.3.1</b> Téléchargement des métadonnées complètes sur les émetteurs pour votre projet</a></li>
+<li class="chapter" data-level="4.3.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres"><i class="fa fa-check"></i><b>4.3.2</b> Détermination du nombre d’émetteurs enregistrés</a></li>
+<li class="chapter" data-level="4.3.3" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-demetteurs-enregistres-qui-ont-ete-deployes"><i class="fa fa-check"></i><b>4.3.3</b> Détermination du nombre d’émetteurs enregistrés qui ont été déployés</a></li>
+<li class="chapter" data-level="4.3.4" data-path="deployments.html"><a href="deployments.html#checkNumberTagDeployments"><i class="fa fa-check"></i><b>4.3.4</b> Détermination du nombre de déploiements par émetteur</a></li>
+<li class="chapter" data-level="4.3.5" data-path="deployments.html"><a href="deployments.html#localisation-des-emetteurs-deployes"><i class="fa fa-check"></i><b>4.3.5</b> Localisation des émetteurs déployés</a></li>
+<li class="chapter" data-level="4.3.6" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-demetteurs"><i class="fa fa-check"></i><b>4.3.6</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="deployments.html"><a href="deployments.html#recvMetadata"><i class="fa fa-check"></i><b>4.4</b> Vérification des métadonnées sur les récepteurs</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="deployments.html"><a href="deployments.html#telechargement-des-metadonnees-sur-tous-les-recepteurs-dans-le-reseau"><i class="fa fa-check"></i><b>4.4.1</b> Téléchargement des métadonnées sur tous les récepteurs dans le réseau</a></li>
+<li class="chapter" data-level="4.4.2" data-path="deployments.html"><a href="deployments.html#determination-du-nombre-de-recepteurs-deployes-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.2</b> Détermination du nombre de récepteurs déployés dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.3" data-path="deployments.html"><a href="deployments.html#determination-du-moment-du-deploiement-des-recepteurs-dans-le-cadre-de-votre-projet"><i class="fa fa-check"></i><b>4.4.3</b> Détermination du moment du déploiement des récepteurs dans le cadre de votre projet</a></li>
+<li class="chapter" data-level="4.4.4" data-path="deployments.html"><a href="deployments.html#localisation-des-recepteurs-deployes"><i class="fa fa-check"></i><b>4.4.4</b> Localisation des récepteurs déployés</a></li>
+<li class="chapter" data-level="4.4.5" data-path="deployments.html"><a href="deployments.html#verification-de-la-completude-et-de-lexactitude-des-metadonnees-sur-les-deploiements-des-recepteurs"><i class="fa fa-check"></i><b>4.4.5</b> Vérification de la complétude et de l’exactitude des métadonnées sur les déploiements des récepteurs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dataCleaning.html"><a href="dataCleaning.html"><i class="fa fa-check"></i><b>5</b> Nettoyage des données</a><ul>
+<li class="chapter" data-level="5.1" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-logiciels-requis"><i class="fa fa-check"></i><b>5.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="5.2" data-path="dataCleaning.html"><a href="dataCleaning.html#chargement-des-donnees-de-detection"><i class="fa fa-check"></i><b>5.2</b> Chargement des données de détection</a></li>
+<li class="chapter" data-level="5.3" data-path="dataCleaning.html"><a href="dataCleaning.html#verifications-preliminaires-des-donnees"><i class="fa fa-check"></i><b>5.3</b> Vérifications préliminaires des données</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="dataCleaning.html"><a href="dataCleaning.html#sommaires-de-donnees-de-detection-demetteurs"><i class="fa fa-check"></i><b>5.3.1</b> Sommaires de données de détection d’émetteurs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dataCleaning.html"><a href="dataCleaning.html#ambigs"><i class="fa fa-check"></i><b>5.4</b> Recherche et examen de détections ambiguës</a></li>
+<li class="chapter" data-level="5.5" data-path="dataCleaning.html"><a href="dataCleaning.html#verification-de-la-validite-des-sequences-dau-moins-2-detections"><i class="fa fa-check"></i><b>5.5</b> Vérification de la validité des séquences d’au moins 2 détections</a></li>
+<li class="chapter" data-level="5.6" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrage-des-donnees"><i class="fa fa-check"></i><b>5.6</b> Filtrage des données</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="dataCleaning.html"><a href="dataCleaning.html#filtrer-et-enregistrer-le-resultat-dans-le-format-rds"><i class="fa fa-check"></i><b>5.6.1</b> Filtrer et enregistrer le résultat dans le format RDS</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dataCleaning.html"><a href="dataCleaning.html#enregistrer-un-filtre-personnalise-dans-la-base-de-donnees-motus-et-lappliquer-aux-donnees"><i class="fa fa-check"></i><b>5.6.2</b> Enregistrer un filtre personnalisé dans la base de données motus et l’appliquer aux données</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exploreData.html"><a href="exploreData.html"><i class="fa fa-check"></i><b>6</b> Exploration des données avec le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="6.1" data-path="exploreData.html"><a href="exploreData.html#chargement-des-logiciels-requis-1"><i class="fa fa-check"></i><b>6.1</b> Chargement des logiciels requis</a></li>
+<li class="chapter" data-level="6.2" data-path="exploreData.html"><a href="exploreData.html#chargement-des-donnees"><i class="fa fa-check"></i><b>6.2</b> Chargement des données</a></li>
+<li class="chapter" data-level="6.3" data-path="exploreData.html"><a href="exploreData.html#dataSummaries"><i class="fa fa-check"></i><b>6.3</b> Sommaires de données</a></li>
+<li class="chapter" data-level="6.4" data-path="exploreData.html"><a href="exploreData.html#dataPlotting"><i class="fa fa-check"></i><b>6.4</b> Graphiques de données</a></li>
+<li class="chapter" data-level="6.5" data-path="exploreData.html"><a href="exploreData.html#mappingData"><i class="fa fa-check"></i><b>6.5</b> Cartes de données</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="exploreData.html"><a href="exploreData.html#googleMaps"><i class="fa fa-check"></i><b>6.5.1</b> Utilisation de Google Maps</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exploreData.html"><a href="exploreData.html#outlineMaps"><i class="fa fa-check"></i><b>6.5.2</b> Création de cartes muettes simples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="vanishingBearings.html"><a href="vanishingBearings.html"><i class="fa fa-check"></i><b>7</b> Directions estimées aux points de départ</a><ul>
+<li class="chapter" data-level="7.1" data-path="vanishingBearings.html"><a href="vanishingBearings.html#thingsToBeAwareOf"><i class="fa fa-check"></i><b>7.1</b> Aspects à considérer</a></li>
+<li class="chapter" data-level="7.2" data-path="vanishingBearings.html"><a href="vanishingBearings.html#estimateBearings"><i class="fa fa-check"></i><b>7.2</b> Estimation des directions aux points de départ, étape par étape</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="vanishingBearings.html"><a href="vanishingBearings.html#loadPackages7"><i class="fa fa-check"></i><b>7.2.1</b> Charger les logiciels R requis.</a></li>
+<li class="chapter" data-level="7.2.2" data-path="vanishingBearings.html"><a href="vanishingBearings.html#vanishingSample"><i class="fa fa-check"></i><b>7.2.2</b> Charger les données.</a></li>
+<li class="chapter" data-level="7.2.3" data-path="vanishingBearings.html"><a href="vanishingBearings.html#choisir-les-individus-pour-lesquels-les-donnees-recueillies-a-la-station-indiquent-des-directions-de-depart-claires."><i class="fa fa-check"></i><b>7.2.3</b> Choisir les individus pour lesquels les données recueillies à la station indiquent des directions de départ claires.</a></li>
+<li class="chapter" data-level="7.2.4" data-path="vanishingBearings.html"><a href="vanishingBearings.html#obtenir-lheure-du-depart-de-chaque-individu."><i class="fa fa-check"></i><b>7.2.4</b> Obtenir l’heure du départ de chaque individu.</a></li>
+<li class="chapter" data-level="7.2.5" data-path="vanishingBearings.html"><a href="vanishingBearings.html#calculer-les-directions-aux-points-de-depart-des-individus-pour-lesquels-les-heures-de-depart-sont-connues."><i class="fa fa-check"></i><b>7.2.5</b> Calculer les directions aux points de départ des individus pour lesquels les heures de départ sont connues.</a></li>
+<li class="chapter" data-level="7.2.6" data-path="vanishingBearings.html"><a href="vanishingBearings.html#pointer-les-valeurs-des-directions-estimees-aux-points-de-depart-sur-une-carte."><i class="fa fa-check"></i><b>7.2.6</b> Pointer les valeurs des directions estimées aux points de départ sur une carte.</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="vanishingBearings.html"><a href="vanishingBearings.html#vanishingLitCited"><i class="fa fa-check"></i><b>7.3</b> Bibliographie</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendixA.html"><a href="appendixA.html"><i class="fa fa-check"></i><b>A</b> Annexe A - structure alltags</a></li>
+<li class="chapter" data-level="B" data-path="appendixB.html"><a href="appendixB.html"><i class="fa fa-check"></i><b>B</b> Annexe B - Dépannage</a><ul>
+<li class="chapter" data-level="B.1" data-path="appendixB.html"><a href="appendixB.html#motusLogout"><i class="fa fa-check"></i><b>B.1</b> Fermeture du logiciel motus</a></li>
+<li class="chapter" data-level="B.2" data-path="appendixB.html"><a href="appendixB.html#resumeDownload"><i class="fa fa-check"></i><b>B.2</b> Reprise du téléchargement de données</a></li>
+<li class="chapter" data-level="B.3" data-path="appendixB.html"><a href="appendixB.html#messages-derreur-courants-et-solutions"><i class="fa fa-check"></i><b>B.3</b> Messages d’erreur courants et solutions</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="appendixB.html"><a href="appendixB.html#je-recois-le-message-auto-disconnecting-sqliteconnection-une-ou-plusieurs-fois-apres-avoir-utilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.1</b> Je reçois le message «Auto-disconnecting SQLiteConnection» une ou plusieurs fois après avoir utilisé la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.2" data-path="appendixB.html"><a href="appendixB.html#je-recois-le-message-internal-server-error-pendant-que-jutilise-la-fonction-tagme-update-true."><i class="fa fa-check"></i><b>B.3.2</b> Je reçois le message «Internal Server Error» pendant que j’utilise la fonction tagme (…, update = TRUE).</a></li>
+<li class="chapter" data-level="B.3.3" data-path="appendixB.html"><a href="appendixB.html#je-recois-le-message-error-forbidden-pendant-que-jutilise-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.3</b> Je reçois le message «Error: Forbidden» pendant que j’utilise la fonction tagme().</a></li>
+<li class="chapter" data-level="B.3.4" data-path="appendixB.html"><a href="appendixB.html#je-recois-le-message-error-object-xxxx-not-found-relatif-au-nom-dune-table-ou-dun-champ-ou-encore-certains-de-vos-exemples-dans-le-guide-ne-fonctionnent-pas."><i class="fa fa-check"></i><b>B.3.4</b> Je reçois le message «Error: Object ‘xxxx’ not found», relatif au nom d’une table ou d’un champ, ou encore certains de vos exemples dans le guide ne fonctionnent pas.</a></li>
+<li class="chapter" data-level="B.3.5" data-path="appendixB.html"><a href="appendixB.html#je-recois-le-message-error-in-rsqlite_connectdbname-loadable.extensions-flags-vfs-could-not-connect-to-database-unable-to-open-database-file-lorsque-je-tente-dexecuter-la-fonction-tagme."><i class="fa fa-check"></i><b>B.3.5</b> Je reçois le message «Error in rsqlite_connect(dbname, loadable.extensions, flags, vfs): Could not connect to database: unable to open database file» lorsque je tente d’exécuter la fonction tagme().</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="appendixC.html"><a href="appendixC.html"><i class="fa fa-check"></i><b>C</b> Annexe C - Le logiciel R de Motus</a><ul>
+<li class="chapter" data-level="C.1" data-path="appendixC.html"><a href="appendixC.html#checkVersion.B"><i class="fa fa-check"></i><b>C.1</b> checkVersion</a><ul>
+<li class="chapter" data-level="C.1.1" data-path="appendixC.html"><a href="appendixC.html#description"><i class="fa fa-check"></i><b>C.1.1</b> Description</a></li>
+<li class="chapter" data-level="C.1.2" data-path="appendixC.html"><a href="appendixC.html#dependances"><i class="fa fa-check"></i><b>C.1.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.1.3" data-path="appendixC.html"><a href="appendixC.html#exemple"><i class="fa fa-check"></i><b>C.1.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.2" data-path="appendixC.html"><a href="appendixC.html#sunRiseSet"><i class="fa fa-check"></i><b>C.2</b> sunRiseSet</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="appendixC.html"><a href="appendixC.html#description-1"><i class="fa fa-check"></i><b>C.2.1</b> Description</a></li>
+<li class="chapter" data-level="C.2.2" data-path="appendixC.html"><a href="appendixC.html#dependances-1"><i class="fa fa-check"></i><b>C.2.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.2.3" data-path="appendixC.html"><a href="appendixC.html#exemple-1"><i class="fa fa-check"></i><b>C.2.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.3" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsCoor"><i class="fa fa-check"></i><b>C.3</b> plotAllTagsCoord</a><ul>
+<li class="chapter" data-level="C.3.1" data-path="appendixC.html"><a href="appendixC.html#description-2"><i class="fa fa-check"></i><b>C.3.1</b> Description</a></li>
+<li class="chapter" data-level="C.3.2" data-path="appendixC.html"><a href="appendixC.html#dependances-2"><i class="fa fa-check"></i><b>C.3.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.3.3" data-path="appendixC.html"><a href="appendixC.html#exemple-2"><i class="fa fa-check"></i><b>C.3.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="appendixC.html"><a href="appendixC.html#plotAllTagsSite"><i class="fa fa-check"></i><b>C.4</b> plotAllTagsSite</a><ul>
+<li class="chapter" data-level="C.4.1" data-path="appendixC.html"><a href="appendixC.html#description-3"><i class="fa fa-check"></i><b>C.4.1</b> Description</a></li>
+<li class="chapter" data-level="C.4.2" data-path="appendixC.html"><a href="appendixC.html#dependances-3"><i class="fa fa-check"></i><b>C.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.4.3" data-path="appendixC.html"><a href="appendixC.html#exemple-3"><i class="fa fa-check"></i><b>C.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="appendixC.html"><a href="appendixC.html#plotDailySiteSum"><i class="fa fa-check"></i><b>C.5</b> plotDailySiteSum</a><ul>
+<li class="chapter" data-level="C.5.1" data-path="appendixC.html"><a href="appendixC.html#description-4"><i class="fa fa-check"></i><b>C.5.1</b> Description</a></li>
+<li class="chapter" data-level="C.5.2" data-path="appendixC.html"><a href="appendixC.html#dependances-4"><i class="fa fa-check"></i><b>C.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.5.3" data-path="appendixC.html"><a href="appendixC.html#exemple-4"><i class="fa fa-check"></i><b>C.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.6" data-path="appendixC.html"><a href="appendixC.html#plotRouteMap"><i class="fa fa-check"></i><b>C.6</b> plotRouteMap</a><ul>
+<li class="chapter" data-level="C.6.1" data-path="appendixC.html"><a href="appendixC.html#description-5"><i class="fa fa-check"></i><b>C.6.1</b> Description</a></li>
+<li class="chapter" data-level="C.6.2" data-path="appendixC.html"><a href="appendixC.html#exemple-5"><i class="fa fa-check"></i><b>C.6.2</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.7" data-path="appendixC.html"><a href="appendixC.html#plotSite"><i class="fa fa-check"></i><b>C.7</b> plotSite</a><ul>
+<li class="chapter" data-level="C.7.1" data-path="appendixC.html"><a href="appendixC.html#description-6"><i class="fa fa-check"></i><b>C.7.1</b> Description</a></li>
+<li class="chapter" data-level="C.7.2" data-path="appendixC.html"><a href="appendixC.html#dependances-5"><i class="fa fa-check"></i><b>C.7.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.7.3" data-path="appendixC.html"><a href="appendixC.html#exemple-6"><i class="fa fa-check"></i><b>C.7.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="appendixC.html"><a href="appendixC.html#plotSiteSig"><i class="fa fa-check"></i><b>C.8</b> plotSiteSig</a><ul>
+<li class="chapter" data-level="C.8.1" data-path="appendixC.html"><a href="appendixC.html#description-7"><i class="fa fa-check"></i><b>C.8.1</b> Description</a></li>
+<li class="chapter" data-level="C.8.2" data-path="appendixC.html"><a href="appendixC.html#dependances-6"><i class="fa fa-check"></i><b>C.8.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.8.3" data-path="appendixC.html"><a href="appendixC.html#exemple-7"><i class="fa fa-check"></i><b>C.8.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.9" data-path="appendixC.html"><a href="appendixC.html#plotTagSig"><i class="fa fa-check"></i><b>C.9</b> plotTagSig</a><ul>
+<li class="chapter" data-level="C.9.1" data-path="appendixC.html"><a href="appendixC.html#description-8"><i class="fa fa-check"></i><b>C.9.1</b> Description</a></li>
+<li class="chapter" data-level="C.9.2" data-path="appendixC.html"><a href="appendixC.html#dependances-7"><i class="fa fa-check"></i><b>C.9.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.9.3" data-path="appendixC.html"><a href="appendixC.html#exemple-8"><i class="fa fa-check"></i><b>C.9.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.10" data-path="appendixC.html"><a href="appendixC.html#simSiteDet"><i class="fa fa-check"></i><b>C.10</b> simSiteDet</a><ul>
+<li class="chapter" data-level="C.10.1" data-path="appendixC.html"><a href="appendixC.html#description-9"><i class="fa fa-check"></i><b>C.10.1</b> Description</a></li>
+<li class="chapter" data-level="C.10.2" data-path="appendixC.html"><a href="appendixC.html#dependances-8"><i class="fa fa-check"></i><b>C.10.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.10.3" data-path="appendixC.html"><a href="appendixC.html#exemple-9"><i class="fa fa-check"></i><b>C.10.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.11" data-path="appendixC.html"><a href="appendixC.html#siteSum"><i class="fa fa-check"></i><b>C.11</b> siteSum</a><ul>
+<li class="chapter" data-level="C.11.1" data-path="appendixC.html"><a href="appendixC.html#description-10"><i class="fa fa-check"></i><b>C.11.1</b> Description</a></li>
+<li class="chapter" data-level="C.11.2" data-path="appendixC.html"><a href="appendixC.html#dependances-9"><i class="fa fa-check"></i><b>C.11.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.11.3" data-path="appendixC.html"><a href="appendixC.html#exemple-10"><i class="fa fa-check"></i><b>C.11.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.12" data-path="appendixC.html"><a href="appendixC.html#siteSumDaily"><i class="fa fa-check"></i><b>C.12</b> siteSumDaily</a><ul>
+<li class="chapter" data-level="C.12.1" data-path="appendixC.html"><a href="appendixC.html#description-11"><i class="fa fa-check"></i><b>C.12.1</b> Description</a></li>
+<li class="chapter" data-level="C.12.2" data-path="appendixC.html"><a href="appendixC.html#dependances-10"><i class="fa fa-check"></i><b>C.12.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.12.3" data-path="appendixC.html"><a href="appendixC.html#exemple-11"><i class="fa fa-check"></i><b>C.12.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.13" data-path="appendixC.html"><a href="appendixC.html#siteTrans"><i class="fa fa-check"></i><b>C.13</b> siteTrans</a><ul>
+<li class="chapter" data-level="C.13.1" data-path="appendixC.html"><a href="appendixC.html#description-12"><i class="fa fa-check"></i><b>C.13.1</b> Description</a></li>
+<li class="chapter" data-level="C.13.2" data-path="appendixC.html"><a href="appendixC.html#dependances-11"><i class="fa fa-check"></i><b>C.13.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.13.3" data-path="appendixC.html"><a href="appendixC.html#exemple-12"><i class="fa fa-check"></i><b>C.13.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.14" data-path="appendixC.html"><a href="appendixC.html#tagSum"><i class="fa fa-check"></i><b>C.14</b> tagSum</a><ul>
+<li class="chapter" data-level="C.14.1" data-path="appendixC.html"><a href="appendixC.html#description-13"><i class="fa fa-check"></i><b>C.14.1</b> Description</a></li>
+<li class="chapter" data-level="C.14.2" data-path="appendixC.html"><a href="appendixC.html#dependances-12"><i class="fa fa-check"></i><b>C.14.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.14.3" data-path="appendixC.html"><a href="appendixC.html#exemple-13"><i class="fa fa-check"></i><b>C.14.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.15" data-path="appendixC.html"><a href="appendixC.html#tagSumSite"><i class="fa fa-check"></i><b>C.15</b> tagSumSite</a><ul>
+<li class="chapter" data-level="C.15.1" data-path="appendixC.html"><a href="appendixC.html#description-14"><i class="fa fa-check"></i><b>C.15.1</b> Description</a></li>
+<li class="chapter" data-level="C.15.2" data-path="appendixC.html"><a href="appendixC.html#dependances-13"><i class="fa fa-check"></i><b>C.15.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.15.3" data-path="appendixC.html"><a href="appendixC.html#exemple-14"><i class="fa fa-check"></i><b>C.15.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="C.16" data-path="appendixC.html"><a href="appendixC.html#timeToSunriset"><i class="fa fa-check"></i><b>C.16</b> timeToSunriset</a><ul>
+<li class="chapter" data-level="C.16.1" data-path="appendixC.html"><a href="appendixC.html#description-15"><i class="fa fa-check"></i><b>C.16.1</b> Description</a></li>
+<li class="chapter" data-level="C.16.2" data-path="appendixC.html"><a href="appendixC.html#dependances-14"><i class="fa fa-check"></i><b>C.16.2</b> Dépendances</a></li>
+<li class="chapter" data-level="C.16.3" data-path="appendixC.html"><a href="appendixC.html#exemple-15"><i class="fa fa-check"></i><b>C.16.3</b> Exemple</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="appendixD.html"><a href="appendixD.html"><i class="fa fa-check"></i><b>D</b> Annexe D - Le logiciel motusClient - Fonctions de filtrage de données</a><ul>
+<li class="chapter" data-level="D.1" data-path="appendixD.html"><a href="appendixD.html#listRunsFilters"><i class="fa fa-check"></i><b>D.1</b> listRunsFilters</a><ul>
+<li class="chapter" data-level="D.1.1" data-path="appendixD.html"><a href="appendixD.html#description-16"><i class="fa fa-check"></i><b>D.1.1</b> Description</a></li>
+</ul></li>
+<li class="chapter" data-level="D.2" data-path="appendixD.html"><a href="appendixD.html#dependances-15"><i class="fa fa-check"></i><b>D.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.3" data-path="appendixD.html"><a href="appendixD.html#exemple-16"><i class="fa fa-check"></i><b>D.3</b> Exemple</a></li>
+<li class="chapter" data-level="D.4" data-path="appendixD.html"><a href="appendixD.html#createRunsFilter"><i class="fa fa-check"></i><b>D.4</b> createRunsFilter</a><ul>
+<li class="chapter" data-level="D.4.1" data-path="appendixD.html"><a href="appendixD.html#description-17"><i class="fa fa-check"></i><b>D.4.1</b> Description</a></li>
+<li class="chapter" data-level="D.4.2" data-path="appendixD.html"><a href="appendixD.html#dependances-16"><i class="fa fa-check"></i><b>D.4.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.4.3" data-path="appendixD.html"><a href="appendixD.html#exemple-17"><i class="fa fa-check"></i><b>D.4.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.5" data-path="appendixD.html"><a href="appendixD.html#getRunsFilters"><i class="fa fa-check"></i><b>D.5</b> getRunsFilters</a><ul>
+<li class="chapter" data-level="D.5.1" data-path="appendixD.html"><a href="appendixD.html#description-18"><i class="fa fa-check"></i><b>D.5.1</b> Description</a></li>
+<li class="chapter" data-level="D.5.2" data-path="appendixD.html"><a href="appendixD.html#dependances-17"><i class="fa fa-check"></i><b>D.5.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.5.3" data-path="appendixD.html"><a href="appendixD.html#exemple-18"><i class="fa fa-check"></i><b>D.5.3</b> Exemple</a></li>
+</ul></li>
+<li class="chapter" data-level="D.6" data-path="appendixD.html"><a href="appendixD.html#writeRunsFilter"><i class="fa fa-check"></i><b>D.6</b> writeRunsFilter</a><ul>
+<li class="chapter" data-level="D.6.1" data-path="appendixD.html"><a href="appendixD.html#description-19"><i class="fa fa-check"></i><b>D.6.1</b> Description</a></li>
+<li class="chapter" data-level="D.6.2" data-path="appendixD.html"><a href="appendixD.html#dependances-18"><i class="fa fa-check"></i><b>D.6.2</b> Dépendances</a></li>
+<li class="chapter" data-level="D.6.3" data-path="appendixD.html"><a href="appendixD.html#exemples"><i class="fa fa-check"></i><b>D.6.3</b> Exemples</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Guide R pour Motus</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vanishingBearings" class="section level1">
+<h1><span class="header-section-number">7</span> Directions estimées aux points de départ</h1>
+<p><em>Le présent chapitre est une contribution d’Ana Morales et de Tara Crewe, qui ont utilisé les données recueillies par Morbey et al. (2017) (voir <a href="introduction.html#sampleData">1.3</a>), avec un soutien financier accordé à Mme Morales dans le cadre d’un stage par l’intermédiaire de l’Université McGill au titre du Programme d’innovation environnementale FONCER du Conseil de recherches en sciences naturelles et en génie du Canada, avec la collaboration d’Études d’Oiseaux Canada (T.C.).</em></p>
+<p>L’estimation de la direction prise par un oiseau qui quitte une halte migratoire peut être un élément essentiel de certaines études de migrations. Dans le contexte des études faisant appel à la radiotélémétrie automatisée, la direction estimée au point de départ est souvent appelée «vanishing bearing» en anglais, c’est-à-dire la direction enregistrée au moment où l’on perd l’animal volant de vue après son départ (Sjöberg et Nilsson 2015). Il est particulièrement important de pouvoir se référer aux caractéristiques des signaux des émetteurs pour estimer la direction au point de départ d’un animal en migration aux endroits où il n’y a pas de stations réceptrices additionnelles permettant de suivre la trajectoire de vol après le départ depuis une halte migratoire.</p>
+<p>Sjöberg et Nilsson (2015) ont calculé des directions aux points de départ en utilisant des statistiques circulaires ordinaires pour estimer la moyenne des azimuts d’antennes de stations réceptrices au cours des 5 à 10 dernières minutes de détection des signaux, l’azimut de chaque détection étant pondéré en fonction de la puissance du signal. En d’autres termes, chaque signal détecté était un vecteur pointant dans la direction de l’antenne de la station réceptrice, la longueur du vecteur étant représentée par la puissance du signal. Par conséquent, la longueur du vecteur est directement proportionnelle à la puissance du signal, et un signal puissant a plus de poids qu’un signal plus faible.</p>
+<p>Le présent chapitre expose la marche à suivre pour estimer la direction au point de départ des oiseaux portant un émetteur en employant la méthode de Sjöberg et de Nilsson. Vous pouvez modifier les scripts présentés en tenant compte de vos propres données ou encore utiliser les données-échantillons fournies. Avant de commencer, il importe de considérer quelques hypothèses et faiblesses potentielles.</p>
+<div id="thingsToBeAwareOf" class="section level2">
+<h2><span class="header-section-number">7.1</span> Aspects à considérer</h2>
+<ol style="list-style-type: decimal">
+<li><strong>La méthode susmentionnée repose sur l’hypothèse selon laquelle l’animal portant l’émetteur quitte l’emplacement général de la station réceptrice et s’en éloigne radialement.</strong></li>
+</ol>
+<p>Il est vraiment important de noter que cette méthode <strong>NE FONCTIONNERA PAS</strong> sans que cette hypothèse soit confirmée. En effet, comme les individus portant un émetteur ne partent vraisemblablement pas de la position exacte de la station réceptrice, les valeurs de la direction de départ devraient être considérées comme des estimations grossières.</p>
+<p>L’écart entre la direction estimée au point de départ et la direction réelle attribuable au fait que l’oiseau part d’un lieu qui n’est pas celui d’une station réceptrice est appelé erreur de parallaxe. On peut réduire au minimum l’erreur de parallaxe en analysant seulement les cas où l’on peut être convaincu, selon les caractéristiques de la puissance du signal de l’émetteur, que le point de départ de l’individu qui porte l’émetteur est passablement proche du lieu de la station réceptrice ayant capté le signal. À partir de données radar, Sjöberg et Nilsson (2015) ont estimé que l’erreur de parallaxe est de plus ou moins 10 degrés lorsque le point de départ de l’oiseau est proche de la station réceptrice.</p>
+<p>On peut recourir à la télémétrie manuelle pour déterminer la position précise d’un individu pendant une halte. Faute de quoi une bonne façon de savoir si un individu a pris le départ depuis l’emplacement général d’une station réceptrice consiste à examiner le profil des détections des signaux de l’émetteur avant et pendant le départ. Si le point de départ de l’individu est proche de la station, les données indiqueront des profils clairs de détection propres à au moins deux antennes différentes établis avant et pendant le départ. Les graphiques suivants présentent des données sur les signaux provenant de parulines aux printemps 2014 et 2015 recueillies par Morbey et al. (2017). Ils montrent des exemples d’un émetteur: a) dont les signaux correspondent à une direction de départ claire et b) dont les signaux ne correspondent pas à une direction de départ claire. Des renseignements supplémentaires sur les données sont présentés dans les sections <a href="introduction.html#sampleData">1.3</a> et <a href="vanishingBearings.html#vanishingSample">7.2.2</a> ci-dessous.</p>
+<ol style="list-style-type: lower-alpha">
+<li><strong>Bonne estimation de la direction de départ</strong> – Nous constatons que l’oiseau est demeuré dans les environs de la station Old Cut (Observatoire d’oiseaux de Long Point, en Ontario) pendant la durée de son séjour, comme l’indique l’accroissement de la variation du signal pendant le jour et la baisse de la variation du signal pendant la nuit. Pour la nuit du départ, le signal de l’émetteur traduit la réduction habituelle de l’activité la nuit mais révèle une augmentation de l’activité vers 02:30, au moment du départ de l’oiseau. Peu de temps après, la station réceptrice Old Cut ne capte plus le signal, mais d’autres stations voisines prennent le relais pendant le vol de départ:</li>
+</ol>
+<p><img src="images/vanishBearing_goodDetection.png" width="252" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><strong>Estimation imprécise de la direction de départ</strong> – L’oiseau n’a pas été détecté par la station Old Cut pendant un bon moment puis l’a été seulement au cours d’un apparent survol; les caractéristiques du signal ne permettent pas d’estimer avec précision la direction de départ à partir de la station. Dans ce cas, nous ne savons pas à quelle distance l’oiseau se trouvait de la station pendant le survol. Nous recommandons de ne pas utiliser des données recueillies dans des cas comme celui-ci pour estimer les directions de départ:</li>
+</ol>
+<p><img src="images/vanishBearing_badDetection.png" width="252" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Plus les azimuts des antennes d’une station réceptrice sont proches l’un de l’autre, plus l’estimation de la direction de départ d’un animal suivi est précise.</strong></li>
+</ol>
+<p>À la station Old Cut, trois antennes étaient orientées dans des directions séparées de 120 degrés l’une de l’autre en 2014 et de 90 degrés en 2015 (approximativement vers l’est, le nord et l’ouest). Ces deux années-là, nous avons effectué une estimation grossière de directions de départ à partir de la moyenne des directions de vol de parulines déterminées par plusieurs stations au moment du départ. Cela nous a donné une direction de départ connue. Nous avons ensuite effectué des estimations de la direction au point de départ que nous avons comparées à cette dernière.</p>
+<p>La carte suivante montre la direction estimée grossièrement après le départ et la direction estimée au point de départ du vol d’une paruline qui est partie de la station Old Cut vers le nord au printemps 2014, quand les trois antennes étaient orientées dans des directions séparées de 120 degrés l’une de l’autre. La ligne rouge représente la direction estimée au point de départ de l’émetteur 277. La ligne bleue représente la direction estimée grossièrement après le départ basée sur les détections effectuées par d’autres stations (points rouges):</p>
+<p><img src="images/vanishBearing2014.png" width="252" style="display: block; margin: auto;" /></p>
+<p>Dans l’exemple ci-dessous, la direction estimée grossièrement après le départ et la direction estimée au point de départ sont indiquées dans le cas d’une paruline qui est partie vers le nord au printemps 2015; à ce moment, les antennes de la station Old Cut étaient orientées dans des directions séparées de 90 degrés l’une de l’autre. Nous pouvons voir que la direction estimée au point de départ est très proche de la direction estimée grossièrement après le départ.</p>
+<p><img src="images/vanishBearing2015.png" width="252" style="display: block; margin: auto;" /></p>
+<p>Dans l’ensemble, l’écart moyen entre les directions estimées grossièrement après le départ et les directions estimées aux points de départ était plus grand en 2014 (n = 14 départs), lorsque les antennes étaient orientées dans des directions séparées de 120 degrés l’une de l’autre, qu’en 2015 (n = 12 départs), lorsque les antennes étaient orientées dans des directions séparées de 90 degrés l’une de l’autre:</p>
+<p><img src="images/vanishBearingDeviation.png" width="252" style="display: block; margin: auto;" /></p>
+<p>Cela porte à croire que l’estimation des directions de départ est plus précise aux stations réceptrices où les azimuts des antennes sont proches l’un de l’autre. Si l’estimation des directions aux points de départ est un élément important de votre recherche, nous vous suggérons d’orienter les antennes dans des directions séparées de 60 degrés l’une de l’autre, comme l’ont fait Sjöberg et Nilsson (2015).</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>En présence de valeurs de puissance du signal négatives, la pondération doit être normalisée.</strong></li>
+</ol>
+<p>On ne peut pas utiliser de pondération négative pour le calcul de moyennes circulaires pondérées. Par conséquent, nous recommandons de normaliser les valeurs de la puissance du signal en soustrayant la valeur minimale du signal et en divisant la différence entre les valeurs minimale et maximale, c.-à-d. en utilisant «r sig.norm = (sig - min(sig))/(max(sig)-min(sig)), eval = FALSE». De plus, nous suggérons d’utiliser les valeurs minimale et maximale de la puissance du signal à une station pour <strong>toutes les données </strong> recueillies par la station, de manière que toute la gamme des valeurs de puissance du signal potentielles soit utilisée dans l’équation de normalisation. Nous avons constaté que la normalisation basée sur l’utilisation des valeurs minimale et maximale de la puissance du signal pour un départ donné peut produire des directions de départ estimées erronées si la gamme des valeurs de puissance du signal est restreinte. On peut éviter cela en utilisant toute la gamme des valeurs de puissance du signal contenues dans la base de données du projet de recherche en question.</p>
+</div>
+<div id="estimateBearings" class="section level2">
+<h2><span class="header-section-number">7.2</span> Estimation des directions aux points de départ, étape par étape</h2>
+<p>Voici la marche à suivre pour estimer les directions aux points de départ:</p>
+<ol style="list-style-type: decimal">
+<li>Charger les logiciels R requis.</li>
+<li>Charger les données.</li>
+<li>Choisir les individus pour lesquels les données recueillies à la station indiquent des directions de départ claires.</li>
+<li>Obtenir l’heure du départ de chaque individu.</li>
+<li>Estimer les directions aux points de départ.</li>
+<li>Pointer la direction estimée au point de départ sur une carte.</li>
+</ol>
+<div id="loadPackages7" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Charger les logiciels R requis.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(circular)
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(motus)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(jpeg)
+<span class="kw">library</span>(ggmap)
+<span class="co"># Make sure working on GMT</span>
+<span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> <span class="st">&quot;GMT&quot;</span>)</code></pre></div>
+</div>
+<div id="vanishingSample" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Charger les données.</h3>
+<p>Les données utilisées ici sont les données de détection de trois Parulines à tête cendrée que Morbey et al. (2017) ont dotées d’un émetteur et remises en liberté au printemps 2015 à la station de recherche sur le terrain Old Cut de l’Observatoire d’oiseaux de Long Point en Ontario, au Canada.</p>
+<p>Ces données sont incluses dans le fichier «vanishBearing.rda» fourni dans le logiciel R motusData. Pour y accéder, vous devez d’abord installer le logiciel motusData en suivant les instructions fournies dans la section <a href="loadingPackages.html#loadingPackages">2</a>, <em>avant</em> d’exécuter le code dans le présent chapitre:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(motusData) <span class="co"># Charger le logiciel motusData, qui contient les données nécessaires pour suivre les instructions présentées ici.</span>
+
+## Charger les données que nous fournissons sur trois parulines qui ont quitté la station Old Cut au printemps 2015.
+## Nous effectuons également quelques manipulations ici afin de réordonner les niveaux du facteur recvSiteName et d’ordonner les données selon le moment du départ.
+
+df.vanish &lt;-<span class="st"> </span>vanishBearing <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">recvSiteName =</span> <span class="kw">reorder</span>(recvSiteName, recvLat),
+         <span class="dt">motusTagID =</span> <span class="kw">as.factor</span>(<span class="kw">as.character</span>(motusTagID))) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ordonner les sites selon la latitude.</span>
+<span class="st">  </span><span class="kw">arrange</span>(ts) <span class="co"># arrange by ts</span></code></pre></div>
+</div>
+<div id="choisir-les-individus-pour-lesquels-les-donnees-recueillies-a-la-station-indiquent-des-directions-de-depart-claires." class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Choisir les individus pour lesquels les données recueillies à la station indiquent des directions de départ claires.</h3>
+<p>Premièrement, nous établissons des sous-ensembles de données sur chaque individu pour lesquels les données recueillies indiquent des directions de départ claires depuis la halte migratoire d’intérêt. En fait, les données fournies ici se rapportent seulement à trois départs d’oiseaux de la station Old Cut dont nous <em>savons</em> que les directions de départ étaient claires. Nous vous invitons néanmoins à effectuer les opérations propres à la présente étape quand même!</p>
+<p>En choisissant seulement les individus pour lesquels les données recueillies à la station indiquent des directions de départ claires, nous réduisons au minimum le risque d’erreur de parallaxe en nous assurant que le point de départ des oiseaux était proche de la station. Pour ce faire, nous produisons d’abord des graphiques indiquant la latitude en fonction de la date de départ. Dans le cas présent, nous constatons que les oiseaux sont partis vers le nord et ont survolé plusieurs stations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df.vanish, <span class="kw">aes</span>(ts, recvLat, <span class="dt">colour =</span> <span class="kw">as.factor</span>(recvSiteName))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">pch =</span> <span class="dv">21</span>) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>motusTagID, 
+    <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
+
+p1</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/vanishPlotLatvsSIG-1.png" width="672" /></p>
+<p>De plus, nous nous assurons que l’oiseau a été détecté par plusieurs antennes en même temps au moment de son départ. Si l’oiseau a été détecté par une seule antenne, la direction estimée au point de départ correspondra seulement au signal reçu par cette seule antenne. Nous produisons un graphique indiquant la puissance du signal en fonction de l’heure pour un sous-ensemble des données de manière à montrer les dernières heures de détection de l’oiseau à la station Old Cut. Essayons cela avec le sous-ensemble des données se rapportant à l’émetteur no 16823:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">subset</span>(df.vanish, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">16823</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>ts <span class="op">&gt;</span><span class="st"> &quot;2015-05-30 00:00:00&quot;</span>), <span class="kw">aes</span>(ts, sig, <span class="dt">colour =</span> <span class="kw">as.factor</span>(port))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">pch =</span> <span class="dv">21</span>) <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(recvSiteName <span class="op">~</span><span class="st"> </span>
+<span class="st">    </span>.) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
+
+p1</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/vanishPlotTSvsSIG-1.png" width="672" /></p>
+<p>Nous pouvons voir le profil typique de détection d’un oiseau partant d’un site: baisse de puissance (début de la période de repos) à environ 00:25 UTC suivie d’une augmentation de l’activité et du départ du site plus tard dans la nuit, après 03:00 UTC. Peu de temps après son départ, l’oiseau est détecté par cinq autres stations plus au nord. Étant donné que cet oiseau a été détecté avant et pendant son départ, nous pouvons supposer qu’il a pris son départ d’un point assez proche de la station Old Cut.</p>
+<p>Avec vos propres données, produisez des graphiques comme ceux-ci pour chacun de vos oiseaux portant un émetteur. Et pour rendre l’estimation des directions de départ plus précise, enlevez les données sur les individus pour lesquels les données recueillies n’indiquent pas des directions de départ claires.</p>
+</div>
+<div id="obtenir-lheure-du-depart-de-chaque-individu." class="section level3">
+<h3><span class="header-section-number">7.2.4</span> Obtenir l’heure du départ de chaque individu.</h3>
+<p>Pour estimer la direction au point de départ à partir de la puissance des signaux captés au moment du départ, nous devons d’abord déterminer l’heure approximative à laquelle l’oiseau a amorcé son vol de départ. Pour l’instant, la meilleure façon de le faire est d’examiner manuellement chaque ensemble de données de détection sur chaque oiseau et d’obtenir l’heure approximative en pointant l’heure par rapport à la puissance du signal.</p>
+<p>Toujours avec le sous-ensemble des données se rapportant à l’émetteur no 16823, déterminons l’heure du départ.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">subset</span>(df.vanish, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">16823</span>), 
+    <span class="kw">aes</span>(ts, sig, <span class="dt">colour =</span> <span class="kw">as.factor</span>(antBearing))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(recvSiteName <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
+
+p2</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/vanishFindDepTime-1.png" width="672" /></p>
+<p>Nous pouvons voir l’ensemble complet des données de détection des signaux de l’émetteur 16823 à la station Old Cut ainsi que des données recueillies par d’autres stations après le départ de l’oiseau.</p>
+<p>Ensuite, nous créons un sous-ensemble de données pour nous concentrer sur les dernières minutes de détection à la station Old Cut, soit le point de départ de l’oiseau. En zoomant, nous pouvons déterminer l’heure exacte du départ.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">subset</span>(df.vanish, motusTagID <span class="op">==</span><span class="st"> </span><span class="dv">16823</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>ts <span class="op">&gt;</span><span class="st"> &quot;2015-05-30 03:03:00&quot;</span> <span class="op">&amp;</span><span class="st"> </span>ts <span class="op">&lt;</span><span class="st"> &quot;2015-05-30 03:10:00&quot;</span>), 
+    <span class="kw">aes</span>(ts, sig, <span class="dt">colour =</span> <span class="kw">as.factor</span>(antBearing))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="co"># facet_grid(recvSiteName~.) +</span>
+<span class="kw">theme_bw</span>()
+
+p3</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/vanishPlotTSvsSIG2-1.png" width="672" /></p>
+<p>Dans ce cas, nous pouvons voir une augmentation à partir d’environ 03:04 du signal capté par les antennes orientées dans des directions séparées de 90 et de 120 degrés l’une de l’autre à la station Old Cut. La puissance du signal atteint son maximum à environ 03:04:59, après quoi elle diminue. Cela indique que l’oiseau était probablement au sud de la station quand il a pris son départ: la puissance du signal a augmenté et atteint son point culminant quand l’oiseau a traversé le faisceau des antennes puis a diminué à mesure qu’il s’est éloigné (vers le nord) de la station Old Cut. Nous avons choisi le moment où le signal était au maximum, soit 03:04:59, comme heure du départ de cet oiseau, de manière à exclure les détections de l’individu quand il s’approchait vraisemblablement de la station. Nous ne voulons pas que les signaux captés quand l’oiseau s’approchait de la station influent sur l’estimation de la direction au point de départ (de la station), car nous tenons pour acquis que l’oiseau s’éloigne radialement de la station.</p>
+<p>Nous créons une trame de données avec les heures de départ pour chaque oiseau et son ID d’émetteur Motus (motusTagID) en vue de l’utiliser plus tard pour filtrer des données. Nous ajoutons les heures de départ pour les deux autres oiseaux dans l’ensemble de données. Si vous vous sentez d’attaque, vous pouvez essayer des graphiques comme celui-ci-dessus avec les données relatives aux émetteurs 16897 et 16791 pour voir comment nous en sommes arrivés à ces heures de départ:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Créer une trame de données et attribuer des noms
+## d’en-têtes de colonnes.
+dep.<span class="dv">16823</span> &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="dv">16823</span>, <span class="st">&quot;2015-05-30 03:04:59&quot;</span>))
+
+## Créer des trames de données pour les deux autres
+## émetteurs:
+dep.<span class="dv">16867</span> &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="dv">16867</span>, <span class="st">&quot;2015-05-29 01:56:00&quot;</span>))
+dep.<span class="dv">16791</span> &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="dv">16791</span>, <span class="st">&quot;2015-05-08 02:41:40&quot;</span>))
+
+## Mettre le tout ensemble.
+df.departTime &lt;-<span class="st"> </span><span class="kw">rbind</span>(dep.<span class="dv">16823</span>, dep.<span class="dv">16867</span>, dep.<span class="dv">16791</span>)
+<span class="kw">names</span>(df.departTime) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;motusTagID&quot;</span>, <span class="st">&quot;ts_depart&quot;</span>)
+
+## Convertir en heures POSIX en utilisant le
+## logiciel Lubridate.
+df.departTime &lt;-<span class="st"> </span><span class="kw">mutate</span>(df.departTime, <span class="dt">ts_depart =</span> <span class="kw">ymd_hms</span>(ts_depart))
+
+df.departTime</code></pre></div>
+<pre><code>##   motusTagID           ts_depart
+## 1      16823 2015-05-30 03:04:59
+## 2      16867 2015-05-29 01:56:00
+## 3      16791 2015-05-08 02:41:40</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Vous avez l’option d’enregistrer dans le format
+## .rds pour conserver la structure temporelle (vous
+## pourriez convertir dans le format .csv, mais dans
+## ce cas la structure temporelle ne sera pas
+## conservée).  Non exécuté ici:
+
+<span class="co"># saveRDS(df.departTime, file =</span>
+<span class="co"># &#39;./data/departureTimes.RDS&#39;)</span></code></pre></div>
+</div>
+<div id="calculer-les-directions-aux-points-de-depart-des-individus-pour-lesquels-les-heures-de-depart-sont-connues." class="section level3">
+<h3><span class="header-section-number">7.2.5</span> Calculer les directions aux points de départ des individus pour lesquels les heures de départ sont connues.</h3>
+<p>Maintenant, nous produisons un sous-ensemble de données se rapportant à un individu afin de calculer sa direction estimée au point de départ.</p>
+<p>Nous continuerons avec le même individu, qui portait l’émetteur 16823, en utilisant toutes les détections après l’heure de départ spécifiée, y compris celle-ci:</p>
+<p>Maintenant que nous avons seulement les détections suivant le départ concernant l’oiseau qui nous intéresse, nous calculons sa direction au point de départ.</p>
+<p>Premièrement, nous normalisons les valeurs de la puissance du signal, tel qu’indiqué précédemment, en utilisant les valeurs minimale et maximale de la puissance du signal observées dans toutes les données recueillies par la station réceptrice. S’il y a des différences dans la gamme des valeurs de puissance du signal détecté par les antennes d’une station réceptrice, vous voudrez peut-être normaliser antenne par antenne à la place. Nous n’avons pas accès à toute la base contenant les données de la station Old Cut, mais nous savons que les valeurs minimale et maximale de la puissance du signal enregistrées à cette station sont respectivement -78,0691 et -17,8707.</p>
+<p>Nous calculons ensuite une moyenne pondérée de l’angle de la direction de départ pendant toute la période du départ au moyen de la fonction circulaire. Les nombres -78,0691 et -17,8707 correspondent respectivement aux valeurs minimale et maximale enregistrées à la station Old Cut. Si vous utilisez vos propres données, assurez-vous d’utiliser en lieu et place les valeurs minimale et maximale de puissance du signal enregistrées à votre station (en utilisant toutes les données recueillies à votre station et non seulement le sous-ensemble des valeurs propres aux émetteurs que vous analysez).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Fusionner les données de la station Old Cut avec les heures de départ, créer un sous-ensemble de données et calculer la direction estimée au point de départ.
+
+## Notez que nous utilisons le nom de la station réceptrice (recvSiteName) pour indiquer la station de départ qui nous intéresse. L’ID du déploiement (recvDeployID) pourrait mieux convenir dans le cas où la station a été déplacée ou a changé de nom au gré des déploiements.
+
+depart.station &lt;-<span class="st"> &quot;Old Cut&quot;</span>
+min.sig &lt;-<span class="st"> </span><span class="op">-</span><span class="fl">78.0691</span> <span class="co"># Normalement, les valeurs minimale et maximale de la puissance du signal devraient être tirées de l’ensemble des données brutes se rapportant à une station.</span>
+max.sig &lt;-<span class="st"> </span><span class="op">-</span><span class="fl">17.8707</span>
+
+df.vanishBearing &lt;-<span class="st"> </span><span class="kw">right_join</span>(df.vanish, df.departTime, <span class="dt">by =</span> <span class="st">&quot;motusTagID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Dans ce cas, la fonction «right-join» ne devrait pas prendre en compte les individus dont l’heure de départ ne correspond pas à df.departTime.</span>
+<span class="st">  </span><span class="kw">filter</span>(ts <span class="op">&gt;=</span><span class="st"> </span>ts_depart,
+         recvSiteName <span class="op">==</span><span class="st"> </span>depart.station) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">distinct</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sig.norm =</span> (sig <span class="op">-</span><span class="st"> </span>(min.sig))<span class="op">/</span>((max.sig)<span class="op">-</span>(min.sig)), 
+         <span class="dt">circ.bear =</span> <span class="kw">circular</span>(antBearing, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;angles&quot;</span>), <span class="dt">units =</span> <span class="kw">c</span>(<span class="st">&quot;degrees&quot;</span>), <span class="dt">rotation =</span> <span class="kw">c</span>(<span class="st">&quot;clock&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(motusTagID, recvSiteName, recvLat, recvLon) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">vanish.bearing =</span> <span class="kw">weighted.mean</span>(circ.bear, sig.norm, <span class="dt">na.rm=</span><span class="ot">FALSE</span>, 
+                                           <span class="dt">control.circular=</span><span class="kw">list</span>(<span class="dt">type =</span> <span class="st">&quot;angles&quot;</span>, <span class="dt">units =</span> <span class="st">&quot;degrees&quot;</span>, <span class="dt">template =</span> <span class="st">&quot;none&quot;</span>, <span class="dt">rotation =</span> <span class="st">&quot;clock&quot;</span>)),
+            <span class="dt">minutes.used =</span> <span class="kw">as.duration</span>(<span class="kw">min</span>(ts) <span class="op">%--%</span><span class="st"> </span><span class="kw">max</span>(ts))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre></div>
+<p>La trame de données «df.vanish» résultante contient l’ID de l’émetteur Motus (motusTagID), la direction estimée au point de départ de l’émetteur (de l’individu), l’heure en secondes/minutes utilisée pour estimer la direction de départ ainsi que le nom et les coordonnées de la station réceptrice. Nous pouvons produire un graphique circulaire sur lequel les points indiquent les directions estimées aux points de départ et la flèche, la direction moyenne, comme suit:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.circular</span>(df.vanishBearing<span class="op">$</span>vanish.bearing, <span class="dt">zero =</span> pi<span class="op">/</span><span class="dv">2</span>)  <span class="co"># Si vous avez beaucoup de directions/points, vous pouvez utiliser stack = TRUE.</span>
+<span class="kw">arrows.circular</span>(<span class="kw">mean</span>(df.vanishBearing<span class="op">$</span>vanish.bearing), 
+    <span class="dt">zero =</span> pi<span class="op">/</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/plotCircular-1.png" width="672" /></p>
+</div>
+<div id="pointer-les-valeurs-des-directions-estimees-aux-points-de-depart-sur-une-carte." class="section level3">
+<h3><span class="header-section-number">7.2.6</span> Pointer les valeurs des directions estimées aux points de départ sur une carte.</h3>
+<p>Le recours à Google Maps peut aussi être une très bonne façon de visualiser sur une carte la ou les directions de départ estimées de vos oiseaux. C’est ce que nous faisons ici pour montrer la station où l’oiseau a été détecté au moment du départ, les orientations des antennes ainsi que la direction estimée au point de départ.</p>
+<p>Premièrement, choisissons un émetteur:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tagID &lt;-<span class="st"> </span><span class="dv">16823</span></code></pre></div>
+<p>Ensuite, créons une carte ayant un centre précis et choisissons le type de carte Google («terrain», «roadmap», «satellite» ou «hybrid») (respectivement «relief», «plan», «satellite» ou «satellite avec légende» en français) et le niveau de zoom (nombre entier de 3 à 21, le nombre 3 correspondant au niveau du continent et le nombre 10 au niveau de la localité). Nous ajoutons des points jaunes pour indiquer les stations où l’oiseau a été détecté, des lignes jaunes pour représenter les azimuts d’antenne auxquels il y a eu détection et une ligne rouge pour représenter la direction estimée au point de départ:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Nous obtenons d’abord une carte montrant la
+## station qui nous intéresse, dans le présent cas
+## la station Old Cut.
+map.OC &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="kw">c</span>(<span class="dt">lon =</span> <span class="op">-</span><span class="fl">80.399334</span>, <span class="dt">lat =</span> <span class="fl">42.582185</span>), 
+    <span class="dt">maptype =</span> <span class="st">&quot;satellite&quot;</span>, <span class="dt">source =</span> <span class="st">&quot;google&quot;</span>, <span class="dt">zoom =</span> <span class="dv">11</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;color&quot;</span>)
+
+## Faisons ce qui suit pour produire une échelle
+## graphique:
+bb &lt;-<span class="st"> </span><span class="kw">attr</span>(map.OC, <span class="st">&quot;bb&quot;</span>)
+sbar &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lon.start =</span> <span class="kw">c</span>(bb<span class="op">$</span>ll.lon <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span>
+<span class="st">    </span>(bb<span class="op">$</span>ur.lon <span class="op">-</span><span class="st"> </span>bb<span class="op">$</span>ll.lon)), <span class="dt">lon.end =</span> <span class="kw">c</span>(bb<span class="op">$</span>ll.lon <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="fl">0.25</span> <span class="op">*</span><span class="st"> </span>(bb<span class="op">$</span>ur.lon <span class="op">-</span><span class="st"> </span>bb<span class="op">$</span>ll.lon)), <span class="dt">lat.start =</span> <span class="kw">c</span>(bb<span class="op">$</span>ll.lat <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span>(bb<span class="op">$</span>ur.lat <span class="op">-</span><span class="st"> </span>bb<span class="op">$</span>ll.lat)), <span class="dt">lat.end =</span> <span class="kw">c</span>(bb<span class="op">$</span>ll.lat <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span>(bb<span class="op">$</span>ur.lat <span class="op">-</span><span class="st"> </span>bb<span class="op">$</span>ll.lat)))
+sbar<span class="op">$</span>distance &lt;-<span class="st"> </span>geosphere<span class="op">::</span><span class="kw">distVincentyEllipsoid</span>(<span class="kw">c</span>(sbar<span class="op">$</span>lon.start, 
+    sbar<span class="op">$</span>lat.start), <span class="kw">c</span>(sbar<span class="op">$</span>lon.end, sbar<span class="op">$</span>lat.end))
+scalebar.length &lt;-<span class="st"> </span><span class="dv">10</span>
+sbar<span class="op">$</span>lon.end &lt;-<span class="st"> </span>sbar<span class="op">$</span>lon.start <span class="op">+</span><span class="st"> </span>((sbar<span class="op">$</span>lon.end <span class="op">-</span><span class="st"> </span>sbar<span class="op">$</span>lon.start)<span class="op">/</span>sbar<span class="op">$</span>distance) <span class="op">*</span><span class="st"> </span>
+<span class="st">    </span>scalebar.length <span class="op">*</span><span class="st"> </span><span class="dv">1000</span>
+ptspermm &lt;-<span class="st"> </span><span class="fl">2.83464567</span>  <span class="co"># Nécessaire parce que geom_text utilise des millimètres et themes, des points.</span>
+
+## Pour pointer sur la carte les azimuts des
+## antennes: Créer une trame de données contenant
+## les valeurs des azimuts des antennes de la
+## station qui ont détecté les signaux de l’émetteur
+## d’intérêt.
+df.stations &lt;-<span class="st"> </span>df.vanish <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(motusTagID <span class="op">==</span><span class="st"> </span>tagID) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(recvSiteName, antBearing, port, recvLon, 
+        recvLat) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()
+
+arr.sc &lt;-<span class="st"> </span><span class="fl">0.03</span>  <span class="co"># détermine la longueur des vecteurs pour les lignes des azimuts des antennes et des directions estimées aux points de départ.</span>
+rad &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+    x <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span>
+}
+
+## Maintenant nous produisons la carte.
+out.map &lt;-<span class="st"> </span><span class="kw">ggmap</span>(map.OC) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.stations, 
+    <span class="kw">aes</span>(recvLon, recvLat), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">&quot;yellow&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="co"># Add antenna bearings</span>
+<span class="kw">geom_segment</span>(<span class="dt">data =</span> df.stations, <span class="kw">aes</span>(<span class="dt">x =</span> recvLon, <span class="dt">xend =</span> recvLon <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>(<span class="kw">sin</span>(<span class="kw">rad</span>(antBearing)) <span class="op">*</span><span class="st"> </span>arr.sc), <span class="dt">y =</span> recvLat, <span class="dt">yend =</span> recvLat <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>(<span class="kw">cos</span>(<span class="kw">rad</span>(antBearing)) <span class="op">*</span><span class="st"> </span>arr.sc)), <span class="dt">colour =</span> <span class="st">&quot;yellow&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span>
+<span class="co"># Ajouter les directions estimées aux points de</span>
+<span class="co"># départ.</span>
+<span class="kw">geom_segment</span>(<span class="dt">data =</span> <span class="kw">filter</span>(df.vanishBearing, motusTagID <span class="op">==</span><span class="st"> </span>
+<span class="st">    </span>tagID), <span class="kw">aes</span>(<span class="dt">x =</span> recvLon, <span class="dt">xend =</span> recvLon <span class="op">+</span><span class="st"> </span>(<span class="kw">sin</span>(<span class="kw">rad</span>(vanish.bearing)) <span class="op">*</span><span class="st"> </span>
+<span class="st">    </span>arr.sc), <span class="dt">y =</span> recvLat, <span class="dt">yend =</span> recvLat <span class="op">+</span><span class="st"> </span>(<span class="kw">cos</span>(<span class="kw">rad</span>(vanish.bearing)) <span class="op">*</span><span class="st"> </span>
+<span class="st">    </span>arr.sc), <span class="dt">colour =</span> motusTagID)) <span class="op">+</span><span class="st"> </span>
+<span class="co"># Ajouter l’échelle graphique.</span>
+<span class="kw">geom_segment</span>(<span class="dt">data =</span> sbar, <span class="kw">aes</span>(<span class="dt">x =</span> lon.start, <span class="dt">xend =</span> lon.end, 
+    <span class="dt">y =</span> lat.start, <span class="dt">yend =</span> lat.end), <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>, 
+    <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.1</span>, <span class="st">&quot;cm&quot;</span>), 
+        <span class="dt">ends =</span> <span class="st">&quot;both&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;open&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="dt">data =</span> sbar, 
+    <span class="kw">aes</span>(<span class="dt">x =</span> (lon.start <span class="op">+</span><span class="st"> </span>lon.end)<span class="op">/</span><span class="dv">2</span>, <span class="dt">y =</span> lat.start <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="fl">0.025</span> <span class="op">*</span><span class="st"> </span>(bb<span class="op">$</span>ur.lat <span class="op">-</span><span class="st"> </span>bb<span class="op">$</span>ll.lat), <span class="dt">label =</span> <span class="kw">paste</span>(<span class="kw">format</span>(scalebar.length), 
+        <span class="st">&quot;km&quot;</span>)), <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">8</span><span class="op">/</span>ptspermm, 
+    <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Longitude&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Latitude&quot;</span>)
+
+out.map</code></pre></div>
+<p><img src="FrMotusRBook_files/figure-html/vanishMapping-1.png" width="672" /></p>
+<p>La longueur des lignes jaunes et de la ligne rouge ne représente pas la dimension de la zone de détection des antennes ni la trajectoire exacte de l’oiseau. Dans le cas présent, les détections effectuées par deux autres stations corroborent l’estimation de la direction du vol de l’oiseau au point de départ.</p>
+<p>Si vous le souhaitez, vous pouvez faire imprimer la carte dans un fichier, comme suit:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tiff</span>(<span class="dt">file =</span> <span class="kw">paste</span>(tagID, <span class="st">&quot;vanishBearing.tiff&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))
+<span class="kw">print</span>(out.map)
+<span class="kw">dev.off</span>()</code></pre></div>
+</div>
+</div>
+<div id="vanishingLitCited" class="section level2">
+<h2><span class="header-section-number">7.3</span> Bibliographie</h2>
+<p>Morbey, Y.E., K.A. Jonasson, J.E. Deakin, A.T. Beauchamp et C.G. Guglielmo. 2017. Studies of migratory birds and bats in southern Ontario, 2014-2017 (Projects #20 and #50). Données obtenues du site Web du Système de surveillance faunique Motus d’Études d’Oiseaux Canada (<a href="http://www.motus-wts.org" class="uri">http://www.motus-wts.org</a>) le 1er mai 2018.</p>
+<p>Sjöberg, S. et C. Nilsson. 2015. «Nocturnal migratory songbirds adjust their travelling direction aloft: evidence from a radiotelemetry and radar study». Biology Letters 11:20150337.</p>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exploreData.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendixA.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["FrMotusRBook.pdf"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

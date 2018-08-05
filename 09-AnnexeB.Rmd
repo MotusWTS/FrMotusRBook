@@ -1,0 +1,77 @@
+# Annexe B - Dépannage {#appendixB}
+
+```{r tidyr9, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
+
+```
+
+Vous devez toujours vous assurer en premier lieu d’utiliser la plus récente version du logiciel motus (voyez la section \@ref(checkVersion.B)) et d’avoir installé, chargé et mis à jour tous les logiciels requis (voyez le chapitre \@ref(loadingPackages)).  
+
+Pendant que vous tentez de télécharger des données avec le logiciel motus, il se peut que vous rencontriez des erreurs, dont un bon nombre sont vraisemblablement causées par une interruption de la connexion Internet. **Assurez-vous toujours d’être connecté à l’Internet lorsque vous utilisez la fonction tagme() avec l’option «update = TRUE»**. On peut résoudre la plupart des problèmes en fermant le logiciel motus ou en relançant le logiciel R puis en reprenant le téléchargement avec la fonction tagme(). Si vous rencontrez encore des erreurs et que vous ne pouvez pas télécharger vos données, il se peut que le serveur soit temporairement hors ligne. Au besoin, communiquez avec nous à motus@birdscanada.org.
+
+## Fermeture du logiciel motus {#motusLogout}
+```{r motusLogout, eval = FALSE}
+motusLogout()
+```
+
+## Reprise du téléchargement de données {#resumeDownload}
+
+Pour reprendre le téléchargement de vos données, exécutez la fonction tagme() de nouveau, mais sans inclure «new = TRUE»:
+
+```{r tagmeResume, eval = FALSE}
+tagme(project.num, update = TRUE, dir = ...)
+```
+
+## Messages d'erreur courants et solutions
+
+### Je reçois le message «Auto-disconnecting SQLiteConnection» une ou plusieurs fois après avoir utilisé la fonction tagme().
+
+Si vous recevez ce message une fois que le téléchargement est terminé, n'en tenez pas compte. Si vous le recevez pendant qu’un téléchargement est en cours, la connexion sera généralement maintenue et le téléchargement se poursuivra. Toutefois, si le téléchargement s’arrête, il vous suffit d’exécuter la fonction tagme() de nouveau. Si cela ne donne pas de résultat, nous vous suggérons de fermer le logiciel motus ou de redémarrer le logiciel R (voyez les sections \@ref(motusLogout) et \@ref(resumeDownload)).
+
+### Je reçois le message «Internal Server Error» pendant que j'utilise la fonction tagme (..., update = TRUE).
+
+Si vous recevez ce message pendant que vous mettez à jour votre fichier .motus, utilisez la fonction tagme() de nouveau pour poursuivre le téléchargement.
+
+### Je reçois le message «Error: Forbidden» pendant que j'utilise la fonction tagme().
+
+Cette erreur peut se produire si vous tentez de télécharger en même temps des données se rapportant à plusieurs projets à partir du même compte utilisateur. Si vous recevez ce message, fermez le logiciel motus et utilisez la fonction tagme() de nouveau (voyez les sections \@ref(motusLogout) et \@ref(resumeDownload)).
+
+### Je reçois le message «Error: Object 'xxxx' not found», relatif au nom d'une table ou d'un champ, ou encore certains de vos exemples dans le guide ne fonctionnent pas.  
+
+Assurez-vous de suivre les étapes à partir du début du chapitre et de les passer l’une après l’autre dans l’ordre. Il se peut aussi que votre base de données n’ait pas été mise à jour pour accepter la version la plus récente du logiciel motusClient ou motus. Si l’appel de la fonction checkVersion est suivi d’un avertissement, cela peut indiquer que la fonction interne utilisée pour mettre à jour votre base de données n’ait pas été enclenchée par la fonction tagme(). Cela peut arriver, par exemple, si vous chargez le logiciel motus Client sans charger aussi le logiciel motus. Le chargement du logiciel motus entraîne aussi le chargement du logiciel motusClient, de sorte que vous devriez avoir besoin de charger seulement le logiciel motus dans votre bibliothèque R. 
+
+Pour vérifier que vous avez la plus récente version du fichier .motus:
+
+```{r checkVersion, eval = FALSE}
+sql.motus <- tagme(project.num, dir= ...)
+checkVersion(sql.motus)
+```
+
+Si vous recevez un avertissement, vous devez suivre les étapes suivantes:
+
+1. Téléchargez les plus récentes versions des logiciels motusClient et motus (reportez-vous au chapitre \@ref(loadingPackages)).
+2. Terminez la session R et relancez-la.
+3. Chargez la bibliothèque motus en utilisant la fonction «require(Motus)» dans la console R.
+4. Chargez votre fichier SQLite. Vérifiez s'il y a des notes sur la console indiquant que la mise à jour de votre base de données est en cours.
+5. Vérifiez la version de nouveau.
+
+```{r checkVersionFix, eval = FALSE}
+library(motus)
+sql <- tagme(project.num, dir= ...)
+checkVersion(sql)
+```
+
+### Je reçois le message «Error in rsqlite_connect(dbname, loadable.extensions, flags, vfs): Could not connect to database: unable to open database file» lorsque je tente d’exécuter la fonction tagme().
+Si vous recevez ce message, il est probable que vous tentiez de faire un nouveau téléchargement ou une mise à jour en indiquant un répertoire inexistant. Le répertoire est indiqué dans la commande **dir = ""** de la fonction tagme(). Si le répertoire n’est pas indiqué, les fichiers seront enregistrés dans votre répertoire de travail. Utilisez la fonction getwd() pour déterminer quel est votre répertoire de travail courant. Utilisez la fonction setwd() pour établir un nouveau répertoire de travail. Pour spécifier l’endroit où enregistrer les fichiers à partir de votre répertoire de travail, utilisez la commande «./» suivie de l’indication du chemin du fichier.
+```{r setWorkingDirectory, eval = FALSE}
+getwd() # Indique le répertoire de travail, dans le cas présent «C:/Documents».
+tagme(proj.num, new = TRUE, update = TRUE) # Télécharge les données dans votre répertoire de travail.
+tagme(proj.num, new = TRUE, update = TRUE, dir = "./data/") # Télécharge les données dans le dossier de données qui se trouve dans votre répertoire de travail, c.-à-d. le chemin de fichier C:/Documents/data.
+tagme(proj.num, new = TRUE, update = TRUE, dir = "C:/Downloads") # Télécharge les données en suivant le chemin de fichier C:/Downloads.
+```
+
+
+
+Bien sûr, il est toujours possible que le guide contienne des erreurs! Si les solutions proposées ici ne fonctionnent pas, communiquez avec motus@birdscanada.org.

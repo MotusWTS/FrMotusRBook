@@ -1,0 +1,17 @@
+# (APPENDIX) Appendix {-} 
+
+# Annexe A - structure alltags {#appendixA}
+
+```{r tidyr8, echo = FALSE, message = FALSE, warning = FALSE}
+
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
+require(pander)
+```
+
+Les variables suivantes sont incluses dans chaque vue alltags dans le fichier SQLite:
+
+```{r parameterTable.A, echo = FALSE}
+param.table <- dplyr::select(read.csv("./data/DatabaseParameters_FR.csv", stringsAsFactors=FALSE), 1:2)
+pander(param.table, split.cell = 50, split.table = Inf) 
+```
