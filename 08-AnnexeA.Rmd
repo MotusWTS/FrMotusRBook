@@ -1,6 +1,6 @@
-# (APPENDIX) Appendix {-} 
+# (APPENDIX) Annexe {-} 
 
-# Annexe A - structure alltags {#appendixA}
+# Annexe A - alltags structure {#appendixA}
 
 ```{r tidyr8, echo = FALSE, message = FALSE, warning = FALSE}
 
