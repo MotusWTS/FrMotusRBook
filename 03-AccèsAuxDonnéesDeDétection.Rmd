@@ -6,7 +6,7 @@ opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy = TRUE)
 
 ```
 
-```{r dataImport, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+```{r dataImport, echo = FALSE, eval = TRUE}
 # hidden data import so update can be set to FALSE
 proj.num= 176
 sql.motus <- tagme(176, update = FALSE, dir = "./data")   # Objet SQLite R relié au fichier .motus
@@ -21,47 +21,9 @@ df.alltags <- tbl.alltags %>%
 
 **Avant de télécharger vos données de détection, rendez-vous à la [page Web relative aux problèmes de données](https://motus.org/data/issues) pour vérifier qu'il n'y a pas de problème en suspens en ce qui touche les métadonnées.**
 
-Ce chapitre commence par une introduction décrivant la structure de la base de données de détection, puis par des instructions sur la façon de télécharger des données et d’y accéder. À la fin du chapitre, un sommaire inclut un script permettant de télécharger des données et de choisir des variables ainsi que nettoyer et exporter les données (voyez \@ref(importSummary)).
-
-## Structure des données {#databaseStructure}
-
-Chaque base de données de détection est stockée sous la forme d’un fichier SQLite («dplyr::src_sqlite») portant le suffixe .motus. Nous avons choisi le format SQLite pour les raisons suivantes:
-
-1. Il est **souple**; il autorise de nombreux formats de données.
-2. Il est **accessible** à partir de nombreuses plates-formes logicielles (pas seulement à partir de R).
-3. Il permet l'**adjonction**: la base de données peut être créée et mise à jour sur disque sans qu’il soit nécessaire de lire et de sauvegarder de nouveau tout le contenu de la base. Cela permet de gagner du temps et d’économiser de la mémoire lorsqu’on fait une recherche pour déterminer si de nouvelles données de détection sont disponibles pour un projet ou un récepteur donné.
-
-Le fichier .motus contient une série de tables interdépendantes dans lesquelles les données sont stockées sous forme condensée pour économiser de la mémoire. Voici quelles sont ces tables:
-
-1. **antDeps**: métadonnées sur les antennes, p. ex., hauteur, angle, type d'antenne;
-2. **batchRuns**: métadonnées sur les runID et les batchID associés;
-3. **batches**: données de détection pour un récepteur et un numéro de redémarrage de récepteur particuliers;
-4. **filters**: métadonnées reliées à des filtres créés par l'utilisateur qui sont associés au récepteur en question;  
-5. **gps**: métadonnées reliées à la position GPS du récepteur; 
-6. **hits**: données de détection au niveau de chaque détection de signaux;
-7. **meta**: métadonnées reliées au projet et au type de données (émetteurs par rapport aux récepteurs) qui sont inclus dans le fichier .motus;
-8. **projAmbig**: métadonnées reliées aux projets pour lesquels il existe des détections ambiguës;
-9. **projBatch**: métadonnées pour le nombre de détections contenues dans chaque lot;
-10. **projs**: métadonnées reliées aux projets, p. ex., nom du projet, chercheur principal;
-11. **recvDeps**: métadonnées reliées aux déploiements de récepteurs, p. ex., date du déploiement, lieu, caractéristiques du récepteur;
-12. **recvs**: métadonnées reliées au numéro de série du récepteur et à l'identifiant d'appareil (deviceID) Motus associé;
-13. **runs**: données de détection associées à une séquence de (détections continues d'un émetteur unique par un récepteur particulier);
-14. **runsFilters**: liste de runIDs associés à des filtres créés par l'utilisateur et à des probabilités attribuées;  
-15. **species**: métadonnées reliées aux espèces, p. ex., identifiant unique, nom scientifique, nom commun;
-16. **tagAmbig**: métadonnées reliées aux émetteurs ambigus, p. ex., ambigID et motusTagID associés;
-17. **tagDeps**: métadonnées reliées à des déploiements d'émetteurs, p. ex., date du déploiement, lieu et espèce;
-18. **tags**: métadonnées reliées à des émetteurs, p. ex., identifiant unique, caractéristiques de l'émetteur(p. ex., cadence d'émission).
-
-En plus de ces tables, des tables «virtuelles» ou «vues» ont été créées à la suite de requêtes qui entraînent la fusion des données des différentes tables en une «vue» pratique contenant tous les champs dont vous pouvez avoir besoin. Les vues suivantes sont actuellement incluses dans chaque fichier .motus:
-
-1. **allambigs**: liste en format long tous les motusTagID (jusqu'à 6) associés à chaque ambigID négatif;
-2. **alltags**: fournit l'ensemble des données de détection pour tous les émetteurs et tous les émetteurs ambigus (en double) associés à votre projet. Les détections ambiguës sont répétées pour chaque motusTagID représenté par chaque ambigID. 
-
-Étant donné que le fichier est un fichier dplyr::src_sqlite, toutes les fonctions dplyr peuvent être utilisées pour filtrer la base de données .motus et en présenter un sommaire sans avoir d’abord à enregistrer les données sous la forme d’un fichier *plat* (une trame de données bidimensionnelle typique). Le format SQL est très avantageux en présence d’un gros fichier – les requêtes effectuées dans ce format seront beaucoup plus rapides que celles effectuées sur une trame de données plate. 
-
 ## Types de bases de données {#databaseTypes}
 
-Il existe deux types de bases de données de détection disponsible pour le téléchargement:
+Il existe deux types de bases de données de détection:
 
 1. **base de données de récepteur**: comprend toutes les données de détection des signaux de n'importe quel émetteur enregistré captés par un récepteur particulier. Une base de données de récepteur porte un nom comme SG-1234BBBK5678.motus, ce nom correspondant au numéro de série du récepteur.
 
@@ -75,11 +37,11 @@ Ces deux types de bases de données correspondent au modèle de base du partage 
 
 ## Chargement des logiciels R pertinents {#loadPackages}
 
-Avant de commencer à travailler avec des données, il faut charger les logiciels requis pour les opérations expliquées dans le présent chapitre. Si vous n'avez pas encore *installé* ces logiciels (à partir de  github et de CRAN), retournez au chapitre \@ref(loadingPackages) pour le faire.
+Avant de commencer à travailler avec des données, il faut charger les logiciels requis pour les opérations expliquées dans le présent chapitre. Si vous n'avez pas encore installé ces logiciels (à partir de  github et de CRAN), retournez au chapitre \@ref(loadingPackages) pour le faire.
 
 ```{r loadPackages, warning = FALSE, message = FALSE}
 
-# Chargement des logiciel «motus» requis depuis github
+# logiciel «motus» requis depuis github
 require(motus)
 
 ```
@@ -98,64 +60,24 @@ Sys.setenv(TZ="GMT")
 
 Pour importer des données de détection de signaux d'émetteurs dans le cadre de votre projet ou à partir de votre récepteur, vous devez avoir un identifiant numérique de projet ou un numéro de série de récepteur. 
 
-Pour que le réseau Motus fonctionne correctement, il est important que les collaborateurs versent en temps opportun dans le serveur de Motus les données de détection provenant de leur(s) récepteur(s) et qu’ils assurent l’exactitude des métadonnées sur leurs émetteurs et récepteurs, et les tiennent à jour. Nous vous encourageons, après avoir téléchargé vos données depuis le serveur de Motus, à mettre à jour vos données de détection (voyez les sections \@ref(tagmeUpdate) and \@ref(tellme)) et vos métadonnées (voyez la section \@ref(forceMeta)) chaque fois que vous exécutez une analyse, car des collaborateurs peuvent ajouter des données de détection et des métadonnées n’importe quand et, si ces nouvelles données ne sont pas incluses, cela peut faire en sorte que vos données de détection soient incomplètes.
+Pour que le réseau Motus fonctionne correctement, il est important que les collaborateurs versent en temps opportun dans le serveur de Motus les données de détection provenant de leur(s) récepteur(s) et qu’ils assurent l’exactitude des métadonnées sur leurs émetteurs et récepteurs, et les tiennent à jour. Nous vous encourageons, après avoir téléchargé vos données depuis le serveur de Motus, à mettre à jour vos données de détection et vos métadonnées chaque fois que vous exécutez une analyse, car des collaborateurs peuvent ajouter des données de détection et des métadonnées n’importe quand et, si ces nouvelles données ne sont pas incluses, cela peut faire en sorte que vos données de détection soient incomplètes.
 
-Veuillez noter que si vous téléchargez pour la première fois un grand ensemble de données à partir du serveur de Motus, cela peut prendre beaucoup de temps, parfois quelques heures. Une fois que vous aurez effectué un premier téléchargement, le chargement d’un fichier .motus dans R se fera presque instantanément. 
+### Téléchargement des données d'un projet ou d'un récepteur pour la _première fois_
 
-### Téléchargement des données d'un projet pour la _première fois_ {#downloadData}
-
-Tous les téléchargements de données sont effectués à l’aide de la fonction tagme() dans le logiciel R de Motus. Cette fonction enregistre une base de données SQLite dans votre ordinateur sous la forme d’un fichier dont le nom porte le suffixe «.motus». La section \@ref(databaseStructure) contient de l’information supplémentaire sur la structure des données. Les paramètres suivants peuvent être utilisés avec la fonction tagme():
-
-- **projRecv**: numéro du projet (nombre entier) OU numéro de série du récepteur.
-- **new**: si «TRUE» est choisi, un nouveau fichier .motus vide sera créé dans votre répertoire local. Si vous avez déjà un fichier .motus dans votre ordinateur, n’utilisez pas ce paramètre ou choisissez «FALSE».
-- **update**: si «TRUE» est choisi, le logiciel téléchargera toutes les données disponibles dans votre fichier .motus. L’option «TRUE» doit être choisie pour votre premier téléchargement de données et pour tous les autres téléchargements si vous souhaitez vérifier s’il y a de nouvelles données. Si vous ne souhaitez pas vérifier s’il y a de nouvelles données, par exemple si vous travaillez hors ligne, choisissez «FALSE».
-- **dir**: Votre fichier de données .motus est automatiquement enregistré dans votre répertoire de travail. Vous pouvez toutefois le faire enregistrer à un autre endroit en utilisant ce paramètre.
-- **forceMeta**: Si «TRUE» est choisi, le logiciel imposera une mise à jour des métadonnées dans un fichier .motus existant.
-
-Tout au long du présent guide, nous utiliserons des exemples de données (voyez la section \@ref(sampleData)) attribuées au projet 176 (Programme de suivi des oiseaux de rivage de la baie James).
-
-Commençons par télécharger les données par projet, c’est-à-dire toutes les données de détection des signaux de vos émetteurs par tous les récepteurs.
-
-Notez que lorsque vous téléchargez des données depuis le serveur de Motus pour la **première fois**, vous devez spécifier 'new = TRUE' et 'update = TRUE'. De plus, le système vous invitera à ouvrir une session (voyez \@ref(userAuthentication) ci-après).
-
-**À moins que le répertoire dans lequel vous voulez enregistrer vos données soit indiqué spécifiquement dans l’appel de fonction, les données seront téléchargées dans le répertoire de travail courant. **
-
-```{r tagme0, eval = FALSE}
-tellme(projRecv = proj.num, new = TRUE)
-# Commençons par déterminer quel est votre répertoire de travail; ainsi, nous saurons où le fichier sera enregistré. 
-# Vous pouvez modifier le répertoire de travail en utilisant la fonction setwd().
-getwd()
-# sIndiquez le numéro du projet par rapport auquel vous voulez télécharger des données de détection. 
-# Dans le cas présent, nous indiquons le numéro du projet correspondant au Programme de suivi des oiseaux de rivage de la baie James (176):
-proj.num <- 176
-# Vu que c’est la première fois que vous téléchargez des données de détection par rapport au projet 176, choisissez «new = TRUE» et «update = TRUE».
-# Cela créera un fichier .motus dans votre répertoire de travail courant, qui a été indiqué précédemment au moyen de la fonction getwd().
-# Cela créera également un objet SQL appelé «sql.motus » dans votre environnement R.
-sql.motus <- tagme(projRecv = proj.num, new = TRUE, update = TRUE)
-# OU vous pouvez spécifier un autre endroit où enregistrer les données en entrant le chemin de fichier de votre choix.
-# Dans le présent exemple, nous enregistrons les données dans notre dossier en utilisant le paramètre dir:
-sql.motus <- tagme(projRecv = proj.num, new = TRUE, update = TRUE, dir = "C:/Users/guest/Documents/data/")
-```
-
-L’utilisation de la fonction tagme() tel qu’indiqué ci-dessus aura pour effet de télécharger un fichier nommé «project-176.motus» dans votre répertoire de travail ou un autre répertoire que vous aurez précisé; le nombre inclus dans le nom du fichier correspond au numéro du projet. La progression du téléchargement devrait être indiquée sur la console; si vous ne voyez pas l’information, essayez de faire défiler la page vers le bas pendant que le téléchargement est en cours.
-
-Dans l’éventualité où votre connexion au serveur de Motus ferait défaut avant la fin du téléchargement (à cause d’une mauvaise connexion Internet par exemple), utilisez «tagme(proj.num, update = TRUE)» pour poursuivre le téléchargement à partir du point d’interruption, en veillant à indiquer le répertoire de réception des données si vous n’utilisez pas le répertoire de travail.  
+Lorsque vous téléchargez des données depuis le serveur de Motus pour la première fois, vous devez spécifier 'new = TRUE' et 'update = TRUE'. À moins que le répertoire dans lequel vous voulez enregistrer vos données soit indiqué spécifiquement dans l’appel de fonction, les données seront téléchargées dans le répertoire de travail courant. 
 
 ### Authentification de l'utilisateur {#userAuthentication}
 
-#### Login {#login}
-
 Notez que la première fois que vous appellerez une fonction en vous servant du logiciel R de Motus, vous devrez entrer votre nom d’utilisateur et votre mot de passe motus.org dans la console R pour certifier votre droit d’accès aux données d’un projet. Cela se produira seulement une fois par session de travail avec le logiciel R. Si vous n’avez pas de nom d’utilisateur ni de mot de passe Motus, vous pouvez vous inscrire à <https://motus.org/data/user/new?lang=fr>. La permission d’accéder aux données d’un projet vous sera accordée par le personnel de Motus ou le chercheur principal engagé dans le projet en question.
 
-Tout au long du présent guide, nous utilisons à titre d’exemples les données attribuées au projet 176 (Programme de suivi des oiseaux de rivage de la baie James) (voyez la section \@ref(sampleData)). Pour accéder à ces données, vous devrez entrer votre nom d’utilisateur et le mot de passe «motus.sample» dans la console R lorsque la fonction tagme() vous y invitera (voyez la section \@ref(downloadData)), comme ceci:
+Tout au long du présent guide, nous utiliserons des exemples de données (voyez la section \@ref(sampleData)) attribuées au projet 176 (Programme de suivi des oiseaux de rivage de la baie James). Pour accéder à ces données, vous devrez ouvrir une session en entrant votre nom d’utilisateur et votre mot de passe («motus.sample») dans la console R lorsque la fonction tagme() vous y invitera (voyez la section \@ref(downloadData)). Cela ressemblera à ce qui suit:
 
-```{r fig3.2, echo=FALSE, fig.align='center'}
- knitr::include_graphics("images/SampleLogin.png")
+```{r fig3.1, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/SampleLogin.png")
 ```
 
-Si vous voulez télécharger des données se rapportant à un de vos propres projets, il vous suffit de remplacer le numéro du projet 176 par celui de votre projet dans l’appel de la fonction tagme() et d’entrer vos propres nom d’utilisateur et mot de passe Motus dans la console R lorsque vous y êtes invité(e). Si vous avez déjà ouvert une session avec le nom d’utilisateur et le mot de passe propres au projet 176, vous devrez d’abord fermer la session et en ouvrir une nouvelle pour pouvoir télécharger les données qui se rapportent à votre propre projet (voyez @ref(logout)).
 
-#### Fermeture de session{#logout}
+### Fermeture de session{#logout}
 
 Une fois que vous aurez ouvert une session dans un compte utilisateur, vous ne pourrez pas accéder aux données d’un autre compte. Si vous avez besoin de fermer une session dans le compte courant pour accéder à d’autres données, vous pouvez exécuter le code ci-dessous.
 
@@ -165,21 +87,152 @@ motusLogout()
 
 ```
 
-### Téléchargement des données d'un récepteur pour la _première fois_
-Le processus décrit ci-dessus pourrait permettre aussi de télécharger des données par récepteur. Ainsi, vous pourriez obtenir toutes les données de détection des signaux de tous les émetteurs captés par un récepteur donné. Dans le cas présent, **l’appel de la fonction tagme() ne donnerait pas de résultat**, car il n’y a pas de récepteurs enregistrés dans le cadre du projet 176. Si vous avez un récepteur enregistré dans le cadre de votre propre projet, remplacez le numéro de série du récepteur inclus dans l’appel de la fonction tagme ci-dessous par celui de votre récepteur, en vous assurant que vous avez ouvert la session en utilisant vos propres nom d’utilisateur et mot de passe (voyez la section \@ref(logout)).
+### Téléchargement de données de détection {#downloadData}
 
-```{r tagmeRecv, eval = FALSE}
-proj.num = "SG-123BBBK1234"
-sql.motus <- tagme(projRecv = proj.num, new = TRUE, update = TRUE)
+Nous pouvons commencer. Notez qu’aucun récepteur n’est enregistré dans le cadre du projet 176, de sorte que le deuxième appel de fonction ne permettra pas d’obtenir des données. Toutefois, vous pouvez remplacer le numéro de série du récepteur par un véritable numéro de série enregistré dans le cadre de votre projet ou d’un de vos projets si vous avez ouvert une session dans votre propre compte (c.-à-d. non pas avec le mot de passe «motus.sample»; voyez la section \@ref(logout)). 
+
+****Toutes les données téléchargées seront enregistrées dans votre répertoire de travail, sauf indication contraire dans l’appel de fonction tagme tel qu’indiqué ci-après.**
+
+Veuillez noter que si vous téléchargez pour la première fois ('new = TRUE' dans l'appel de fonction tagme) un grand ensemble de données à partir du serveur de Motus, cela peut prendre beaucoup de temps, parfois quelques heures. Une fois que vous aurez effectué un premier téléchargement, le chargement d’un fichier .motus dans R avec la commande «'tagme(proj.num, update = TRUE)» se fera presque instantanément. L’indication du déroulement du téléchargement devrait s’afficher à la console; si vous ne la voyez pas, essayez de faire défiler la page vers le bas pendant que la fonction tagme est en cours d’exécution.
+
+Dans l’éventualité où votre connexion au serveur de Motus ferait défaut avant la fin du téléchargement (à cause d’une mauvaise connexion Internet par exemple), utilisez «tagme(proj.num, update = TRUE)» pour poursuivre le téléchargement à partir du point d’interruption, en veillant à indiquer le répertoire de réception des données si vous n’utilisez pas le répertoire de travail.  
+
+
+```{r tagme1, eval = FALSE}
+
+getwd()         # Indiquez le répertoire de travail; utilisez la fonction setwd() pour le modifier.
+proj.num <- 176 # Entrez 176 ou le numéro de votre projet.
+
+sql.motus <- tagme(projRecv = proj.num, new = TRUE, update = TRUE)  # Pour la base de données du projet
+sql.motus <- tagme(projRecv = "SG-123BBBK1234", update = TRUE, new = TRUE)  # Pour la base de données du récepteur
+
 ```
 
-Cet appel de fonction aura pour effet de télécharger un fichier nommé «SG-123BBBK1234.motus» dans votre répertoire de travail.
+Si vous ne voulez pas utiliser le répertoire de travail, spécifiez un répertoire à créer et ouvrez une base de données de détection locale en utilisant «dir =»:
 
-Les utilisateurs peuvent souhaiter travailler directement avec le fichier SQLite .motus. Toutefois, vu que beaucoup d’utilisateurs sont plus à l’aise avec les fichiers de trame de données «plats», nous présentons ci-après la marche à suivre pour visionner les données sous la forme d’une trame de données plate dans R et pour exporter le fichier plat dans le format .CSV ou .RDS. Dans la majeure partie du présent guide, nous utilisons un format de trame de données plate.
+```{r tagme2, eval = FALSE}
 
-### Accéder aux données de détection téléchargées {#accessSQL}.
+sql.motus <- tagme(projRecv = proj.num, new = TRUE, update = TRUE, dir = "./data/") 
 
-Maintenant que nous avons téléchargé nos données dans une base SQLite et que nous avons chargé celle-ci dans un objet R nommé «sql.motus», nous voulons accéder aux tables de données qui s’y trouvent. La section \@ref(databaseStructure) présente des descriptions détaillées de toutes les tables de données stockées dans le fichier .motus.
+```
+
+La fonction tagme() versera une copie de votre base de données de détection dans le répertoire de travail ou le répertoire que vous avez spécifié. Cette copie prendra la forme d’un fichier SQLite portant le suffixe .motus. 
+
+### Ouverture et mise à jour d'une base de données de détection locale {#tagmeUpdate}
+
+Pour ouvrir et mettre à jour une base de données de détection qui existe déjà (qui a déjà été téléchargée):
+
+```{r tagme3, eval = FALSE}
+
+sql.motus <- tagme(projRecv = proj.num, new = FALSE, update = TRUE, dir = "./data/") # Utilisez «dir =» pour spécifier un répertoire.
+
+```
+
+Si vous travaillez hors ligne et que vous voulez charger une base de données déjà téléchargée sans vous connecter au serveur, utilisez:
+
+```{r tagme3.1, eval = FALSE}
+
+sql.motus <- tagme(projRecv = proj.num, update = FALSE, dir = "./data/")
+
+```
+
+### Vérification de l'existence de nouvelles données {#tellme}
+
+Pour vérifier si de nouvelles données sont disponibles sans télécharger ces données, vous pouvez utiliser la fonction tellme(). Vous verrez s’afficher une liste:
+
+- **numHits**: nombre de nouvelles détections;
+- **numBytes**: quantité approximative de données non comprimées à transférer, en mégaoctets;
+- **numRuns**: nombre de séquences de nouvelles détections, c'est-à-dire de séries de détections continues par une antenne particulière de signaux provenant d'un émetteur;
+- **numBatches**: nombre de lots de nouvelles données; 
+- **numGPS** nombre d'enregistrements GPS de nouvelles données.
+
+La fonction tellme () repose sur l'hypothèse qu'il existe déjà une copie locale de la base de données:
+
+```{r tagme5, eval = FALSE}
+
+tellme(projRecv = proj.num)                    # Si db est dans le répertoire de travail
+tellme(projRecv = proj.num, dir = "./data/")   # Pour spécifier un autre répertoire
+
+```
+
+Pour vérifier combien de données sont disponibles pour un projet sans_que_vous_ayez une copie locale de la base de données, utilisez le paramètre «new»:
+
+```{r tagme6, eval = FALSE}
+
+tellme(projRecv = proj.num, new = TRUE)
+
+```
+
+### Imposition d'une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs {#forceMeta}
+
+Les métadonnées sur les émetteurs et les récepteurs sont automatiquement fusionnées avec les données de détection d'émetteurs lorsque ces dernières sont téléchargées. Toutefois, si vous voulez imposer la réimportation des métadonnées lorsque vous mettez à jour une base de données, vous pouvez utiliser la commande suivante:  
+
+```{r tagme7, eval = FALSE}
+
+sql.motus <- tagme(projRecv = proj.num, forceMeta = TRUE)
+
+```
+
+### Importation de l'ensemble des métadonnées sur les émetteurs et les récepteurs {#metadata}
+
+Lorsque vous utilisez la fonction tagme() pour télécharger ou mettre à jour votre fichier .motus, vous obtenez les métadonnées sur:
+
+1. tous les émetteurs enregistrés dans le cadre de votre projet dont des signaux ont été détectés; 
+2. les émetteurs enregistrés dans le cadre d'autres projets qui sont associés à des détections de signaux ambigus (voyez le chapitre \@ref(dataCleaning)) dans vos données; 
+3. les récepteurs qui ont détecté les signaux de vos émetteurs ainsi que les signaux ambigus.  
+
+Dans de nombreux cas, vous voudrez accéder à toutes les métadonnées sur l’ensemble des émetteurs et des récepteurs partout dans le réseau (par exemple pour déterminer combien de vos émetteurs déployés n’ont pas été repérés ou pour localiser les stations avec et sans détections). Vous pouvez utiliser la fonction metadata() pour ajouter la totalité des métadonnées Motus à votre fichier .motus enregistré. Cette fonction n’a besoin d’être exécutée qu’une seule fois, mais nous vous suggérons de réimporter les métadonnées occasionnellement pour vous assurer que vous avez l’information la plus récente et à jour.
+
+L’exécution de la fonction metadata () de la manière suivante aura pour effet d’ajouter les métadonnées appropriées provenant de l’ensemble du réseau (tous les émetteurs et les récepteurs) aux tables «recvDeps» et «'tagDeps» dans votre fichier .motus: 
+
+```{r metadata1, eval = FALSE}
+
+# Accéder aux métadonnées sur tous les émetteurs et les récepteurs dans le cadre de tous les projets dans le réseau.
+metadata(sql.motus) 
+
+```
+
+Vous pouvez aussi charger les métadonnées reliées à un ou des projets spécifiques, de la manière suivante:
+
+```{r metadata2, eval = FALSE}
+
+# Accéder aux métadonnées sur les émetteurs et les récepteurs associés au projet 176.
+metadata(sql.motus, projectIDs = 176) 
+
+# Accéder aux métadonnées sur les émetteurs et les récepteurs associés aux projets 176 et 1.
+metadata(sql.motus, projectIDs = c(176, 1)) 
+
+```
+
+
+## Structure des données {#databaseStructure}
+
+Chaque base de données de détection est stockée sous la forme d’un fichier SQLite («dplyr::src_sqlite») portant le suffixe .motus. Nous avons choisi le format SQLite pour les raisons suivantes:
+
+1. Il est souple; il autorise de nombreux formats de données.
+2. Il est accessible à partir de nombreuses plates-formes logicielles (pas seulement à partir de R).
+3. Il permet l'**adjonction**: la base de données peut être créée et mise à jour sur disque sans qu’il soit nécessaire de lire et de sauvegarder de nouveau tout le contenu de la base. Cela permet de gagner du temps et d’économiser de la mémoire lorsqu’on fait une recherche pour déterminer si de nouvelles données de détection sont disponibles pour un projet ou un récepteur donné.
+
+Le fichier .motus contient une série de tables interdépendantes dans lesquelles les données sont stockées sous forme condensée pour économiser de la mémoire. Voici quelles sont ces tables:
+
+1. antDeps: métadonnées sur les antennes, p. ex., hauteur, angle, type d'antenne;
+2. batchRuns: métadonnées sur les runID et les batchID associés;
+3. batches: données de détection pour un récepteur et un numéro de redémarrage de récepteur particuliers;
+4. filters: métadonnées reliées à des filtres créés par l'utilisateur qui sont associés au récepteur en question;  
+5. gps: métadonnées reliées à la position GPS du récepteur; 
+6. hits: données de détection au niveau de chaque détection de signaux;
+7. meta: métadonnées reliées au projet et au type de données (émetteurs par rapport aux récepteurs) qui sont inclus dans le fichier .motus;
+8. projAmbig: métadonnées reliées aux projets pour lesquels il existe des détections ambiguës;
+9. projBatch: métadonnées pour le nombre de détections contenues dans chaque lot;
+10. projs: métadonnées reliées aux projets, p. ex., nom du projet, chercheur principal;
+11. recvDeps: métadonnées reliées aux déploiements de récepteurs, p. ex., date du déploiement, lieu, caractéristiques du récepteur;
+12. recvs: métadonnées reliées au numéro de série du récepteur et à l'identifiant d'appareil (deviceID) Motus associé;
+13. runs: données de détection associées à une séquence de (détections continues d'un émetteur unique par un récepteur particulier);
+14. runsFilters: liste de runIDs associés à des filtres créés par l'utilisateur et à des probabilités attribuées;  
+15. species: métadonnées reliées aux espèces, p. ex., identifiant unique, nom scientifique, nom commun;
+16. tagAmbig: métadonnées reliées aux émetteurs ambigus, p. ex., ambigID et motusTagID associés;
+17. tagDeps: métadonnées reliées à des déploiements d'émetteurs, p. ex., date du déploiement, lieu et espèce;
+18. tags: métadonnées reliées à des émetteurs, p. ex., identifiant unique, caractéristiques de l'émetteur(p. ex., cadence d'émission).
 
 Vous pouvez visualiser la liste des tables, et les variables contenues dans ces tables, en utilisant les codes suivants:
 
@@ -196,6 +249,42 @@ dbListFields(file.name, "species")
 
 ```
 
+En plus de ces tables, des tables «virtuelles» ou «vues» ont été créées à la suite de requêtes qui entraînent la fusion des données des différentes tables en une «vue» pratique contenant tous les champs dont vous pouvez avoir besoin. Les vues suivantes sont actuellement incluses dans chaque fichier .motus:
+
+1. allambigs: liste en format long tous les motusTagID (jusqu'à 6) associés à chaque ambigID négatif;
+2. alltags: fournit l'ensemble des données de détection pour tous les émetteurs et tous les émetteurs ambigus (en double) associés à votre projet. Les détections ambiguës sont répétées pour chaque motusTagID représenté par chaque ambigID. 
+
+Étant donné que le fichier est un fichier dplyr::src_sqlite, toutes les fonctions dplyr peuvent être utilisées pour filtrer la base de données .motus et en présenter un sommaire sans avoir d’abord à enregistrer les données sous la forme d’un fichier *plat* (une trame de données bidimensionnelle typique). Le format SQL est très avantageux en présence d’un gros fichier – les requêtes effectuées dans ce format seront beaucoup plus rapides que celles effectuées sur une trame de données plate. 
+
+On peut accéder à chaque table et chaque vue dans le fichier .motus en utilisant la fonction tbl(): 
+
+```{r getTable}
+
+# Obtenir la table des métadonnées sur les déploiements d'émetteurs pour le projet courant.
+tbl.tagDeps <- tbl(sql.motus, "tagDeps")
+     
+```
+
+La structure sous-jacente à ces tables est une liste de longueur 2:
+
+```{r dfStructure, eval = FALSE}
+
+str(tbl.tagDeps)
+
+```
+
+La première partie de la liste, «src», fournit de l’information sur la SQLiteConnection, entre autres sur l’emplacement de la base de données. La deuxième partie est une liste qui comprend la table sous-jacente. Dès lors, l’objet R «tagDeps» est une table *virtuelle* qui contient la structure de la base de données et l’information nécessaire pour la connexion avec les données sous-jacentes dans le fichier .motus. Tel qu’indiqué plus haut, cette méthode de stockage des données présente l’avantage d’économiser de la mémoire lorsqu’on accède à de très grosses bases de données, et les fonctions intégrées dans le logiciel dplyr peuvent être utilisées pour manipuler et résumer les tables avant de rassembler les résultats dans une trame de données «plate» typique.
+
+Si vous voulez utiliser des fonctions familières pour accéder à des composantes de la trame de données sous-jacente, utilisez la fonction «collect». Par exemple, pour voir les noms des variables dans la table tagDeps:
+
+```{r}
+
+tbl.tagDeps %>% 
+  collect() %>%
+  names() # Présenter la liste des noms des variables dans la table.
+
+```
+
 La table *virtuelle* «alltags» contient les données de détection ainsi que toutes les variables dont la plupart des utilisateurs pourront avoir besoin à partir des tables .motus sous-jacentes. Cette table est accessible elle aussi à l’aide de la fonction dplyr tbl():  
 
 ```{r getAllTagsTable, eval = FALSE}
@@ -204,37 +293,47 @@ tbl.alltags <- tbl(sql.motus, "alltags") # Table virtuelle
 
 ```
 
-Nous avons maintenant un nouvel objet, «tbl.alltags», dans R. La structure sous-jacente à ces tables est une liste de longueur 2:
+La table suivante présente la liste des variables disponibles dans la vue «alltags». Vous trouverez une description complète de chaque champ dans l’annexe A.
 
-```{r dfStructure, eval = FALSE}
-
-str(tbl.alltags)
-
-```
-
-La première partie de la liste, «src», fournit de l’information sur la SQLiteConnection, entre autres sur l’emplacement de la base de données. La deuxième partie est une liste qui comprend la table sous-jacente. Dès lors, l’objet R «tbl.alltags» est une table *virtuelle* qui contient la structure de la base de données et l’information nécessaire pour la connexion avec les données sous-jacentes dans le fichier .motus. Tel qu’indiqué plus haut, cette méthode de stockage des données présente l’avantage d’économiser de la mémoire lorsqu’on accède à de très grosses bases de données, et les fonctions intégrées dans le logiciel dplyr peuvent être utilisées pour manipuler et résumer les tables avant de rassembler les résultats dans une trame de données «plate» typique.
-
-Si vous voulez utiliser des fonctions familières pour accéder à des composantes de la trame de données sous-jacente, utilisez la fonction «collect». Par exemple, pour voir les noms des variables dans la table alltags:
-
-```{r}
+```{r parameterTable.3, echo = FALSE, eval = FALSE}
 
 tbl.alltags %>% 
-  collect() %>%
-  names() # Présenter la liste des noms des variables dans la table.
+      collect() %>%
+      names()
 
 ```
+
+## Vérification de la version de la base de données {checkVersion}
+
+Lorsque vous appelez la fonction tagme pour charger la base de données SQLite, un processus permet de vérifier que la version de votre base de données correspond à la version la plus récente du logiciel motus et de stocker la version dans une nouvelle table appelée admInfo. Au fil du temps, des changements sont apportés qui nécessitent l’ajout de nouvelles tables ou vues ou de nouveaux champs dans la base de données. Si vous n’avez pas la version correcte de la base de données, il se pourrait que certains des exemples contenus dans le présent guide ne fonctionnent pas. Cette fonction permet de vérifier que votre base de données a été actualisée à la version courante du logiciel motus. Si vous n’avez pas la version courante, reportez-vous au chapitre \@ref(loadingPackages), qui fournit des instructions sur la mise à jour des logiciels motus et motusClient. Si le système affiche un avertissement, reportez-vous à l’annexe B.
+
+
+```{r dbVersion, eval = FALSE}
+checkVersion(sql.motus)
+
+```
+
+## Conversion d'une table SQLITE en une trame de données plate {#convertToFlat}
 
 Pour convertir la vue «alltags» ou une autre table dans le fichier .motus en un format «plat» typique (c.-à-d. avec tous les enregistrements pour chaque champ entrés), utilisez les fonctions collect() et as.data.frame(). La sortie pourra ensuite subir d’autres manipulations ou être utilisée pour générer un fichier RDS de vos données à des fins d’archivage ou d’exportation. 
 
-```{r df.alltags, eval = FALSE}
+Nous suggérons le flux de travail suivant. Préparez un script qui effectue le téléchargement/la mise à jour de vos données, élimine les variables nécessaires et effectue un premier nettoyage s’il y a lieu, puis enregistrez les données résultantes sous la forme d’un fichier RDS. Nous suggérons d’utiliser le format RDS plutôt que le format CSV, car il conserve la structure sous-jacente des données (p. ex. les heures POSIX demeurent des heures POSIX). Toutefois, si vous voulez exporter vos données dans un autre programme, il pourrait être préférable d’utiliser le format CSV.  
+
+Créer un fichier plat avec l’ensemble des champs peut exiger beaucoup de mémoire et peut ralentir le logiciel R considérablement lorsqu’il faut traiter de grands ensembles de données. Pour certaines combinaisons d’ensembles de données et d’ordinateurs, il peut être impossible d’utiliser directement des trames de données dans R. Si cela se produit, c’est l’étape de votre flux de travail où vous devriez examiner attentivement l’information dont vous avez besoin dans votre ensemble de données (par exemple comment les données sont agrégées) et la simplifier. Il est toujours possible de revenir au script dont il est question ici pour créer un nouveau fichier RDS avec des variables différentes ou avec des données agrégées à une échelle différente.  
+
+Nous développons cette idée dans les sections qui suivent.  
+
+Créez une trame de données ...
+
+```{r collect, eval = FALSE}
 
 df.alltags <- tbl.alltags %>% 
-              collect() %>% 
-              as.data.frame()
+                collect() %>% 
+                as.data.frame()  # Pour tous les champs dans la trame de données
 
 ```
 
-Nous avons maintenant une trame de données plate de la table alltags nommée «df.alltags». Nous pouvons examiner certaines caractéristiques du fichier:
+... et examinez brièvement le fichier résultant. 
 
 ```{r quickLook, eval = FALSE}
 
@@ -258,8 +357,6 @@ df.alltags <- tbl.alltags %>%
 # ... mais c'est un rappel utile!
 
 ```
-
-Il est à noter que les estampilles temporelles peuvent être manipulées de cette façon seulement *après* que les données ont été recueillies dans une trame de données plate.
 
 Si vous voulez charger seulement une partie de votre table virtuelle complète (p. ex., certains champs, certains émetteurs ou tous les émetteurs se rapportant à un projet ou à une espèce spécifique), vous pouvez utiliser des fonctions dplyr pour filtrer les données avant de les réunir en une trame de données. Voici des exemples:  
 
@@ -319,115 +416,19 @@ df.detectSum <- tbl.alltags %>%
 Dans les chapitres suivants, nous vous montrerons d'autres façons de travailler avec vos données et de les résumer.
 
 ## Exportation d'une trame de données «plate» sous la forme d'un fichier CSV ou RDS {#exportDetections}
-Il est bon de créer un script qui traite tous vos problèmes de données (tel que décrit plus loin) et enregistre ensuite une trame de données qui pourra être réutilisée. Si vous faites cela, vous pouvez amorcer rapidement une session d’analyse ou de visualisation à partir d’un point de départ connu (toujours le même). Nous utilisons un fichier .RDS, qui conserve toutes les structures de données R associées, notamment les estampilles temporelles.
+
+Nous avons mentionné qu’un flux de travail approprié consiste à créer un script qui permet de traiter tous les problèmes de données et qui crée ensuite une trame de données (ou un espace de travail) qui peut être réutilisée. Si vous faites cela, vous pouvez rapidement amorcer une session d’analyse ou de visualisation à partir d’un point de départ connu (et cohérent). Nous utilisons un fichier RDS, qui conserve toutes les structures de données R associées, par exemple les estampilles temporelles.
 
 ```{r createRDS, eval = FALSE, message = FALSE, warning = FALSE}
 
-# Enregistrer le fichier df.alltags dans le format .RDS dans votre dossier de données.
+# Enregistrez un fichier RDS.
+
 saveRDS(df.alltags, "./data/df.alltags.RDS")  
-```
 
-Il se peut que certains utilisateurs veuillent aussi exporter la trame de données plate dans le format de fichier .CSV en vue de faire analyser les données dans d’autres programmes. Cela peut être fait facilement à l’aide du code suivant. Veuillez noter que cette opération **ne conserve pas** les estampilles temporelles:
+# ou enregistrez comme fichier CSV, qui ne conserve pas les estampilles temporelles,
+# mais qui peut être lu facilement par d'autres programmes.
 
-```{r createCSV, eval = FALSE, message = FALSE, warning = FALSE}
- 
-# Enregistrer le fichier df.alltags dans le format .CSV dans votre dossier de données.
-write.csv(df.alltags, "./data/df.alltags.CSV")
- 
-```
-
-## Mettre à jour et/ou ouvrir une base de données existante {#tagmeUpdate}.
-
-Au moment où vous, ou d’autres utilisateurs, téléversez des données dans notre serveur, il se peut que d’autres données de détection de signaux d’émetteurs se soient ajoutées après le téléchargement initial de vos données. Étant donné que le fichier .motus est une base de données SQLite, vous pouvez mettre à jour votre fichier existant en ajoutant de nouvelles données au lieu d’effectuer de nouveau un téléchargement complet de tout le contenu de la base de données. Pour ouvrir et mettre à jour une base de données de détection existante (qui a été téléchargée précédemment), nous utilisons la fonction tagme() mais en choisissant «new = FALSE»:
-
-```{r tagme3, eval = FALSE}
-
-sql.motus <- tagme(projRecv = proj.num, new = FALSE, update = TRUE, dir = "./data/") # Utilisez «dir =» pour spécifier un répertoire.
-
-```
-
-Si vous travaillez hors ligne et que vous voulez simplement ouvrir une base de données déjà téléchargée sans vous connecter au serveur pour la mettre à jour, vous pouvez utiliser les options «new = FALSE» et «update = FALSE»:
-
-```{r tagme3.1, eval = FALSE}
-
-sql.motus <- tagme(projRecv = proj.num, update = FALSE, dir = "./data/")
-
-```
-
-### Vérification de l'existence de nouvelles données {#tellme}
-
-Pour vérifier si de nouvelles données sont disponibles sans télécharger ces données, vous pouvez utiliser la fonction tellme(). Vous verrez s’afficher une liste:
-
-- **numHits**: nombre de nouvelles détections;
-- **numBytes**: quantité approximative de données non comprimées à transférer, en mégaoctets;
-- **numRuns**: nombre de séquences de nouvelles détections, c'est-à-dire de séries de détections continues par une antenne particulière de signaux provenant d'un émetteur;
-- **numBatches**: nombre de lots de nouvelles données; 
-- **numGPS** nombre d'enregistrements GPS de nouvelles données.
-
-La fonction tellme () repose sur l'hypothèse qu'il existe déjà une copie locale de la base de données:
-
-```{r tagme5, eval = FALSE}
-
-tellme(projRecv = proj.num)                    # Si db est dans le répertoire de travail
-tellme(projRecv = proj.num, dir = "./data/")   # Pour spécifier un autre répertoire
-
-```
-
-Pour vérifier combien de données sont disponibles pour un projet sans_que_vous_ayez une copie locale de la base de données, utilisez le paramètre «new»:
-
-```{r tagme6, eval = FALSE}
-
-tellme(projRecv = proj.num, new = TRUE)
-
-```
-
-### Imposition d'une mise à jour/réimportation de métadonnées sur des émetteurs et des récepteurs {#forceMeta}
-
-Les métadonnées sur les émetteurs et les récepteurs sont automatiquement fusionnées avec les données de détection d'émetteurs lorsque ces dernières sont téléchargées. Toutefois, si vous voulez imposer une nouvelle importation des métadonnées pendant la mise à jour d’une base de données, vous pouvez faire exécuter le script suivant: 
-
-```{r tagme7, eval = FALSE}
-
-sql.motus <- tagme(projRecv = proj.num, forceMeta = TRUE)
-
-```
-
-### Importation de l'ensemble des métadonnées sur les émetteurs et les récepteurs {#metadata}
-
-Lorsque vous utilisez la fonction tagme() pour télécharger ou mettre à jour votre fichier .motus, vous obtenez les métadonnées sur:
-
-1. tous les émetteurs enregistrés dans le cadre de votre projet dont des signaux ont été détectés; 
-2. les émetteurs enregistrés dans le cadre d'autres projets qui sont associés à des détections de signaux ambigus (voyez le chapitre \@ref(dataCleaning)) dans vos données; 
-3. les récepteurs qui ont détecté les signaux de vos émetteurs ainsi que les signaux ambigus.  
-
-Dans de nombreux cas, vous voudrez accéder à toutes les métadonnées sur l’ensemble des émetteurs et des récepteurs partout dans le réseau (par exemple pour déterminer combien de vos émetteurs déployés n’ont pas été repérés ou pour localiser les stations avec et sans détections). Vous pouvez utiliser la fonction metadata() pour ajouter la totalité des métadonnées Motus à votre fichier .motus enregistré. Cette fonction n’a besoin d’être exécutée qu’une seule fois, mais nous vous suggérons de réimporter les métadonnées occasionnellement pour vous assurer que vous avez l’information la plus récente et à jour.
-
-L’exécution de la fonction metadata () de la manière suivante aura pour effet d’ajouter les métadonnées appropriées provenant de l’ensemble du réseau (tous les émetteurs et les récepteurs) aux tables «recvDeps» et «'tagDeps» dans votre fichier .motus: 
-
-```{r metadata1, eval = FALSE}
-
-# Accéder aux métadonnées sur tous les émetteurs et les récepteurs dans le cadre de tous les projets dans le réseau.
-metadata(sql.motus) 
-
-```
-
-Vous pouvez aussi charger les métadonnées reliées à un ou des projets spécifiques, de la manière suivante:
-
-```{r metadata2, eval = FALSE}
-
-# Accéder aux métadonnées sur les émetteurs et les récepteurs associés au projet 176.
-metadata(sql.motus, projectIDs = 176) 
-
-# Accéder aux métadonnées sur les émetteurs et les récepteurs associés aux projets 176 et 1.
-metadata(sql.motus, projectIDs = c(176, 1)) 
-
-```
-
-## Vérification de la version de la base de données {checkVersion}
-
-Lorsque vous appelez la fonction tagme pour charger la base de données SQLite, la version du logiciel R utilisée pour télécharger les données est stockée dans une table admInfo. Au fil du temps, des modifications seront apportées à la fonctionnalité du logiciel R qui pourraient nécessiter l’ajout de nouvelles tables ou vues ou de nouveaux champs à la base de données. Si votre version de la base de données ne correspond pas à la version courante du logiciel R, il se peut que certains des exemples présentés dans ce guide ne fonctionnent pas. L’appel de fonction suivant permet de vérifier si votre base de données a été mise à jour à la version courante du logiciel R de Motus. Si la version de votre base de données ne correspond pas à la version courante du logiciel R, consultez le chapitre \@ref(loadingPackages) pour obtenir les instructions sur la mise à jour des logiciels R motus et motusClient, puis utilisez la fonction tagme() avec l’option «update = TRUE» pour mettre à jour votre base de données au format approprié. Si vous recevez un avertissement après avoir appelé la fonction checkVersion(), reportez-vous à l’annexe B.
-
-```{r dbVersion, eval = FALSE}
-checkVersion(sql.motus)
+write_csv(df.alltags, "./data/df.alltags.CSV")
 
 ```
 
@@ -448,35 +449,4 @@ df.alltags <- tbl.alltags %>%
                 mutate(ts = as_datetime(ts, tz = "UTC", origin = "1970-01-01"))              
 
 ```
-
-## Sommaire: téléchargement de données, accès aux données et exportation de données
-Tout au long du présent guide, nous travaillerons principalement avec la table «alltags» dans le format plat. La marche à suivre pour télécharger les données et y accéder et pour convertir les données utilisées comme exemples (projet 176) en vue de les utiliser dans le reste du guide a déjà été présentée de façon détaillée précédemment, mais nous en incluons ici un bref sommaire. Dans les sections ultérieures du guide, il est question des modifications supplémentaires et de la suppression des variables non nécessaires qui sont recommandées. Des renseignements supplémentaires sont présentés dans la section \@ref(loadDetectionsCleaning) du chapitre \@ref(dataCleaning). 
-```{r summaryDownload, eval = FALSE}
-# set proj.num to 176 for sample data
-#définir le proj.num sur 176 pour les données d'exemple
-# Télécharger les données de détection se rapportant au projet 176, les charger et les enregistrer dans le dossier de données.
-# Le mot de passe pour l’ouverture d’une session et l’accès aux données se rapportant au projet 176 est «motus.sample».
-# Si vous accédez à des données déjà téléchargées, choisissez «new = FALSE»; si vous ne voulez pas mettre les données à jour, choisissez aussi «update = FALSE»
-sql.motus <- tagme(proj.num, new = TRUE, update = TRUE, dir = "./data/")
-# Accéder à la table «alltags» dans le fichier SQLite.tbl.alltags <- tbl(sql.motus, "alltags")
-# Convertir l’objet «tbl.alltags» en une trame de données plate et changer la date dans le format numérique (nombre de secondes écoulées depuis le 1er janvier 1970) en un objet date et heure habituel.df.alltags <- tbl.alltags %>%
-              collect() %>%
-              as.data.frame() %>%
-              mutate(ts = as_datetime(ts, tz = "UTC", origin = "1970-01-01"))
-```
- 
-Pour travailler avec vos propres données plutôt qu’avec les données se rapportant au projet 176, nous vous suggérons de créer un script correspondant au flux de travail suivant:
-1. téléchargement et/ou mise à jour de vos données;
-2. choix des variables d’intérêt pour la table avec laquelle vous travaillez (généralement la table «alltags»);
-3. exécution d’un premier nettoyage des données s’il y a lieu;
-4. enregistrement des données résultantes sous la forme d’un fichier .RDS tel que décrit dans la section \@ref(exportDetections). Nous suggérons d’utiliser le format .RDS plutôt que le format .CSV car le format .CSV préserve la structure sous-jacente aux données (p. ex. les heures POSIX demeurent des heures POSIX). Toutefois, si vous voulez exporter vos données pour travailler dans un autre programme, il pourrait être préférable alors d’utiliser le format .CSV.
-
-Créer un fichier plat avec l’ensemble des champs peut exiger beaucoup de mémoire et peut ralentir le logiciel R considérablement lorsqu’il faut traiter de grands ensembles de données. Pour certaines combinaisons d’ensembles de données et d’ordinateurs, il peut être impossible d’utiliser directement des trames de données dans R. Si cela se produit, c’est l’étape de votre flux de travail où vous devriez examiner attentivement l’information dont vous avez besoin dans votre ensemble de données (par exemple comment les données sont agrégées) et la simplifier. Il est toujours possible de revenir au script dont il est question ici pour créer un nouveau fichier RDS avec des variables différentes ou avec des données agrégées à une échelle différente.  
-
-Pour lire le contenu d’un fichier enregistré dans le format .RDS, vous pouvez faire exécuter le script suivant:
-
-```{r readRDS1, eval = FALSE}
-df.alltags.saved <- readRDS("./data/df.alltags.rds") # permet de lire le contenu du fichier «df.alltags.rds» enregistré dans votre dossier de données.
-```
-
 Dans le prochain chapitre, il sera question de métadonnées manquantes.

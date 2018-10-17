@@ -17,6 +17,7 @@ Suivez les instructions fournies dans le chapitre \@ref(loadingPackages) pour in
 
 library(motus)
 library(tidyverse)
+# Oct 16, 2018: Note that the development version must be used as described in Chapter 2
 library(ggmap)
 
 ```
@@ -337,7 +338,12 @@ L’utilisation de Google Maps peut permettre de visualiser rapidement des traje
 
 La première étape consiste à créer une carte ayant un centre précis (types de carte: relief, plan, satellite ou hybride) et à choisir le niveau de zoom (nombre entier de 3 à 21, 3 correspondant au niveau du continent et 10 au niveau de la localité). Ensuite, nous ajoutons des points indiquant les positions des récepteurs et des lignes reliant les stations consécutives où chaque émetteur (motusTagID) a été détecté. Nous pouvons également ajouter des points pour toutes les stations réceptrices qui étaient actives durant une certaine période si nous avons déjà téléchargé toutes les métadonnées.
 
-```{r googleMap, warning = FALSE, message = FALSE, fig.width=10, fig.height=10}
+**Important Note** As of October 16, 2018 recent updates require the use of a Google key to access google maps. Full instructions are available in Appendix B in section \@ref(googleMapsKey). Once you have your access key, you'll need to provide it with the call register_google(), **each time you start a new R session you will be required to enter your key.**
+
+```{r googleMap, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE, fig.width=10, fig.height=10}
+# IMPORTANT! Your personal key has to be entered here, I recommend regenerating your personal key AFTER building the book, rendering this key useless. You could also build the book with your key, push changes, then delete it and push changes again WITHOUT building. However it will still be saved in old versions of the book on Git so I still recommend regenerating your own key after.
+
+ggmap::register_google(key = "Your Key Here")
 
 gmap <-  get_map(location = c(lon = -75, lat = 40), # Centrez la carte (lon/lat).
                  maptype = "satellite", # Choisissez le type de carte.
@@ -359,7 +365,30 @@ p + geom_point(data=df.tmp,
   scale_color_discrete(name="MotusTagID")
 
 ```
+```{r googleMap, eval = FALSE, warning = FALSE, message = FALSE, fig.width=10, fig.height=10}
 
+ggmap::register_google(key = "Your Key Here")
+
+gmap <-  get_map(location = c(lon = -75, lat = 40), # Centrez la carte (lon/lat).
+                 maptype = "satellite", # Choisissez le type de carte.
+                 source = "google",
+                 zoom = 4) # Entrez le niveau de zoom (nombre entier).
+
+# Utilisez seulement les émetteurs dont nous avons examiné attentivement et filtré les détections (dans le chapitre précédent).
+df.tmp <- filter(df.alltags.path, 
+                           motusTagID %in% c(16011, 16035, 16036, 16037, 16038, 16039))
+df.tmp <- arrange(df.tmp, ts.h) # Disposez par heure.
+df.tmp <- as.data.frame(df.tmp)
+
+p <- ggmap(gmap)
+p + geom_point(data=df.tmp, 
+               aes(recvLon, recvLat), pch=21, colour = "black", fill = "yellow") +
+  geom_path(data=df.tmp, 
+            aes(recvLon, recvLat, group=motusTagID, col = as.factor(motusTagID))) +
+  theme_bw() + 
+  scale_color_discrete(name="MotusTagID")
+
+```
 Nous produisons la même carte avec des points supplémentaires correspondant aux stations réceptrices qui étaient actives pendant une période déterminée:
 
 ```{r googleMapRecvs, warning = FALSE, message = FALSE, fig.width=10, fig.height=10}
@@ -383,6 +412,8 @@ dateRange <- lubridate::interval(as.POSIXct("2015-08-01"), as.POSIXct("2016-01-0
 df.recvDeps$active <- lubridate::int_overlaps(siteOp, dateRange) 
 
 # Créez une carte montrant en rouge les positions des récepteurs qui étaient actifs pendant l'intervalle de temps fixé et en jaune les positions des récepteurs qui ont détecté des émetteurs.
+# remember to register your google key if you haven't already!
+# ggmap::register_google(key = "Your key here")
 p <- ggmap(gmap)
 p + geom_point(data = subset(df.recvDeps, active == TRUE), ggplot2::aes(longitude, latitude), pch=21, colour = "black", fill = "red") +
   geom_point(data=df.tmp, aes(recvLon, recvLat), pch=21, colour = "black", fill = "yellow") +
