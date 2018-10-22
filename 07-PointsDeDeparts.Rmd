@@ -96,7 +96,7 @@ library(tidyr)
 library(motus)
 library(ggplot2)
 library(jpeg)
-# Oct 16, 2018: Note that the development version must be used as described in Chapter 2
+# 16 oct. 2018 – Veuillez noter que la version de développement doit être utilisée tel que décrit dans le chapitre 2.
 library(ggmap)
 #Make sure working on GMT 
 Sys.setenv(TZ = "GMT")
@@ -310,8 +310,8 @@ arr.sc <- 0.03 # détermine la longueur des vecteurs pour les lignes des azimuts
 rad <- function(x) {x * pi/180}
 
 ## Maintenant nous produisons la carte.
-## Oct 16 2018: note that if you haven't already registered the google key for your current session you will need to:
-## ggmap::register_google(key = "Your key here")
+## 16 oct. 2018 – Veuillez noter que si vous n’avez pas déjà enregistré la clé de sécurité Google pour la session courante, vous devrez :
+## ggmap::register_google(key = "Votre clé ici")
 out.map <- ggmap(map.OC) +
     geom_point(data = df.stations, aes(recvLon,recvLat), size=1, colour = "yellow") +
     # Add antenna bearings

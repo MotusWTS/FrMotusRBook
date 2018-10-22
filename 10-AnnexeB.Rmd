@@ -17,16 +17,17 @@ motusLogout()
 ```
 
 ## Google Maps {#googleMapsKey}
-As of October 16, 2018 recent updates require the use of a Google key to access google maps. To obtain an access key, you must be a registered Google user with **up to date billing information**, however you do not have to pay for the service. To obtain a key:  
-1. login to the [Google Cloud Platform](https://cloud.google.com/console/google/maps-apis/overview).  
-2. If you do not already have a project then create one.  
-3. Check that you have current billing information - you will not be charged but it must be present and up to date.  
-4. Under the navigation menu on the left, click APIs & Services > Credentials, then click Create credentials > API key.   
-5. You may need to enable Google Maps Static API. You can do this through the navigation menu in the upper left corner, and selecting APIs & Services > library, choosing "Google Maps Static API" and clicking "Enable".
+En date du 16 octobre 2018, des mises à jour récentes font en sorte qu’il faut utiliser une clé de sécurité Google pour accéder aux cartes Google. Pour obtenir une clé de sécurité, vous devez être un utilisateur de Google enregistré et **vos données de facturation doivent être à jour**. Toutefois, le service est gratuit. Pour obtenir une clé :
+1. Ouvrez une session sur [Google Cloud Platform](https://cloud.google.com/console/google/maps-apis/overview).
+2. Si vous n’avez pas déjà un projet, créez-en un.
+3. Vérifiez que vos données de facturation sont à jour, et cela même si vous ne serez pas facturé(e).
+4. Dans le menu de navigation sur la gauche, cliquez sur «APIs & Services > Credentials», puis sur «Create credentials > API key».  
+5. Il se peut que vous deviez activer l’application «Maps Static API». Vous pouvez le faire à partir du menu de navigation dans le coin supérieur gauche en sélectionnant «APIs & Services > library» puis «Google Maps Static API» et en cliquant sur «Enable».
 
-Full details are listed under "Detailed Guide" [here](https://developers.google.com/maps/documentation/javascript/get-api-key). Note that you may have to enable Google Maps Static API. For troubleshooting see [here](https://groups.google.com/forum/#!topic/motus-wts/UxqFIO6Pcmo) and [here](https://groups.google.com/forum/#!topic/motus-wts/UxqFIO6Pcmo and https://github.com/dkahle/ggmap/issues/51).
+Vous trouverez tous les détails en cliquant sur «Detailed Guide» dans le menu de droite [ici](https://developers.google.com/maps/documentation/javascript/get-api-key).
+Veuillez noter que vous devrez peut-être activer l’application «Maps Static API». Pour obtenir de l’aide : [ici](https://groups.google.com/forum/#!topic/motus-wts/UxqFIO6Pcmo) et [ici](https://groups.google.com/forum/#!topic/motus-wts/UxqFIO6Pcmo et https://github.com/dkahle/ggmap/issues/51).
 
-Once you have your access key, you'll need to provide it with the call register_google(), **each time you start a new R session you will be required to enter your key.**
+Une fois que vous aurez obtenu votre clé de sécurité, vous devrez l’entrer avec l’appel de fonction register_google(), ** Chaque fois que vous ouvrirez une nouvelle session R, vous devrez entrer votre clé de sécurité. **
 
 ## Reprise du téléchargement de données {#resumeDownload}
 

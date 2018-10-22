@@ -68,9 +68,9 @@ library(tidyr)
 install.packages("rworldmap")
 library(rworldmap)
 
-# Oct 16, 2018: due to recent updates, the development version of ggmap must be used.
-# Ensure that packages are updated prior to installing 
-# (see https://groups.google.com/forum/#!topic/motus-wts/UxqFIO6Pcmo and https://github.com/dkahle/ggmap/issues/51)
+# 16 oct. 2018 – En raison de mise à jour récentes, il faut utiliser la version de développement de ggmap.
+# Assurez-vous que les logiciels sont à jour avant l’installation.
+# (voir https://groups.google.com/forum/#!topic/motus-wts/UxqFIO6Pcmo et https://github.com/dkahle/ggmap/issues/51)
 devtools::install_github("dkahle/ggmap", ref = "tidyup", dependencies = TRUE)
 library(ggmap)
 

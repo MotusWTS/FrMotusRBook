@@ -136,6 +136,62 @@ sql.motus <- tagme(projRecv = proj.num, update = FALSE, dir = "./data/")
 
 ```
 
+### Téléchargement des données de plusieurs récepteurs en même temps
+Si votre projet comporte l’utilisation d’un grand nombre de récepteurs et que vous voulez obtenir les données provenant de chacun, vous pouvez télécharger les données de tous les récepteurs d’un seul coup au lieu des données d’un récepteur à la fois comme ci-dessus. Comme aucun récepteur n’est associé au projet pris comme exemple ici, ce script ne produira pas de téléchargement; toutefois, vous pouvez faire un essai à partir de votre projet, si celui-ci comporte l’utilisation de récepteurs.
+```{r tagmeAllRecvs, eval = FALSE}
+
+# Indiquez le projet auquel sont associés les récepteurs dont vous voulez télécharger les données :
+proj.num = 176
+# Obtenez une copie des métadonnées seulement.
+sql.motus <- tagme(proj.num, new = TRUE, update = FALSE, dir = "C:/Users/guest/Documents/data/")
+metadata(sql.motus, proj.num)
+tbl.recvDeps <- tbl(sql.motus, "recvDeps")
+df.serno = tbl.recvDeps %>% 
+  filter(projectID == proj.num) %>% 
+  select(serno) %>% 
+  distinct() %>% 
+  collect() %>% as.data.frame()
+
+# Lisez les données de chaque récepteur (cela peut prendre beaucoup de temps!)
+for (row in 1:nrow(df.serno)) {
+  tagme(df.serno[row, "serno"], dir="C:/Users/guest/Documents/data/", new=TRUE, update=TRUE)
+}
+
+# Notez que vous pouvez remplacer l’indication du répertoire de destination si vous voulez
+# enregistrer les fichiers de données dans votre répertoire de travail à la place. Assurez-vous de toujours utiliser
+# le même répertoire.
+
+``
+Vous pouvez également créer une liste des récepteurs dont vous voudriez télécharger les données si vous ne voulez pas télécharger les données de tous les récepteurs utilisés pour le projet :
+```{r tagmeMultipleRecvs, eval = FALSE}
+
+# Créez une liste des récepteurs dont vous voudriez télécharger les données :
+df.serno <- c("SG-AB12RPI3CD34", "SG-1234BBBK4321"))
+
+# Lisez les données de chaque récepteur (cela peut prendre beaucoup de temps!) et téléchargez-les dans votre répertoire de travail :
+for (k in 1:length(df.serno)) {
+  tagme(df.serno[k], new=TRUE, update=TRUE)
+}
+
+# Lisez les données de chaque récepteur (cela peut prendre beaucoup de temps!) et téléchargez-les dans un répertoire spécifié:
+for (k in 1:length(df.serno)) {
+  tagme(df.serno[k], dir="C:/Users/guest/Documents/data/ ", new=TRUE, update=TRUE)
+}
+```
+
+### Mise à jour de tous les fichiers .motus dans un répertoire
+
+Une fois que vous avez des fichiers .motus, vous pouvez aussi les mettre tous à jour simplement en appelant la fonction tagme() mais en laissant tous les arguments en blanc, sauf celui du répertoire :
+
+```{r AllRecvsUpdate, eval = FALSE}
+# Si vous avez téléchargé les fichiers dans votre répertoire de travail :
+tagme()
+
+# Si vous les avez téléchargés dans un répertoire différent :
+tagme(dir = "C:/Users/guest/Documents/data/")
+
+```
+
 ### Vérification de l'existence de nouvelles données {#tellme}
 
 Pour vérifier si de nouvelles données sont disponibles sans télécharger ces données, vous pouvez utiliser la fonction tellme(). Vous verrez s’afficher une liste:
