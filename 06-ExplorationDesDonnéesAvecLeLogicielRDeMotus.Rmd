@@ -343,7 +343,7 @@ La première étape consiste à créer une carte ayant un centre précis (types 
 ```{r googleKey, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE, fig.width=10, fig.height=10}
 # IMPORTANT! Vous devez entrer votre clé de sécurité personnelle ici. Nous vous recommandons de rafraîchir votre clé APRÈS avoir créé le guide, ce qui rendra l’ancienne version de la clé inutile. Vous pourriez également créer le guide avec votre clé, téléverser les changements puis supprimer celle-ci et téléverser les changements de nouveau SANS créer. Toutefois, dans ce dernier cas, le tout sera enregistré dans les anciennes versions du guide sur Git; il est donc recommandé de rafraîchir votre clé APRÈS avoir créé le guide.
 # IMPORTANT! Your personal key has to be entered here, I recommend regenerating your personal key AFTER building the book, rendering this key useless. You could also build the book with your key, push changes, then delete it and push changes again WITHOUT building. However it will still be saved in old versions of the book on Git so I still recommend regenerating your own key after.
-ggmap::register_google(key = "AIzaSyDPX0FA0fhHAD_CRQpT0MdI-sbgz3_51A8")
+ggmap::register_google(key = "Votre clé ici")
 
 gmap <-  get_map(location = c(lon = -75, lat = 40), # Centrez la carte (lon/lat).
                  maptype = "satellite", # Choisissez le type de carte.
